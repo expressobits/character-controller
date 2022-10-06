@@ -1,10 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://d2vgv6ie0v40s"]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="Script" path="res://Levels/Main/L_Main.gd" id="1_km1jj"]
-[ext_resource type="PackedScene" uid="uid://bdupkh0grwy27" path="res://Player/Player.tscn" id="1_qgept"]
-[ext_resource type="PackedScene" uid="uid://ctkc7yqdqdtao" path="res://Levels/Main/Geometry/Floor.tscn" id="1_yb0tt"]
-[ext_resource type="PackedScene" uid="uid://cdn7d5mxwdyks" path="res://Levels/Main/Geometry/Wall.tscn" id="3_jw8hm"]
-[ext_resource type="Material" uid="uid://sofvlrq3jmka" path="res://Levels/Main/Materials/M_Dark.tres" id="4_m7xar"]
+[ext_resource type="PackedScene" path="res://addons/character-controller/core/player.tscn" id="1_qgept"]
+[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="1_yb0tt"]
+[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="3_jw8hm"]
+[ext_resource type="Material" path="res://addons/character-controller/example/main/materials/dark.tres" id="4_m7xar"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)

@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1f6duvpfuijb"
-path.s3tc="res://.godot/imported/T_Grid.png-743ab0e70ebb739710c260b2c2305256.s3tc.ctex"
-path.etc2="res://.godot/imported/T_Grid.png-743ab0e70ebb739710c260b2c2305256.etc2.ctex"
+path.s3tc="res://.godot/imported/grid.png-eaf91d061154104a4cf22c5548c3ed9a.s3tc.ctex"
+path.etc2="res://.godot/imported/grid.png-eaf91d061154104a4cf22c5548c3ed9a.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/character-controller/Levels/Main/Materials/T_Grid.png"
-dest_files=["res://.godot/imported/T_Grid.png-743ab0e70ebb739710c260b2c2305256.s3tc.ctex", "res://.godot/imported/T_Grid.png-743ab0e70ebb739710c260b2c2305256.etc2.ctex"]
+source_file="res://addons/character-controller/example/main/materials/grid.png"
+dest_files=["res://.godot/imported/grid.png-eaf91d061154104a4cf22c5548c3ed9a.s3tc.ctex", "res://.godot/imported/grid.png-eaf91d061154104a4cf22c5548c3ed9a.etc2.ctex"]
 
 [params]
 

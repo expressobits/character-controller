@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdn7d5mxwdyks"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Material" uid="uid://sofvlrq3jmka" path="res://Levels/Main/Materials/M_Dark.tres" id="1_h7iyj"]
+[ext_resource type="Material" path="res://addons/character-controller/example/main/materials/dark.tres" id="1_h7iyj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7y6gq"]
 size = Vector3(40, 12, 1)
