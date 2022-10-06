@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://lqyku5wn2wo0"]
 
-[ext_resource type="Script" path="res://Player/MovementController.gd" id="1_ktghv"]
+[ext_resource type="Script" path="res://addons/character-controller/core/movement_controller.gd" id="1_6rdkx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
 [node name="MovementController" type="CharacterBody3D"]
 floor_block_on_wall = false
 floor_snap_length = 0.5
-script = ExtResource("1_ktghv")
+script = ExtResource("1_6rdkx")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
