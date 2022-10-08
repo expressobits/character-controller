@@ -9,6 +9,7 @@ extends Node
 
 @export var sprint_speed := 16
 @export var fov_multiplier := 1.05
+@export var input_sprint := "sprint"
 @onready var normal_speed: int = controller.speed
 @onready var normal_fov: float = cam.fov
 
@@ -24,5 +25,5 @@ func _physics_process(delta):
 
 
 func can_sprint() -> bool:
-	return (controller.is_on_floor() and Input.is_action_pressed("sprint") 
+	return (controller.is_on_floor() and Input.is_action_pressed(input_sprint) 
 			and controller.input_axis.x >= 0.5)
