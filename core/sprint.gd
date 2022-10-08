@@ -9,7 +9,7 @@ extends Node
 
 @export var sprint_speed := 16
 @export var fov_multiplier := 1.05
-@export var input_sprint := "sprint"
+@export var input_sprint := "move_sprint"
 @onready var normal_speed: int = controller.speed
 @onready var normal_fov: float = cam.fov
 

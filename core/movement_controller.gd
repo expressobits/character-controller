@@ -10,11 +10,11 @@ signal jumped
 @export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
 @export var jump_height := 10
-@export var input_back := "move_back"
+@export var input_back := "move_backward"
 @export var input_forward := "move_forward"
 @export var input_left := "move_left"
 @export var input_right := "move_right"
-@export var input_jump := "jump"
+@export var input_jump := "move_jump"
 
 var direction := Vector3()
 var input_axis := Vector2()
