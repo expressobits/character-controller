@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://v02ypykhol1e"]
+[gd_scene load_steps=25 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
-[ext_resource type="PackedScene" path="res://addons/character-controller/core/controller.tscn" id="2_tes6m"]
+[ext_resource type="PackedScene" uid="uid://47sxq212e4ko" path="res://addons/character-controller/core/controller.tscn" id="2_tes6m"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
