@@ -1,31 +1,33 @@
-extends HeadMovement
+extends Node
 
 class_name HeadBob
 
 @export_node_path var step_path
 @onready var step : Step = get_node(step_path)
+@export_node_path(Marker3D) var head_path := NodePath("../Head")
+@onready var head: Marker3D = get_node(head_path)
 var speed : float = 0
-@export var lerp_bob_curve = (Resource)
+@export var lerp_bob_curve : LerpBobCurve
 
 var original_position
 
 func _ready():
-	original_position = position
+	original_position = head.position
 	setup_bob(step.interval * 2);
 	
 func head_bob_process(speed:float, is_on_floor:bool, delta:float):
 	lerp_bob_curve.bob_process(delta)
-	var head = do_head_bob(speed,delta)
+	var headpos = do_head_bob(speed,delta)
 	var new_position = original_position
 	if(is_on_floor):
-		new_position += head
-#	new_position.y -= lerp_bob_curve.offset
-#	position = new_position
+		new_position += headpos
+	new_position.y -= lerp_bob_curve.offset
+	head.position = new_position
 
 #Lerp bob	
-@export var bob_range = Vector2(0.1, 0.1)
-@export var bob_curve = (Curve)
-@export var curve_multiplier = Vector2(4,2)
+@export var bob_range = Vector2(0.07, 0.07)
+@export var bob_curve : Curve
+@export var curve_multiplier = Vector2(2,2)
 
 @export var vertical_horizontal_ratio = 2
 
@@ -38,6 +40,7 @@ func setup_bob(bob_base_interval: float):
 	print(bob_base_interval)
 
 func do_bob_jump():
+	pass
 	lerp_bob_curve.do_bob_cycle()
 
 func do_head_bob(speed: float, delta: float) -> Vector3: 

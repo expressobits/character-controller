@@ -10,8 +10,12 @@ signal jumped
 @export var acceleration := 8
 @export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
-@export_node_path(Node) var step_path
-#@export_node_path(Node) var head_bob_path
+
+@export_node_path(Step) var step_path := NodePath("Step")
+@onready var step: Step = get_node(step_path)
+
+@export_node_path(HeadBob) var head_bob_path := NodePath("Head Bob")
+@onready var head_bob: HeadBob = get_node(head_bob_path)
 
 @export_group("Inputs")
 @export var jump_height := 10
@@ -26,8 +30,6 @@ var input_axis := Vector2()
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 @onready var gravity: float = (ProjectSettings.get_setting("physics/3d/default_gravity") 
 		* gravity_multiplier)
-@onready var step : Step = get_node(step_path)
-#@onready var head_bob : HeadBob = get_node(head_bob_path)
 
 var _last_is_on_floor := false
 
@@ -56,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	if step.is_step(velocity.length(), is_on_floor(), delta):
 		call_step()
 		
-#	head_bob.head_bob_process(velocity.length(),is_on_floor(), delta)
+	head_bob.head_bob_process(velocity.length(),is_on_floor(), delta)
 	
 func call_step():
 	emit_signal("stepped")
