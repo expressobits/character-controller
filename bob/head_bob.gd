@@ -4,8 +4,8 @@ class_name HeadBob
 
 @export_node_path var step_path
 @onready var step : Step = get_node(step_path)
-@export_node_path(Marker3D) var head_path := NodePath("../Head")
-@onready var head: Marker3D = get_node(head_path)
+@export_node_path(Camera3D) var head_path := NodePath("../Camera")
+@onready var head: Camera3D = get_node(head_path)
 var speed : float = 0
 @export var lerp_bob_curve : LerpBobCurve
 

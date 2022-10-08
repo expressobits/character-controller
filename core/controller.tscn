@@ -1,17 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://47sxq212e4ko"]
+[gd_scene load_steps=10 format=3 uid="uid://ctuidx07gh6nx"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/movement_controller.gd" id="1_ewmc1"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
-[ext_resource type="Script" path="res://addons/character-controller/core/head_bob.gd" id="3_a0fls"]
-[ext_resource type="Curve" path="res://addons/character-controller/core/bob_curve.tres" id="3_pv824"]
-[ext_resource type="Script" path="res://addons/character-controller/core/lerp_bob_curve.gd" id="3_ud8l3"]
+[ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
+[ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
 [ext_resource type="Script" path="res://addons/character-controller/core/step.gd" id="4_gn086"]
 [ext_resource type="Script" path="res://addons/character-controller/core/sprint.gd" id="5_f0ymk"]
+[ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
 [sub_resource type="Resource" id="Resource_ojc2q"]
-script = ExtResource("3_ud8l3")
+script = ExtResource("4_0bgly")
 duration = 0.2
 amount = 0.1
 
@@ -19,6 +19,7 @@ amount = 0.1
 floor_block_on_wall = false
 floor_snap_length = 0.5
 script = ExtResource("1_ewmc1")
+head_bob_path = NodePath("Head/Head Bob")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -30,15 +31,16 @@ script = ExtResource("2_1o423")
 [node name="Camera" type="Camera3D" parent="Head"]
 current = true
 
+[node name="Head Bob" type="Node" parent="Head"]
+script = ExtResource("3_7s0qe")
+step_path = NodePath("../../Step")
+lerp_bob_curve = SubResource("Resource_ojc2q")
+bob_curve = ExtResource("5_ql48t")
+
 [node name="Sprint" type="Node" parent="."]
 script = ExtResource("5_f0ymk")
+fov_multiplier = 1.25
 
 [node name="Step" type="Node" parent="."]
 script = ExtResource("4_gn086")
 interval = 4.0
-
-[node name="Head Bob" type="Node" parent="."]
-script = ExtResource("3_a0fls")
-step_path = NodePath("../Step")
-lerp_bob_curve = SubResource("Resource_ojc2q")
-bob_curve = ExtResource("3_pv824")
