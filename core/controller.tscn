@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://47sxq212e4ko"]
+[gd_scene load_steps=6 format=3 uid="uid://47sxq212e4ko"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/movement_controller.gd" id="1_ewmc1"]
-[ext_resource type="PackedScene" uid="uid://b8drbos167vf8" path="res://addons/character-controller/core/head.tscn" id="2_41iu1"]
+[ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
+[ext_resource type="Script" path="res://addons/character-controller/core/step.gd" id="4_gn086"]
 [ext_resource type="Script" path="res://addons/character-controller/core/sprint.gd" id="5_f0ymk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
@@ -10,11 +11,21 @@
 floor_block_on_wall = false
 floor_snap_length = 0.5
 script = ExtResource("1_ewmc1")
+step_path = NodePath("Step")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
 
-[node name="Head" parent="." instance=ExtResource("2_41iu1")]
+[node name="Head" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+script = ExtResource("2_1o423")
+
+[node name="Camera" type="Camera3D" parent="Head"]
+current = true
 
 [node name="Sprint" type="Node" parent="."]
 script = ExtResource("5_f0ymk")
+
+[node name="Step" type="Node" parent="."]
+script = ExtResource("4_gn086")
+interval = 4.0

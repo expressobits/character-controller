@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ceiplxdpqbfkj"]
+
+[ext_resource type="Script" path="res://addons/character-controller/core/lerp_bob_curve.gd" id="1_xot37"]
+
+[resource]
+script = ExtResource("1_xot37")
+duration = 0.2
+amount = 0.1
