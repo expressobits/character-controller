@@ -2,8 +2,6 @@ extends Node
 
 class_name HeadBob
 
-@export_node_path var step_path
-@onready var step : Step = get_node(step_path)
 @export_node_path(Camera3D) var head_path := NodePath("../Camera")
 @onready var head: Camera3D = get_node(head_path)
 var speed : float = 0
@@ -13,7 +11,6 @@ var original_position
 
 func _ready():
 	original_position = head.position
-	setup_bob(step.interval * 2);
 	
 func head_bob_process(speed:float, is_on_floor:bool, delta:float):
 	lerp_bob_curve.bob_process(delta)
@@ -41,7 +38,7 @@ func setup_bob(bob_base_interval: float):
 
 func do_bob_jump():
 	pass
-	lerp_bob_curve.do_bob_cycle()
+#	lerp_bob_curve.do_bob_cycle()
 
 func do_head_bob(speed: float, delta: float) -> Vector3: 
 	var x_pos = (bob_curve.sample(cycle_position_x) * curve_multiplier.x * bob_range.x)
@@ -57,3 +54,7 @@ func do_head_bob(speed: float, delta: float) -> Vector3:
 		cycle_position_y -= 1
 
 	return Vector3(x_pos,y_pos,0)
+	
+func reset():
+	cycle_position_x = 0
+	cycle_position_y = 0

@@ -5,8 +5,7 @@ class_name Step
 signal stepped
 
 @export var step_lengthen = 0.7
-@export var interval : float = 8
-@export var isStepActive = true
+@export var step_interval : float = 8
 
 var step_cycle : float = 0
 var next_step : float = 0
@@ -27,5 +26,5 @@ func _step(is_on_floor:bool) -> bool:
 	return false
 		
 func reset_step():
-	next_step = step_cycle + interval
+	next_step = step_cycle + step_interval
 	

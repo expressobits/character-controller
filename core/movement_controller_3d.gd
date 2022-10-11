@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name MovementController3D
+class_name MovementController
 
 signal stepped
 signal landed
@@ -31,16 +31,15 @@ signal jumped
 @export var input_sprint := "move_sprint"
 @export var input_jump := "move_jump"
 
+var step_path := NodePath("Step")
 var camera_path := NodePath("Head/Camera")
 var head_bob_path := NodePath("Head/Head Bob")
 
 var direction := Vector3()
 var input_axis := Vector2()
-var step_cycle : float = 0
-var next_step : float = 0
-var horizontal_velocity
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 @onready var gravity: float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
+@onready var step: Step = get_node(step_path)
 @onready var head_bob: HeadBob = get_node(head_bob_path)
 @onready var camera: Camera3D = get_node(camera_path)
 @onready var normal_speed: int = speed
@@ -49,42 +48,35 @@ var horizontal_velocity
 var _last_is_on_floor := false
 
 func _ready():
-	head_bob.setup_bob(step_interval * 2);
+	step.step_interval = step_interval
+	step.step_lengthen = step_lengthen
 
 # Called every physics tick. 'delta' is constant
 func _physics_process(_delta: float) -> void:
 	input_axis = Input.get_vector(input_back, input_forward, input_left, input_right)
-	
 	_direction_input()
 	_check_landed()
 	_jump_and_gravity(_delta)
 	_accelerate(_delta)
-	
 	move_and_slide()
-	horizontal_velocity = Vector3(velocity.x,0.0,velocity.z)
-	
 	_check_step(_delta)
+	head_bob.head_bob_process(velocity.length(),is_on_floor(), _delta)
 	_check_sprint(_delta)
-	_check_head_bob(_delta)
-	
+
 func _check_landed():
 	if is_on_floor() and !_last_is_on_floor:
 		emit_signal("landed")
-		reset_step()
-#		head_bob.reset()
 	_last_is_on_floor = is_on_floor()
 	
 func _check_step(_delta):
-	if is_step(horizontal_velocity.length(), is_on_floor(), _delta):
-		_step(is_on_floor())
+	if step.is_step(velocity.length(), is_on_floor(), _delta):
+		emit_signal("stepped")
 
 func _jump_and_gravity(_delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed(input_jump):
 			velocity.y = jump_height
 			emit_signal("jumped")
-			head_bob.do_bob_jump()
-			head_bob.reset()
 	else:
 		velocity.y -= gravity * _delta
 
@@ -132,29 +124,7 @@ func _accelerate(delta: float) -> void:
 	velocity.x = temp_vel.x
 	velocity.z = temp_vel.z
 	
-func _step(is_on_floor:bool) -> bool:
-	reset_step()
-	if(is_on_floor):
-		emit_signal("stepped")
-		return true
-	return false
-	
-func _check_head_bob(_delta):
-	head_bob.head_bob_process(horizontal_velocity.length(),is_on_floor(), _delta)
-		
-func reset_step():
-	next_step = step_cycle + step_interval
 	
 func can_sprint() -> bool:
 	return (is_on_floor() and Input.is_action_pressed(input_sprint) 
 			and input_axis.x >= 0.5)
-			
-func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
-	if(velocity == 0):
-		return false
-	step_cycle = step_cycle + ((velocity + step_lengthen) * _delta)
-	if(step_cycle <= next_step):
-		return false
-	return true
-	
-

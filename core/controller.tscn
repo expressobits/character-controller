@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctuidx07gh6nx"]
+[gd_scene load_steps=8 format=3 uid="uid://cvkrdh5uv7bjw"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/movement_controller.gd" id="1_ewmc1"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
-[ext_resource type="Script" path="res://addons/character-controller/core/step.gd" id="4_gn086"]
-[ext_resource type="Script" path="res://addons/character-controller/core/sprint.gd" id="5_f0ymk"]
 [ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
@@ -16,10 +14,8 @@ duration = 0.2
 amount = 0.1
 
 [node name="Controller" type="CharacterBody3D"]
-floor_block_on_wall = false
 floor_snap_length = 0.5
 script = ExtResource("1_ewmc1")
-head_bob_path = NodePath("Head/Head Bob")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -33,14 +29,5 @@ current = true
 
 [node name="Head Bob" type="Node" parent="Head"]
 script = ExtResource("3_7s0qe")
-step_path = NodePath("../../Step")
 lerp_bob_curve = SubResource("Resource_ojc2q")
 bob_curve = ExtResource("5_ql48t")
-
-[node name="Sprint" type="Node" parent="."]
-script = ExtResource("5_f0ymk")
-fov_multiplier = 1.25
-
-[node name="Step" type="Node" parent="."]
-script = ExtResource("4_gn086")
-interval = 4.0
