@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvkrdh5uv7bjw"]
+[gd_scene load_steps=8 format=3 uid="uid://3eryjp6bqxnm"]
 
-[ext_resource type="Script" path="res://addons/character-controller/core/movement_controller.gd" id="1_ewmc1"]
+[ext_resource type="Script" path="res://addons/character-controller/core/movement_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
@@ -15,7 +15,7 @@ amount = 0.1
 
 [node name="Controller" type="CharacterBody3D"]
 floor_snap_length = 0.5
-script = ExtResource("1_ewmc1")
+script = ExtResource("1_snllq")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")

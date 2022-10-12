@@ -34,7 +34,6 @@ var bob_base_interval: float = 0;
 
 func setup_bob(bob_base_interval: float):
 	self.bob_base_interval = bob_base_interval
-	print(bob_base_interval)
 
 func do_bob_jump():
 	pass
