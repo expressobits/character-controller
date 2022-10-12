@@ -6,20 +6,32 @@ class_name HeadBob
 @onready var head: Camera3D = get_node(head_path)
 var speed : float = 0
 @export var lerp_bob_curve : LerpBobCurve
+@export_group("Rotation To Move (Quake Like)")
+@export var rotation_to_move := true
+@export var speed_rotation := 4.0
+@export var angle_limit_for_rotation := 0.1
 
 var original_position
 
 func _ready():
 	original_position = head.position
 	
-func head_bob_process(speed:float, is_on_floor:bool, delta:float):
-	lerp_bob_curve.bob_process(delta)
-	var headpos = do_head_bob(speed,delta)
+func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint, is_on_floor:bool, _delta:float):
+	lerp_bob_curve.bob_process(_delta)
+	var headpos = do_head_bob(horizontal_velocity.length(), _delta)
 	var new_position = original_position
-	if(is_on_floor):
+	if is_on_floor:
 		new_position += headpos
 	new_position.y -= lerp_bob_curve.offset
 	head.position = new_position
+	if is_sprint:
+		input_axis *= 2
+	if rotation_to_move:
+		head_bob_rotation(input_axis.x, input_axis.y, _delta)
+		
+func head_bob_rotation(x, z, _delta):
+	var target_rotation = Vector3(x * angle_limit_for_rotation, 0.0, -z * angle_limit_for_rotation);
+	head.rotation = lerp(head.rotation, target_rotation, speed_rotation * _delta);
 
 #Lerp bob	
 @export var bob_range = Vector2(0.07, 0.07)

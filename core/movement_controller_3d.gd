@@ -140,7 +140,7 @@ func _step(is_on_floor:bool) -> bool:
 	return false
 	
 func _check_head_bob(_delta):
-	head_bob.head_bob_process(horizontal_velocity.length(),is_on_floor(), _delta)
+	head_bob.head_bob_process(horizontal_velocity, input_axis, can_sprint(), is_on_floor(), _delta)
 		
 func reset_step():
 	next_step = step_cycle + step_interval
