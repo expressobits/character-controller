@@ -13,6 +13,7 @@ signal uncrouched
 @export var acceleration := 8
 @export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
+@export var fov_change_speed := 4
 
 @export_group("Sprint")
 @export var sprint_speed_multiplier := 1.6
@@ -26,7 +27,7 @@ signal uncrouched
 @export var step_interval : float = 8
 
 @export_group("Crouch")
-@export var height_in_crouch = 0.32
+@export var height_in_crouch = 1.0
 @export var crouch_speed_multiplier := 0.7
 @export var crouch_fov_multiplier := 0.95
 
@@ -67,7 +68,7 @@ var _is_crouched := false
 
 func _ready():
 	head_bob.setup_bob(step_interval * 2);
-	_default_height = head.position.y
+	_default_height = collision.shape.height
 	
 
 # Called every physics tick. 'delta' is constant
@@ -101,7 +102,7 @@ func _check_step(_delta):
 	
 
 func _jump_and_gravity(_delta):
-	if is_on_floor():
+	if is_on_floor() and not head_check.is_colliding():
 		if Input.is_action_just_pressed(input_jump):
 			velocity.y = jump_height
 			emit_signal("jumped")
@@ -132,23 +133,21 @@ func _check_crouch(_delta):
 	elif _was_crouching and !_is_crouched:
 		emit_signal("uncrouched")
 	if is_crouch():
-		collision.shape.height = 1.0
-		head.position.y = lerp(head.position.y, height_in_crouch, _delta * 8)
+		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
 	else:
-		head.position.y = lerp(head.position.y, _default_height, _delta * 8)
-		collision.shape.height = 2.0
+		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
 	_was_crouching = _is_crouched
 
 func _check_sprint(_delta):
 	if can_sprint():
 		speed = normal_speed * sprint_speed_multiplier
-		camera.set_fov(lerp(camera.fov, normal_fov * sprint_fov_multiplier, _delta * 8))
+		camera.set_fov(lerp(camera.fov, normal_fov * sprint_fov_multiplier, _delta * fov_change_speed))
 	elif _is_crouched:
 		speed = normal_speed * crouch_speed_multiplier
-		camera.set_fov(lerp(camera.fov, normal_fov  * crouch_fov_multiplier, _delta * 8))
+		camera.set_fov(lerp(camera.fov, normal_fov  * crouch_fov_multiplier, _delta * fov_change_speed))
 	else:
 		speed = normal_speed
-		camera.set_fov(lerp(camera.fov, normal_fov, _delta * 8))
+		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
 	
 
 func _accelerate(delta: float) -> void:
