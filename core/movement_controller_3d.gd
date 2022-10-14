@@ -50,6 +50,7 @@ var _last_is_on_floor := false
 
 func _ready():
 	head_bob.setup_bob(step_interval * 2);
+	
 
 # Called every physics tick. 'delta' is constant
 func _physics_process(_delta: float) -> void:
@@ -67,16 +68,18 @@ func _physics_process(_delta: float) -> void:
 	_check_sprint(_delta)
 	_check_head_bob(_delta)
 	
+
 func _check_landed():
 	if is_on_floor() and !_last_is_on_floor:
 		emit_signal("landed")
 		reset_step()
-#		head_bob.reset()
 	_last_is_on_floor = is_on_floor()
 	
+
 func _check_step(_delta):
 	if is_step(horizontal_velocity.length(), is_on_floor(), _delta):
 		_step(is_on_floor())
+	
 
 func _jump_and_gravity(_delta):
 	if is_on_floor():
@@ -87,6 +90,7 @@ func _jump_and_gravity(_delta):
 			head_bob.reset()
 	else:
 		velocity.y -= gravity * _delta
+	
 
 func _direction_input() -> void:
 	direction = Vector3()
@@ -102,7 +106,7 @@ func _direction_input() -> void:
 	direction.y = 0
 	direction = direction.normalized()
 	
-	
+
 func _check_sprint(_delta):
 	if can_sprint():
 		speed = normal_speed * sprint_speed_multiplier
@@ -110,6 +114,7 @@ func _check_sprint(_delta):
 	else:
 		speed = normal_speed
 		camera.set_fov(lerp(camera.fov, normal_fov, _delta * 8))
+	
 
 func _accelerate(delta: float) -> void:
 	# Using only the horizontal velocity, interpolate towards the input.
@@ -132,6 +137,7 @@ func _accelerate(delta: float) -> void:
 	velocity.x = temp_vel.x
 	velocity.z = temp_vel.z
 	
+
 func _step(is_on_floor:bool) -> bool:
 	reset_step()
 	if(is_on_floor):
@@ -139,16 +145,20 @@ func _step(is_on_floor:bool) -> bool:
 		return true
 	return false
 	
+
 func _check_head_bob(_delta):
 	head_bob.head_bob_process(horizontal_velocity, input_axis, can_sprint(), is_on_floor(), _delta)
 		
+
 func reset_step():
 	next_step = step_cycle + step_interval
 	
+
 func can_sprint() -> bool:
 	return (is_on_floor() and Input.is_action_pressed(input_sprint) 
 			and input_axis.x >= 0.5)
 			
+
 func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(abs(velocity) < 0.1):
 		return false
@@ -156,5 +166,3 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(step_cycle <= next_step):
 		return false
 	return true
-	
-

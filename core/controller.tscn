@@ -29,5 +29,5 @@ current = true
 
 [node name="Head Bob" type="Node" parent="Head"]
 script = ExtResource("3_7s0qe")
-lerp_bob_curve = SubResource("Resource_ojc2q")
 bob_curve = ExtResource("5_ql48t")
+lerp_bob_curve = SubResource("Resource_ojc2q")

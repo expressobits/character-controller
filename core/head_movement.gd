@@ -22,10 +22,10 @@ func _input(event: InputEvent) -> void:
 	# Mouse look (only if the mouse is captured).
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		mouse_axis = event.relative
-		camera_rotation()
+		_camera_rotation()
 
 
-func camera_rotation() -> void:
+func _camera_rotation() -> void:
 	# Horizontal mouse look.
 	rot.y -= mouse_axis.x * mouse_sensitivity
 	# Vertical mouse look.
