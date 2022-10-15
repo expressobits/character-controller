@@ -6,6 +6,7 @@ signal landed
 signal jumped
 signal crouched
 signal uncrouched
+signal sprinted
 
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
@@ -17,7 +18,7 @@ signal uncrouched
 
 @export_group("Sprint")
 @export var sprint_speed_multiplier := 1.6
-@export var sprint_fov_multiplier := 1.05
+@export var sprint_fov_multiplier := 1.1
 
 @export_group("Jump")
 @export var jump_height := 10
@@ -44,7 +45,7 @@ var head_path := NodePath("Head")
 var camera_path := NodePath("Head/Camera")
 var head_bob_path := NodePath("Head/Head Bob")
 var collision_path := NodePath("Collision")
-var head_check_path := NodePath("Head Bonker")
+var head_check_path := NodePath("Head Check")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -63,8 +64,12 @@ var horizontal_velocity
 
 var _last_is_on_floor := false
 var _was_crouching := false
+var _was_sprinting := false
 var _default_height : float
-var _is_crouched := false
+var _is_crouching := false
+var _is_sprinting := false
+var _speed_modifiers := 1.0
+var _fov_modifiers := 1.0
 
 func _ready():
 	head_bob.setup_bob(step_interval * 2);
@@ -86,6 +91,9 @@ func _physics_process(_delta: float) -> void:
 	_check_step(_delta)
 	_check_crouch(_delta)
 	_check_sprint(_delta)
+	
+	speed = normal_speed * _speed_modifiers
+	camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
 	_check_head_bob(_delta)
 	
 
@@ -127,29 +135,36 @@ func _direction_input() -> void:
 	direction = direction.normalized()
 
 func _check_crouch(_delta):
-	_is_crouched = Input.is_action_pressed(input_crouch) or head_check.is_colliding()
-	if !_was_crouching and _is_crouched:
+	_is_crouching = Input.is_action_pressed(input_crouch) or (head_check.is_colliding() and is_on_floor())
+	
+	if !_was_crouching and is_crouching():
 		emit_signal("crouched")
-	elif _was_crouching and !_is_crouched:
+		_speed_modifiers *= crouch_speed_multiplier
+		_fov_modifiers *= crouch_fov_multiplier
+	elif _was_crouching and !is_crouching():
 		emit_signal("uncrouched")
-	if is_crouch():
+		_speed_modifiers /= crouch_speed_multiplier
+		_fov_modifiers /= crouch_fov_multiplier
+		
+	if is_crouching():
 		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
 	else:
 		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
-	_was_crouching = _is_crouched
-
-func _check_sprint(_delta):
-	if can_sprint():
-		speed = normal_speed * sprint_speed_multiplier
-		camera.set_fov(lerp(camera.fov, normal_fov * sprint_fov_multiplier, _delta * fov_change_speed))
-	elif _is_crouched:
-		speed = normal_speed * crouch_speed_multiplier
-		camera.set_fov(lerp(camera.fov, normal_fov  * crouch_fov_multiplier, _delta * fov_change_speed))
-	else:
-		speed = normal_speed
-		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
+	_was_crouching = is_crouching()
 	
-
+	
+func _check_sprint(_delta):
+	_is_sprinting = is_on_floor() and Input.is_action_pressed(input_sprint) and input_axis.x >= 0.5 and !_is_crouching
+	if !_was_sprinting and is_sprinting():
+		emit_signal("sprinted")
+		_speed_modifiers *= sprint_speed_multiplier
+		_fov_modifiers *= sprint_fov_multiplier
+	if _was_sprinting and !is_sprinting():
+		_speed_modifiers /= sprint_speed_multiplier
+		_fov_modifiers /= sprint_fov_multiplier
+	_was_sprinting = is_sprinting()
+	
+	
 func _accelerate(delta: float) -> void:
 	# Using only the horizontal velocity, interpolate towards the input.
 	var temp_vel := velocity
@@ -181,21 +196,19 @@ func _step(is_on_floor:bool) -> bool:
 	
 
 func _check_head_bob(_delta):
-	head_bob.head_bob_process(horizontal_velocity, input_axis, can_sprint(), is_on_floor(), _delta)
+	head_bob.head_bob_process(horizontal_velocity, input_axis, is_sprinting(), is_on_floor(), _delta)
 
 func reset_step():
 	next_step = step_cycle + step_interval
-	
-
-func can_sprint() -> bool:
-	return (is_on_floor() and Input.is_action_pressed(input_sprint) 
-			and input_axis.x >= 0.5 and !_is_crouched)
 			
-func is_crouch():
-	return _is_crouched	
+func is_crouching():
+	return _is_crouching
+	
+func is_sprinting():
+	return _is_sprinting
 	
 func get_speed():
-	return _is_crouched	
+	return speed
 
 func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(abs(velocity) < 0.1):

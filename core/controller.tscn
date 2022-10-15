@@ -32,6 +32,6 @@ script = ExtResource("3_7s0qe")
 bob_curve = ExtResource("5_ql48t")
 lerp_bob_curve = SubResource("Resource_ojc2q")
 
-[node name="Head Bonker" type="RayCast3D" parent="."]
+[node name="Head Check" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.236723, 0)
 target_position = Vector3(0, 1, 0)
