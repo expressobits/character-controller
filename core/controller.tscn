@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://3eryjp6bqxnm"]
+[gd_scene load_steps=9 format=3 uid="uid://3eryjp6bqxnm"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/movement_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
 [ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
+[ext_resource type="Script" path="res://addons/character-controller/core/water_check.gd" id="6_goby4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
@@ -35,3 +36,16 @@ lerp_bob_curve = SubResource("Resource_ojc2q")
 [node name="Head Check" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.236723, 0)
 target_position = Vector3(0, 1, 0)
+
+[node name="Water Check" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("6_goby4")
+submerged_height = null
+
+[connection signal="entered_the_water" from="Water Check" to="." method="_on_water_check_entered_the_water"]
+[connection signal="exit_the_water" from="Water Check" to="." method="_on_water_check_exit_the_water"]

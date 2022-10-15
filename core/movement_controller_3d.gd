@@ -7,6 +7,8 @@ signal jumped
 signal crouched
 signal uncrouched
 signal sprinted
+signal fly_mode_actived
+signal fly_mode_deactived
 
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
@@ -32,6 +34,14 @@ signal sprinted
 @export var crouch_speed_multiplier := 0.7
 @export var crouch_fov_multiplier := 0.95
 
+@export_group("Swim")
+@export var on_water_speed_multiplier := 0.7
+@export var submerged_speed_multiplier := 0.3
+@export var swim_fov_multiplier := 1.0
+
+@export_group("Fly Mode")
+@export var fly_mode_speed_modifier := 2.0
+
 @export_group("Inputs")
 @export var input_back := "move_backward"
 @export var input_forward := "move_forward"
@@ -40,12 +50,14 @@ signal sprinted
 @export var input_sprint := "move_sprint"
 @export var input_jump := "move_jump"
 @export var input_crouch := "move_crouch"
+@export var input_fly_mode := "move_fly_mode"
 
 var head_path := NodePath("Head")
 var camera_path := NodePath("Head/Camera")
 var head_bob_path := NodePath("Head/Head Bob")
 var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
+var water_check_path := NodePath("Water Check")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -59,6 +71,7 @@ var horizontal_velocity
 @onready var camera: Camera3D = get_node(camera_path)
 @onready var collision: CollisionShape3D = get_node(collision_path)
 @onready var head_check: RayCast3D = get_node(head_check_path)
+@onready var water_check: WaterCheck = get_node(water_check_path)
 @onready var normal_speed: int = speed
 @onready var normal_fov: float = camera.fov
 
@@ -70,35 +83,56 @@ var _is_crouching := false
 var _is_sprinting := false
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
+var _is_fly_mode := false
 
 func _ready():
 	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
-	
+	water_check.submerged.connect(_on_water_check_submerged.bind())
+	water_check.emerged.connect(_on_water_check_emerged.bind())
 
 # Called every physics tick. 'delta' is constant
 func _physics_process(_delta: float) -> void:
 	input_axis = Input.get_vector(input_back, input_forward, input_left, input_right)
 	
-	_direction_input()
-	_check_landed()
-	_jump_and_gravity(_delta)
-	_accelerate(_delta)
+	_check_fly_mode()
+	
+	if is_fly_mode():
+		var direction = _fly_direction_input(input_axis)
+		velocity = direction * speed
+	else:
+		var direction = _direction_input(input_axis)
+		_check_landed()
+		_jump_and_gravity(_delta)
+		_accelerate(direction, _delta)
 	
 	move_and_slide()
 	horizontal_velocity = Vector3(velocity.x,0.0,velocity.z)
 	
-	_check_step(_delta)
-	_check_crouch(_delta)
-	_check_sprint(_delta)
+	if not is_fly_mode():
+		_check_step(_delta)
+		_check_crouch(_delta)
+		_check_sprint(_delta)
 	
+		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
+		_check_head_bob(_delta)
+		
 	speed = normal_speed * _speed_modifiers
-	camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
-	_check_head_bob(_delta)
-	
+
+
+func _check_fly_mode():
+	if Input.is_action_just_pressed(input_fly_mode):
+		_is_fly_mode = !is_fly_mode()
+		if is_fly_mode():
+			emit_signal("fly_mode_actived")
+			_speed_modifiers *= fly_mode_speed_modifier
+		else:
+			emit_signal("fly_mode_deactived")
+			_speed_modifiers /= fly_mode_speed_modifier
+
 
 func _check_landed():
-	if is_on_floor() and !_last_is_on_floor:
+	if is_on_floor() and not _last_is_on_floor:
 		emit_signal("landed")
 		reset_step()
 	_last_is_on_floor = is_on_floor()
@@ -107,7 +141,7 @@ func _check_landed():
 func _check_step(_delta):
 	if is_step(horizontal_velocity.length(), is_on_floor(), _delta):
 		_step(is_on_floor())
-	
+
 
 func _jump_and_gravity(_delta):
 	if is_on_floor() and not head_check.is_colliding():
@@ -118,21 +152,41 @@ func _jump_and_gravity(_delta):
 			head_bob.reset()
 	else:
 		velocity.y -= gravity * _delta
-	
 
-func _direction_input() -> void:
+
+func _direction_input(input : Vector2) -> Vector3:
 	direction = Vector3()
 	var aim: Basis = get_global_transform().basis
-	if input_axis.x >= 0.5:
+	if input.x >= 0.5:
 		direction -= aim.z
-	if input_axis.x <= -0.5:
+	if input.x <= -0.5:
 		direction += aim.z
-	if input_axis.y <= -0.5:
+	if input.y <= -0.5:
 		direction -= aim.x
-	if input_axis.y >= 0.5:
+	if input.y >= 0.5:
 		direction += aim.x
 	direction.y = 0
-	direction = direction.normalized()
+	return direction.normalized()
+
+
+func _fly_direction_input(input : Vector2) -> Vector3:
+	direction = Vector3()
+	var aim: Basis = head.get_global_transform().basis
+	if input.x >= 0.5:
+		direction -= aim.z
+	if input.x <= -0.5:
+		direction += aim.z
+	if input.y <= -0.5:
+		direction -= aim.x
+	if input.y >= 0.5:
+		direction += aim.x
+	if Input.is_action_pressed(input_jump):
+		direction.y += 1.0
+	elif Input.is_action_pressed(input_crouch):
+		direction.y -= 1.0
+	return direction.normalized()
+	return direction
+	
 
 func _check_crouch(_delta):
 	_is_crouching = Input.is_action_pressed(input_crouch) or (head_check.is_colliding() and is_on_floor())
@@ -165,7 +219,7 @@ func _check_sprint(_delta):
 	_was_sprinting = is_sprinting()
 	
 	
-func _accelerate(delta: float) -> void:
+func _accelerate(direction : Vector3, delta: float) -> void:
 	# Using only the horizontal velocity, interpolate towards the input.
 	var temp_vel := velocity
 	temp_vel.y = 0
@@ -197,18 +251,27 @@ func _step(is_on_floor:bool) -> bool:
 
 func _check_head_bob(_delta):
 	head_bob.head_bob_process(horizontal_velocity, input_axis, is_sprinting(), is_on_floor(), _delta)
+	
 
 func reset_step():
 	next_step = step_cycle + step_interval
-			
+
+
 func is_crouching():
 	return _is_crouching
-	
+
+
 func is_sprinting():
 	return _is_sprinting
-	
+
+
+func is_fly_mode():
+	return _is_fly_mode
+
+
 func get_speed():
 	return speed
+
 
 func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(abs(velocity) < 0.1):
@@ -217,3 +280,21 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(step_cycle <= next_step):
 		return false
 	return true
+
+
+func _on_water_check_emerged():
+	_fov_modifiers /= swim_fov_multiplier
+	_speed_modifiers /= submerged_speed_multiplier
+
+
+func _on_water_check_entered_the_water():
+	pass
+
+
+func _on_water_check_submerged():
+	_fov_modifiers *= swim_fov_multiplier
+	_speed_modifiers *= submerged_speed_multiplier
+
+
+func _on_water_check_exit_the_water():
+	pass
