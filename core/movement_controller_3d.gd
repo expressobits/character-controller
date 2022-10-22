@@ -91,25 +91,34 @@ func _ready():
 	water_check.submerged.connect(_on_water_check_submerged.bind())
 	water_check.emerged.connect(_on_water_check_emerged.bind())
 
-# Called every physics tick. 'delta' is constant
+
 func _physics_process(_delta: float) -> void:
 	input_axis = Input.get_vector(input_back, input_forward, input_left, input_right)
 	
 	_check_fly_mode()
 	
-	if is_fly_mode():
-		var direction = _fly_direction_input(input_axis)
+	var depth = water_check.get_depth_on_water() - water_check.get_floating_height()
+	print(depth)
+	
+	if is_fly_mode() or water_check.is_floating():
+		var direction = _direction_input(input_axis, head, false)
 		velocity = direction * speed
+		if not water_check.is_submerged() && Input.is_action_just_pressed(input_jump) && depth > -0.19:
+			velocity.y = jump_height
+			emit_signal("jumped")
+			head_bob.do_bob_jump()
+			head_bob.reset()
+		elif depth > -0.2:
+			velocity.y = min(velocity.y, 0)
 	else:
-		var direction = _direction_input(input_axis)
+		var direction = _direction_input(input_axis, self, true)
 		_check_landed()
 		_jump_and_gravity(_delta)
 		_accelerate(direction, _delta)
-	
 	move_and_slide()
-	horizontal_velocity = Vector3(velocity.x,0.0,velocity.z)
+	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
 	
-	if not is_fly_mode():
+	if not is_fly_mode() and not water_check.is_submerged():
 		_check_step(_delta)
 		_check_crouch(_delta)
 		_check_sprint(_delta)
@@ -154,9 +163,9 @@ func _jump_and_gravity(_delta):
 		velocity.y -= gravity * _delta
 
 
-func _direction_input(input : Vector2) -> Vector3:
+func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bool) -> Vector3:
 	direction = Vector3()
-	var aim: Basis = get_global_transform().basis
+	var aim: Basis = aim_target.get_global_transform().basis
 	if input.x >= 0.5:
 		direction -= aim.z
 	if input.x <= -0.5:
@@ -165,28 +174,16 @@ func _direction_input(input : Vector2) -> Vector3:
 		direction -= aim.x
 	if input.y >= 0.5:
 		direction += aim.x
-	direction.y = 0
+	# NOTE: For free-flying and swimming movements
+	if not horizontal_only:
+		if Input.is_action_pressed(input_jump):
+			direction.y += 1.0
+		elif Input.is_action_pressed(input_crouch):
+			direction.y -= 1.0
+	else:
+		direction.y = 0
 	return direction.normalized()
 
-
-func _fly_direction_input(input : Vector2) -> Vector3:
-	direction = Vector3()
-	var aim: Basis = head.get_global_transform().basis
-	if input.x >= 0.5:
-		direction -= aim.z
-	if input.x <= -0.5:
-		direction += aim.z
-	if input.y <= -0.5:
-		direction -= aim.x
-	if input.y >= 0.5:
-		direction += aim.x
-	if Input.is_action_pressed(input_jump):
-		direction.y += 1.0
-	elif Input.is_action_pressed(input_crouch):
-		direction.y -= 1.0
-	return direction.normalized()
-	return direction
-	
 
 func _check_crouch(_delta):
 	_is_crouching = Input.is_action_pressed(input_crouch) or (head_check.is_colliding() and is_on_floor())
@@ -283,18 +280,18 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 
 
 func _on_water_check_emerged():
-	_fov_modifiers /= swim_fov_multiplier
-	_speed_modifiers /= submerged_speed_multiplier
-
-
-func _on_water_check_entered_the_water():
 	pass
 
 
-func _on_water_check_submerged():
+func _on_water_check_entered_the_water():
 	_fov_modifiers *= swim_fov_multiplier
 	_speed_modifiers *= submerged_speed_multiplier
 
 
-func _on_water_check_exit_the_water():
+func _on_water_check_submerged():
 	pass
+
+
+func _on_water_check_exit_the_water():
+	_fov_modifiers /= swim_fov_multiplier
+	_speed_modifiers /= submerged_speed_multiplier

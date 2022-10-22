@@ -45,7 +45,6 @@ hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("6_goby4")
-submerged_height = null
 
 [connection signal="entered_the_water" from="Water Check" to="." method="_on_water_check_entered_the_water"]
 [connection signal="exit_the_water" from="Water Check" to="." method="_on_water_check_exit_the_water"]

@@ -7,21 +7,27 @@ signal exit_the_water
 signal submerged
 signal emerged
 
-@export var submerged_height := -0.36
+@export var submerged_height := 0.36
+@export var floating_height := 0.72
 
 var _is_on_water := false
+var _is_floating_in_water := false
 var _is_submerged := false
 var _was_is_on_water := false
 var _was_is_submerged := false
+var _depth_on_water := 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_is_on_water = is_colliding()
 	if _is_on_water:
-		var local_height = to_local(get_collision_point()).y
-		_is_submerged = local_height > submerged_height
+		_depth_on_water = -to_local(get_collision_point()).y
+		_is_submerged = get_depth_on_water() < submerged_height
+		_is_floating_in_water = get_depth_on_water() < floating_height
 	else:
 		_is_submerged = false
+		_is_floating_in_water = false
+		_depth_on_water = 2.1
 		
 	if is_on_water() and !_was_is_on_water:
 		emit_signal("entered_the_water")
@@ -45,6 +51,15 @@ func is_submerged() -> bool:
 	return _is_submerged
 
 
+func is_floating() -> bool:
+	return _is_floating_in_water
+	
+func get_floating_height() -> float:
+	return floating_height
+
+
+func get_depth_on_water() -> float:
+	return _depth_on_water
 
 
 func _on_exit_the_water():
