@@ -4,16 +4,19 @@ class_name WaterCheck
 
 signal entered_the_water
 signal exit_the_water
+signal started_floating
+signal stop_floating
 signal submerged
 signal emerged
 
 @export var submerged_height := 0.36
-@export var floating_height := 0.72
+@export var floating_height := 0.55
 
 var _is_on_water := false
 var _is_floating_in_water := false
 var _is_submerged := false
 var _was_is_on_water := false
+var _was_is_floating_in_water := false
 var _was_is_submerged := false
 var _depth_on_water := 0.0
 
@@ -34,12 +37,18 @@ func _process(delta):
 	elif !is_on_water() and _was_is_on_water:
 		emit_signal("exit_the_water")
 		
+	if is_floating() and !_was_is_floating_in_water:
+		emit_signal("started_floating")
+	elif !is_floating() and _was_is_floating_in_water:
+		emit_signal("stop_floating")
+		
 	if is_submerged() and !_was_is_submerged:
 		emit_signal("submerged")
 	elif !is_submerged() and _was_is_submerged:
 		emit_signal("emerged")
 		
 	_was_is_on_water = _is_on_water
+	_was_is_floating_in_water = _is_floating_in_water
 	_was_is_submerged = _is_submerged
 
 
@@ -61,6 +70,3 @@ func get_floating_height() -> float:
 func get_depth_on_water() -> float:
 	return _depth_on_water
 
-
-func _on_exit_the_water():
-	pass # Replace with function body.

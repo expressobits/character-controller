@@ -48,3 +48,5 @@ script = ExtResource("6_goby4")
 
 [connection signal="entered_the_water" from="Water Check" to="." method="_on_water_check_entered_the_water"]
 [connection signal="exit_the_water" from="Water Check" to="." method="_on_water_check_exit_the_water"]
+[connection signal="started_floating" from="Water Check" to="." method="_on_water_check_started_floating"]
+[connection signal="stop_floating" from="Water Check" to="." method="_on_water_check_stop_floating"]

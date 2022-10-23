@@ -9,6 +9,8 @@ signal uncrouched
 signal sprinted
 signal fly_mode_actived
 signal fly_mode_deactived
+signal emerged
+signal subemerged
 
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
@@ -35,8 +37,8 @@ signal fly_mode_deactived
 @export var crouch_fov_multiplier := 0.95
 
 @export_group("Swim")
-@export var on_water_speed_multiplier := 0.7
-@export var submerged_speed_multiplier := 0.3
+@export var on_water_speed_multiplier := 0.9
+@export var submerged_speed_multiplier := 0.7
 @export var swim_fov_multiplier := 1.0
 
 @export_group("Fly Mode")
@@ -97,19 +99,22 @@ func _physics_process(_delta: float) -> void:
 	
 	_check_fly_mode()
 	
-	var depth = water_check.get_depth_on_water() - water_check.get_floating_height()
-	print(depth)
-	
-	if is_fly_mode() or water_check.is_floating():
+	if is_fly_mode():
 		var direction = _direction_input(input_axis, head, false)
 		velocity = direction * speed
-		if not water_check.is_submerged() && Input.is_action_just_pressed(input_jump) && depth > -0.19:
-			velocity.y = jump_height
-			emit_signal("jumped")
-			head_bob.do_bob_jump()
-			head_bob.reset()
-		elif depth > -0.2:
+	elif water_check.is_floating():
+		var depth = water_check.get_floating_height() - water_check.get_depth_on_water()
+		var direction = _direction_input(input_axis, head, false)
+		velocity = direction * speed
+		if depth < 0.1 && !is_fly_mode():
+			# Prevent free sea movement from exceeding the water surface
 			velocity.y = min(velocity.y, 0)
+		# Testing some games, most don't jump when floating under water
+#		if not water_check.is_submerged() && Input.is_action_just_pressed(input_jump):
+#			velocity.y = jump_height
+##			emit_signal("jumped")
+#			head_bob.do_bob_jump()
+#			head_bob.reset()
 	else:
 		var direction = _direction_input(input_axis, self, true)
 		_check_landed()
@@ -118,13 +123,13 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
 	
-	if not is_fly_mode() and not water_check.is_submerged():
+	if not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged():
 		_check_step(_delta)
 		_check_crouch(_delta)
 		_check_sprint(_delta)
 	
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
-		_check_head_bob(_delta)
+	_check_head_bob(_delta)
 		
 	speed = normal_speed * _speed_modifiers
 
@@ -174,13 +179,14 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 		direction -= aim.x
 	if input.y >= 0.5:
 		direction += aim.x
-	# NOTE: For free-flying and swimming movements
-	if not horizontal_only:
+	# NOTE: For free-flying and (NOT MORE) swimming movements
+	if is_fly_mode():
 		if Input.is_action_pressed(input_jump):
 			direction.y += 1.0
 		elif Input.is_action_pressed(input_crouch):
 			direction.y -= 1.0
-	else:
+			
+	if horizontal_only:
 		direction.y = 0
 	return direction.normalized()
 
@@ -280,18 +286,26 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 
 
 func _on_water_check_emerged():
-	pass
+	emit_signal("emerged")
 
 
 func _on_water_check_entered_the_water():
+	pass
+
+
+func _on_water_check_submerged():
+	emit_signal("subemerged")
+
+
+func _on_water_check_exit_the_water():
+	pass
+
+
+func _on_water_check_started_floating():
 	_fov_modifiers *= swim_fov_multiplier
 	_speed_modifiers *= submerged_speed_multiplier
 
 
-func _on_water_check_submerged():
-	pass
-
-
-func _on_water_check_exit_the_water():
+func _on_water_check_stop_floating():
 	_fov_modifiers /= swim_fov_multiplier
 	_speed_modifiers /= submerged_speed_multiplier
