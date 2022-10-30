@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name MovementController3D
+class_name CharacterController3D
 
 signal stepped
 signal landed
@@ -44,16 +44,6 @@ signal subemerged
 @export_group("Fly Mode")
 @export var fly_mode_speed_modifier := 2.0
 
-@export_group("Inputs")
-@export var input_back := "move_backward"
-@export var input_forward := "move_forward"
-@export var input_left := "move_left"
-@export var input_right := "move_right"
-@export var input_sprint := "move_sprint"
-@export var input_jump := "move_jump"
-@export var input_crouch := "move_crouch"
-@export var input_fly_mode := "move_fly_mode"
-
 var head_path := NodePath("Head")
 var camera_path := NodePath("Head/Camera")
 var head_bob_path := NodePath("Head/Head Bob")
@@ -63,6 +53,10 @@ var water_check_path := NodePath("Water Check")
 
 var direction := Vector3()
 var input_axis := Vector2()
+var input_crouch := false
+var input_jump := false
+var input_sprint := false
+var input_fly_mode := false
 var step_cycle : float = 0
 var next_step : float = 0
 var horizontal_velocity
@@ -94,9 +88,7 @@ func _ready():
 	water_check.emerged.connect(_on_water_check_emerged.bind())
 
 
-func _physics_process(_delta: float) -> void:
-	input_axis = Input.get_vector(input_back, input_forward, input_left, input_right)
-	
+func move(_delta: float) -> void:
 	_check_fly_mode()
 	
 	if is_fly_mode():
@@ -135,7 +127,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _check_fly_mode():
-	if Input.is_action_just_pressed(input_fly_mode):
+	if input_fly_mode:
 		_is_fly_mode = !is_fly_mode()
 		if is_fly_mode():
 			emit_signal("fly_mode_actived")
@@ -159,7 +151,7 @@ func _check_step(_delta):
 
 func _jump_and_gravity(_delta):
 	if is_on_floor() and not head_check.is_colliding():
-		if Input.is_action_just_pressed(input_jump):
+		if input_jump:
 			velocity.y = jump_height
 			emit_signal("jumped")
 			head_bob.do_bob_jump()
@@ -181,9 +173,9 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 		direction += aim.x
 	# NOTE: For free-flying and (NOT MORE) swimming movements
 	if is_fly_mode():
-		if Input.is_action_pressed(input_jump):
+		if input_jump:
 			direction.y += 1.0
-		elif Input.is_action_pressed(input_crouch):
+		elif input_crouch:
 			direction.y -= 1.0
 			
 	if horizontal_only:
@@ -192,7 +184,7 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 
 
 func _check_crouch(_delta):
-	_is_crouching = Input.is_action_pressed(input_crouch) or (head_check.is_colliding() and is_on_floor())
+	_is_crouching = input_crouch or (head_check.is_colliding() and is_on_floor())
 	
 	if !_was_crouching and is_crouching():
 		emit_signal("crouched")
@@ -211,7 +203,7 @@ func _check_crouch(_delta):
 	
 	
 func _check_sprint(_delta):
-	_is_sprinting = is_on_floor() and Input.is_action_pressed(input_sprint) and input_axis.x >= 0.5 and !_is_crouching
+	_is_sprinting = is_on_floor() and input_sprint and input_axis.x >= 0.5 and !_is_crouching
 	if !_was_sprinting and is_sprinting():
 		emit_signal("sprinted")
 		_speed_modifiers *= sprint_speed_multiplier

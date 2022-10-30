@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://3eryjp6bqxnm"]
+[gd_scene load_steps=9 format=3]
 
-[ext_resource type="Script" path="res://addons/character-controller/core/movement_controller_3d.gd" id="1_snllq"]
+[ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
