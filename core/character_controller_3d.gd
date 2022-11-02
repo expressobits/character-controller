@@ -29,7 +29,7 @@ signal subemerged
 
 @export_group("Footsteps")
 @export var step_lengthen = 0.7
-@export var step_interval : float = 8
+@export var step_interval := 6.0
 
 @export_group("Crouch")
 @export var height_in_crouch = 1.0
@@ -171,8 +171,8 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 		direction -= aim.x
 	if input.y >= 0.5:
 		direction += aim.x
-	# NOTE: For free-flying and (NOT MORE) swimming movements
-	if is_fly_mode():
+	# NOTE: For free-flying and swimming movements
+	if is_fly_mode() or is_floating():
 		if input_jump:
 			direction.y += 1.0
 		elif input_crouch:
@@ -268,6 +268,14 @@ func get_speed():
 	return speed
 
 
+func is_submerged():
+	return water_check.is_submerged()
+
+
+func is_floating():
+	return water_check.is_floating()
+
+
 func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(abs(velocity) < 0.1):
 		return false
@@ -287,10 +295,6 @@ func _on_water_check_entered_the_water():
 
 func _on_water_check_submerged():
 	emit_signal("subemerged")
-
-
-func _on_water_check_exit_the_water():
-	pass
 
 
 func _on_water_check_started_floating():
