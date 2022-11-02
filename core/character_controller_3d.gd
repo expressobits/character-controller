@@ -289,10 +289,6 @@ func _on_water_check_emerged():
 	emit_signal("emerged")
 
 
-func _on_water_check_entered_the_water():
-	pass
-
-
 func _on_water_check_submerged():
 	emit_signal("subemerged")
 
