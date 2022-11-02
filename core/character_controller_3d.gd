@@ -86,7 +86,9 @@ func _ready():
 	_default_height = collision.shape.height
 	water_check.submerged.connect(_on_water_check_submerged.bind())
 	water_check.emerged.connect(_on_water_check_emerged.bind())
-
+	water_check.started_floating.connect(_on_water_check_started_floating.bind())
+	water_check.stop_floating.connect(_on_water_check_stop_floating.bind())
+	
 
 func move(_delta: float) -> void:
 	_check_fly_mode()
@@ -116,10 +118,10 @@ func move(_delta: float) -> void:
 	
 	if not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged():
 		_check_step(_delta)
-		_check_crouch(_delta)
 		_check_sprint(_delta)
-	
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
+		
+	_check_crouch(_delta)
 	_check_head_bob(_delta)
 		
 	speed = normal_speed * _speed_modifiers
@@ -183,7 +185,7 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 
 
 func _check_crouch(_delta):
-	_is_crouching = input_crouch or (head_check.is_colliding() and is_on_floor())
+	_is_crouching = (input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode()
 	
 	if !_was_crouching and is_crouching():
 		emit_signal("crouched")
