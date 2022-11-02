@@ -100,13 +100,12 @@ func move(_delta: float) -> void:
 		velocity = direction * speed
 		if depth < 0.1 && !is_fly_mode():
 			# Prevent free sea movement from exceeding the water surface
-			velocity.y = min(velocity.y, 0)
+			velocity.y = min(velocity.y,0)
 		# Testing some games, most don't jump when floating under water
-#		if not water_check.is_submerged() && Input.is_action_just_pressed(input_jump):
-#			velocity.y = jump_height
-##			emit_signal("jumped")
-#			head_bob.do_bob_jump()
-#			head_bob.reset()
+		if not water_check.is_submerged() && input_jump:
+			velocity.y = jump_height
+			head_bob.do_bob_jump()
+			head_bob.reset()
 	else:
 		var direction = _direction_input(input_axis, self, true)
 		_check_landed()
