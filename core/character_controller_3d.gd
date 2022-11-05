@@ -44,12 +44,26 @@ signal subemerged
 @export_group("Fly Mode")
 @export var fly_mode_speed_modifier := 2.0
 
+@export_group("Abilities")
+@export var abilities_path: Array[NodePath]
+
+var abilities: Array[MovementAbility3D]
+
+func load_nodes(nodePaths: Array) -> Array:
+	var nodes := []
+	for nodePath in nodePaths:
+		var node := get_node(nodePath)
+		if node != null:
+			nodes.append(node)
+	return nodes
+
 var head_path := NodePath("Head")
 var camera_path := NodePath("Head/Camera")
 var head_bob_path := NodePath("Head/Head Bob")
 var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
 var water_check_path := NodePath("Water Check")
+var crouch_ability_path := NodePath("Crouch Ability 3D")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -68,6 +82,7 @@ var horizontal_velocity
 @onready var collision: CollisionShape3D = get_node(collision_path)
 @onready var head_check: RayCast3D = get_node(head_check_path)
 @onready var water_check: WaterCheck = get_node(water_check_path)
+@onready var crouch_ability: CrouchAbility3D = get_node(crouch_ability_path)
 @onready var normal_speed: int = speed
 @onready var normal_fov: float = camera.fov
 
@@ -75,13 +90,13 @@ var _last_is_on_floor := false
 var _was_crouching := false
 var _was_sprinting := false
 var _default_height : float
-var _is_crouching := false
 var _is_sprinting := false
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
 var _is_fly_mode := false
 
 func _ready():
+	abilities = load_nodes(abilities_path)
 	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
 	water_check.submerged.connect(_on_water_check_submerged.bind())
@@ -121,10 +136,17 @@ func move(_delta: float) -> void:
 		_check_sprint(_delta)
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
 		
-	_check_crouch(_delta)
+	crouch_ability.check_crouch(_delta, input_crouch, not is_floating() and not is_submerged() and not is_fly_mode(), head_check.is_colliding(), is_on_floor())
+	if is_crouching():
+		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
+	else:
+		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
 	_check_head_bob(_delta)
-		
-	speed = normal_speed * _speed_modifiers
+	
+	var multiplier = 1.0
+	for ability in abilities:
+		multiplier *= ability.get_speed_modifier()
+	speed = normal_speed * _speed_modifiers * multiplier
 
 
 func _check_fly_mode():
@@ -182,29 +204,10 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 	if horizontal_only:
 		direction.y = 0
 	return direction.normalized()
-
-
-func _check_crouch(_delta):
-	_is_crouching = (input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode()
-	
-	if !_was_crouching and is_crouching():
-		emit_signal("crouched")
-		_speed_modifiers *= crouch_speed_multiplier
-		_fov_modifiers *= crouch_fov_multiplier
-	elif _was_crouching and !is_crouching():
-		emit_signal("uncrouched")
-		_speed_modifiers /= crouch_speed_multiplier
-		_fov_modifiers /= crouch_fov_multiplier
-		
-	if is_crouching():
-		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
-	else:
-		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
-	_was_crouching = is_crouching()
 	
 	
 func _check_sprint(_delta):
-	_is_sprinting = is_on_floor() and input_sprint and input_axis.x >= 0.5 and !_is_crouching
+	_is_sprinting = is_on_floor() and input_sprint and input_axis.x >= 0.5 and !is_crouching()
 	if !_was_sprinting and is_sprinting():
 		emit_signal("sprinted")
 		_speed_modifiers *= sprint_speed_multiplier
@@ -254,7 +257,7 @@ func reset_step():
 
 
 func is_crouching():
-	return _is_crouching
+	return crouch_ability.is_crouching()
 
 
 func is_sprinting():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ciu2qgckgu5sr"]
+[gd_scene load_steps=10 format=3 uid="uid://ciu2qgckgu5sr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
 [ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
 [ext_resource type="Script" path="res://addons/character-controller/core/water_check.gd" id="6_goby4"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
@@ -17,6 +18,7 @@ amount = 0.1
 [node name="Controller" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
+abilities_path = [NodePath("Crouch Ability 3D")]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -45,3 +47,6 @@ hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("6_goby4")
+
+[node name="Crouch Ability 3D" type="Node3D" parent="."]
+script = ExtResource("7_kh76d")
