@@ -15,15 +15,10 @@ signal subemerged
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
 @export var speed := 10
-@export_range(0.0, 1.0, 0.05) var air_control := 0.3
 @export var fov_change_speed := 4
 
 @export_group("Sprint")
-@export var sprint_speed_multiplier := 1.6
 @export var sprint_fov_multiplier := 1.1
-
-@export_group("Jump")
-@export var jump_height := 10
 
 @export_group("Footsteps")
 @export var step_lengthen = 0.7
@@ -31,7 +26,6 @@ signal subemerged
 
 @export_group("Crouch")
 @export var height_in_crouch = 1.0
-@export var crouch_speed_multiplier := 0.7
 @export var crouch_fov_multiplier := 0.95
 
 @export_group("Swim")
@@ -64,6 +58,7 @@ var water_check_path := NodePath("Water Check")
 var walk_ability_path := NodePath("Walk Ability 3D")
 var crouch_ability_path := NodePath("Crouch Ability 3D")
 var sprint_ability_path := NodePath("Sprint Ability 3D")
+var jump_ability_path := NodePath("Jump Ability 3D")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -85,6 +80,7 @@ var horizontal_velocity
 @onready var walk_ability: WalkAbility3D = get_node(walk_ability_path)
 @onready var crouch_ability: CrouchAbility3D = get_node(crouch_ability_path)
 @onready var sprint_ability: SprintAbility3D = get_node(sprint_ability_path)
+@onready var jump_ability: JumpAbility3D = get_node(jump_ability_path)
 @onready var normal_speed: int = speed
 @onready var normal_fov: float = camera.fov
 
@@ -102,6 +98,7 @@ func _ready():
 	crouch_ability.crouched.connect(_on_crouched.bind())
 	crouch_ability.uncrouched.connect(_on_uncrouched.bind())
 	sprint_ability.sprinted.connect(_on_sprinted.bind())
+	jump_ability.jumped.connect(_on_jumped.bind())
 	water_check.submerged.connect(_on_water_check_submerged.bind())
 	water_check.emerged.connect(_on_water_check_emerged.bind())
 	water_check.started_floating.connect(_on_water_check_started_floating.bind())
@@ -120,36 +117,36 @@ func move(_delta: float) -> void:
 		if depth < 0.1 && !is_fly_mode():
 			# Prevent free sea movement from exceeding the water surface
 			velocity.y = min(velocity.y,0)
-		# Testing some games, most don't jump when floating under water
-		if not water_check.is_submerged() && input_jump:
-			velocity.y = jump_height
-			head_bob.do_bob_jump()
-			head_bob.reset()
 	else:
 		_check_landed()
-		_jump_and_gravity(_delta)
-		
-	walk_ability.set_active(!is_fly_mode() and !water_check.is_floating())
-	velocity = walk_ability.accelerate(is_on_floor(), air_control, speed, velocity, direction, _delta)
-	move_and_slide()
-	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
 	
-	if not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged():
-		_check_step(_delta)
-		sprint_ability.check_sprint(_delta, is_on_floor(),input_sprint,input_axis,is_crouching())
-		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
-		
-	crouch_ability.check_crouch(_delta, input_crouch, not is_floating() and not is_submerged() and not is_fly_mode(), head_check.is_colliding(), is_on_floor())
-	if is_crouching():
-		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
-	else:
-		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
-	_check_head_bob(_delta)
+	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
+		velocity.y -= gravity * _delta
+	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
+	walk_ability.set_active(not is_fly_mode() and not water_check.is_floating())
+	crouch_ability.set_active((input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode())
+	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged())
 	
 	var multiplier = 1.0
 	for ability in abilities:
 		multiplier *= ability.get_speed_modifier()
 	speed = normal_speed * _speed_modifiers * multiplier
+	
+	velocity = jump_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
+	velocity = walk_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
+	
+	move_and_slide()
+	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
+	
+	if not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged():
+		_check_step(_delta)
+		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
+	
+	if is_crouching():
+		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
+	else:
+		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
+	_check_head_bob(_delta)
 
 
 func _check_fly_mode():
@@ -173,17 +170,6 @@ func _check_landed():
 func _check_step(_delta):
 	if is_step(horizontal_velocity.length(), is_on_floor(), _delta):
 		_step(is_on_floor())
-
-
-func _jump_and_gravity(_delta):
-	if is_on_floor() and not head_check.is_colliding():
-		if input_jump:
-			velocity.y = jump_height
-			emit_signal("jumped")
-			head_bob.do_bob_jump()
-			head_bob.reset()
-	else:
-		velocity.y -= gravity * _delta
 
 
 func _direction_input(input : Vector2, horizontal_only : bool) -> Vector3:
@@ -272,6 +258,11 @@ func _on_uncrouched():
 
 func _on_sprinted():
 	emit_signal("sprinted")
+	
+func _on_jumped():
+	emit_signal("jumped")
+	head_bob.do_bob_jump()
+	head_bob.reset()
 
 
 func _on_water_check_emerged():

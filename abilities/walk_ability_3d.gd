@@ -6,8 +6,9 @@ signal sprinted
 
 @export var acceleration := 8
 @export var deceleration := 10
+@export_range(0.0, 1.0, 0.05) var air_control := 0.3
 	
-func accelerate(is_on_floor : bool, air_control : float, speed : float, velocity : Vector3, direction : Vector3, delta: float) -> Vector3:
+func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
 	if not active:
 		return velocity
 	

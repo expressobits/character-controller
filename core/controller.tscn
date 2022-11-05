@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ciu2qgckgu5sr"]
+[gd_scene load_steps=13 format=3 uid="uid://ciu2qgckgu5sr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
@@ -20,7 +21,7 @@ amount = 0.1
 [node name="Controller" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
-abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D")]
+abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D")]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -58,3 +59,11 @@ script = ExtResource("8_8b02o")
 
 [node name="Walk Ability 3D" type="Node3D" parent="."]
 script = ExtResource("9_laych")
+acceleration = null
+deceleration = null
+speed = null
+air_control = null
+
+[node name="Jump Ability 3D" type="Node3D" parent="."]
+script = ExtResource("10_abxar")
+jump_height = null
