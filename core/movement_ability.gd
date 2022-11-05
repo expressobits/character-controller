@@ -5,3 +5,6 @@ class_name MovementAbility3D
 
 func get_speed_modifier() -> float:
 	return 1.0
+	
+func is_actived() -> bool:
+	return false

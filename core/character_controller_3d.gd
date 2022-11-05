@@ -64,6 +64,7 @@ var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
 var water_check_path := NodePath("Water Check")
 var crouch_ability_path := NodePath("Crouch Ability 3D")
+var sprint_ability_path := NodePath("Sprint Ability 3D")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -83,14 +84,13 @@ var horizontal_velocity
 @onready var head_check: RayCast3D = get_node(head_check_path)
 @onready var water_check: WaterCheck = get_node(water_check_path)
 @onready var crouch_ability: CrouchAbility3D = get_node(crouch_ability_path)
+@onready var sprint_ability: SprintAbility3D = get_node(sprint_ability_path)
 @onready var normal_speed: int = speed
 @onready var normal_fov: float = camera.fov
 
 var _last_is_on_floor := false
 var _was_crouching := false
-var _was_sprinting := false
 var _default_height : float
-var _is_sprinting := false
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
 var _is_fly_mode := false
@@ -99,6 +99,9 @@ func _ready():
 	abilities = load_nodes(abilities_path)
 	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
+	crouch_ability.crouched.connect(_on_crouched.bind())
+	crouch_ability.uncrouched.connect(_on_uncrouched.bind())
+	sprint_ability.sprinted.connect(_on_sprinted.bind())
 	water_check.submerged.connect(_on_water_check_submerged.bind())
 	water_check.emerged.connect(_on_water_check_emerged.bind())
 	water_check.started_floating.connect(_on_water_check_started_floating.bind())
@@ -133,7 +136,7 @@ func move(_delta: float) -> void:
 	
 	if not is_fly_mode() and not water_check.is_floating() and not water_check.is_submerged():
 		_check_step(_delta)
-		_check_sprint(_delta)
+		sprint_ability.check_sprint(_delta, is_on_floor(),input_sprint,input_axis,is_crouching())
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
 		
 	crouch_ability.check_crouch(_delta, input_crouch, not is_floating() and not is_submerged() and not is_fly_mode(), head_check.is_colliding(), is_on_floor())
@@ -204,20 +207,8 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 	if horizontal_only:
 		direction.y = 0
 	return direction.normalized()
-	
-	
-func _check_sprint(_delta):
-	_is_sprinting = is_on_floor() and input_sprint and input_axis.x >= 0.5 and !is_crouching()
-	if !_was_sprinting and is_sprinting():
-		emit_signal("sprinted")
-		_speed_modifiers *= sprint_speed_multiplier
-		_fov_modifiers *= sprint_fov_multiplier
-	if _was_sprinting and !is_sprinting():
-		_speed_modifiers /= sprint_speed_multiplier
-		_fov_modifiers /= sprint_fov_multiplier
-	_was_sprinting = is_sprinting()
-	
-	
+
+
 func _accelerate(direction : Vector3, delta: float) -> void:
 	# Using only the horizontal velocity, interpolate towards the input.
 	var temp_vel := velocity
@@ -257,11 +248,11 @@ func reset_step():
 
 
 func is_crouching():
-	return crouch_ability.is_crouching()
+	return crouch_ability.is_actived()
 
 
 func is_sprinting():
-	return _is_sprinting
+	return sprint_ability.is_actived()
 
 
 func is_fly_mode():
@@ -287,6 +278,18 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(step_cycle <= next_step):
 		return false
 	return true
+
+# Bubbly signals
+func _on_crouched():
+	emit_signal("crouched")
+
+
+func _on_uncrouched():
+	emit_signal("uncrouched")
+
+
+func _on_sprinted():
+	emit_signal("sprinted")
 
 
 func _on_water_check_emerged():

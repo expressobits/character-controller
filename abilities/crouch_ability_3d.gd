@@ -2,6 +2,9 @@ extends MovementAbility3D
 
 class_name CrouchAbility3D
 
+signal crouched
+signal uncrouched
+
 var _is_crouching := false
 var _was_crouching := false
 
@@ -16,15 +19,11 @@ func get_speed_modifier() -> float:
 func check_crouch(_delta, input_crouch : bool, disable_crouch : bool, head_is_colliding : bool, is_in_floor : bool):
 	_is_crouching = (input_crouch or (head_is_colliding and is_in_floor)) and disable_crouch
 	
-	if !_was_crouching and is_crouching():
+	if !_was_crouching and is_actived():
 		emit_signal("crouched")
-#		_speed_modifiers *= crouch_speed_multiplier
-#		_fov_modifiers *= crouch_fov_multiplier
-	elif _was_crouching and !is_crouching():
+	elif _was_crouching and !is_actived():
 		emit_signal("uncrouched")
-#		_speed_modifiers /= crouch_speed_multiplier
-#		_fov_modifiers /= crouch_fov_multiplier
-	_was_crouching = is_crouching()
+	_was_crouching = is_actived()
 	
-func is_crouching():
+func is_actived():
 	return _is_crouching
