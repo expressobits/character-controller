@@ -15,8 +15,6 @@ signal subemerged
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
 @export var speed := 10
-@export var acceleration := 8
-@export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
 @export var fov_change_speed := 4
 
@@ -63,6 +61,7 @@ var head_bob_path := NodePath("Head/Head Bob")
 var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
 var water_check_path := NodePath("Water Check")
+var walk_ability_path := NodePath("Walk Ability 3D")
 var crouch_ability_path := NodePath("Crouch Ability 3D")
 var sprint_ability_path := NodePath("Sprint Ability 3D")
 
@@ -83,6 +82,7 @@ var horizontal_velocity
 @onready var collision: CollisionShape3D = get_node(collision_path)
 @onready var head_check: RayCast3D = get_node(head_check_path)
 @onready var water_check: WaterCheck = get_node(water_check_path)
+@onready var walk_ability: WalkAbility3D = get_node(walk_ability_path)
 @onready var crouch_ability: CrouchAbility3D = get_node(crouch_ability_path)
 @onready var sprint_ability: SprintAbility3D = get_node(sprint_ability_path)
 @onready var normal_speed: int = speed
@@ -111,12 +111,11 @@ func _ready():
 func move(_delta: float) -> void:
 	_check_fly_mode()
 	
+	var direction = _direction_input(input_axis, !is_fly_mode() and !water_check.is_floating())
 	if is_fly_mode():
-		var direction = _direction_input(input_axis, head, false)
 		velocity = direction * speed
 	elif water_check.is_floating():
 		var depth = water_check.get_floating_height() - water_check.get_depth_on_water()
-		var direction = _direction_input(input_axis, head, false)
 		velocity = direction * speed
 		if depth < 0.1 && !is_fly_mode():
 			# Prevent free sea movement from exceeding the water surface
@@ -127,10 +126,11 @@ func move(_delta: float) -> void:
 			head_bob.do_bob_jump()
 			head_bob.reset()
 	else:
-		var direction = _direction_input(input_axis, self, true)
 		_check_landed()
 		_jump_and_gravity(_delta)
-		_accelerate(direction, _delta)
+		
+	walk_ability.set_active(!is_fly_mode() and !water_check.is_floating())
+	velocity = walk_ability.accelerate(is_on_floor(), air_control, speed, velocity, direction, _delta)
 	move_and_slide()
 	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
 	
@@ -186,9 +186,13 @@ func _jump_and_gravity(_delta):
 		velocity.y -= gravity * _delta
 
 
-func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bool) -> Vector3:
+func _direction_input(input : Vector2, horizontal_only : bool) -> Vector3:
 	direction = Vector3()
-	var aim: Basis = aim_target.get_global_transform().basis
+	var aim : Basis
+	if horizontal_only:
+		aim = self.get_global_transform().basis
+	else:
+		aim = head.get_global_transform().basis
 	if input.x >= 0.5:
 		direction -= aim.z
 	if input.x <= -0.5:
@@ -207,28 +211,6 @@ func _direction_input(input : Vector2, aim_target : Node3D, horizontal_only : bo
 	if horizontal_only:
 		direction.y = 0
 	return direction.normalized()
-
-
-func _accelerate(direction : Vector3, delta: float) -> void:
-	# Using only the horizontal velocity, interpolate towards the input.
-	var temp_vel := velocity
-	temp_vel.y = 0
-	
-	var temp_accel: float
-	var target: Vector3 = direction * speed
-	
-	if direction.dot(temp_vel) > 0:
-		temp_accel = acceleration
-	else:
-		temp_accel = deceleration
-	
-	if not is_on_floor():
-		temp_accel *= air_control
-	
-	temp_vel = temp_vel.lerp(target, temp_accel * delta)
-	
-	velocity.x = temp_vel.x
-	velocity.z = temp_vel.z
 	
 
 func _step(is_on_floor:bool) -> bool:
