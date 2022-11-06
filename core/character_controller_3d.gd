@@ -108,20 +108,15 @@ func _ready():
 
 func move(_delta: float) -> void:
 	var direction = _direction_input(input_axis, !is_fly_mode() and !swim_ability.is_floating())
-	if swim_ability.is_floating():
-		var depth = swim_ability.get_floating_height() - swim_ability.get_depth_on_water()
-		velocity = direction * speed
-		if depth < 0.1 && !is_fly_mode():
-			# Prevent free sea movement from exceeding the water surface
-			velocity.y = min(velocity.y,0)
-	else:
-		_check_landed()
 	
+	if not swim_ability.is_floating():
+		_check_landed()
 	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
 		velocity.y -= gravity * _delta
 	
 	if input_fly_mode: 
 		fly_ability.set_active(!fly_ability.is_actived())
+	swim_ability.set_active(!fly_ability.is_actived())
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
 	crouch_ability.set_active((input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode())
@@ -132,9 +127,8 @@ func move(_delta: float) -> void:
 		multiplier *= ability.get_speed_modifier()
 	speed = normal_speed * _speed_modifiers * multiplier
 	
-	velocity = fly_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
-	velocity = jump_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
-	velocity = walk_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
+	for ability in abilities:
+		velocity = ability.apply(velocity, speed, is_on_floor(), direction, _delta)
 	
 	move_and_slide()
 	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)

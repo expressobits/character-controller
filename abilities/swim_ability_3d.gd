@@ -27,9 +27,8 @@ func get_speed_modifier() -> float:
 		return on_water_speed_multiplier
 	else:
 		return super.get_speed_modifier()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+		
+func set_active(a : bool) -> void:
 	_is_on_water = raycast.is_colliding()
 	
 	if _is_on_water:
@@ -37,8 +36,8 @@ func _process(delta):
 	else:
 		_depth_on_water = 2.1
 		
-	set_active(get_depth_on_water() < submerged_height and _is_on_water)
-	_is_floating = get_depth_on_water() < floating_height and _is_on_water
+	super.set_active(get_depth_on_water() < submerged_height and _is_on_water and a)
+	_is_floating = get_depth_on_water() < floating_height and _is_on_water and a
 	
 	if is_on_water() and !_was_is_on_water:
 		emit_signal("entered_the_water")
@@ -52,6 +51,17 @@ func _process(delta):
 		
 	_was_is_on_water = _is_on_water
 	_was_is_floating = _is_floating
+	
+func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
+	if not is_floating():
+		return velocity
+	var depth = get_floating_height() - get_depth_on_water()
+	velocity = direction * speed
+#	if depth < 0.1: && !is_fly_mode():
+	if depth < 0.1:
+		# Prevent free sea movement from exceeding the water surface
+		velocity.y = min(velocity.y,0)
+	return velocity
 
 
 func is_on_water() -> bool:
