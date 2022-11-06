@@ -2,8 +2,6 @@ extends MovementAbility3D
 
 class_name WalkAbility3D
 
-signal sprinted
-
 @export var acceleration := 8
 @export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3

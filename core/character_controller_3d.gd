@@ -33,9 +33,6 @@ signal subemerged
 @export var submerged_speed_multiplier := 0.7
 @export var swim_fov_multiplier := 1.0
 
-@export_group("Fly Mode")
-@export var fly_mode_speed_modifier := 2.0
-
 @export_group("Abilities")
 @export var abilities_path: Array[NodePath]
 
@@ -59,6 +56,7 @@ var walk_ability_path := NodePath("Walk Ability 3D")
 var crouch_ability_path := NodePath("Crouch Ability 3D")
 var sprint_ability_path := NodePath("Sprint Ability 3D")
 var jump_ability_path := NodePath("Jump Ability 3D")
+var fly_ability_path := NodePath("Fly Ability 3D")
 
 var direction := Vector3()
 var input_axis := Vector2()
@@ -81,24 +79,25 @@ var horizontal_velocity
 @onready var crouch_ability: CrouchAbility3D = get_node(crouch_ability_path)
 @onready var sprint_ability: SprintAbility3D = get_node(sprint_ability_path)
 @onready var jump_ability: JumpAbility3D = get_node(jump_ability_path)
+@onready var fly_ability: FlyAbility3D = get_node(fly_ability_path)
 @onready var normal_speed: int = speed
 @onready var normal_fov: float = camera.fov
 
 var _last_is_on_floor := false
-var _was_crouching := false
 var _default_height : float
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
-var _is_fly_mode := false
 
 func _ready():
 	abilities = load_nodes(abilities_path)
 	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
-	crouch_ability.crouched.connect(_on_crouched.bind())
-	crouch_ability.uncrouched.connect(_on_uncrouched.bind())
-	sprint_ability.sprinted.connect(_on_sprinted.bind())
-	jump_ability.jumped.connect(_on_jumped.bind())
+	crouch_ability.actived.connect(_on_crouched.bind())
+	crouch_ability.deactived.connect(_on_uncrouched.bind())
+	sprint_ability.actived.connect(_on_sprinted.bind())
+	jump_ability.actived.connect(_on_jumped.bind())
+	fly_ability.actived.connect(_on_fly_mode_actived.bind())
+	fly_ability.deactived.connect(_on_fly_mode_deactived.bind())
 	water_check.submerged.connect(_on_water_check_submerged.bind())
 	water_check.emerged.connect(_on_water_check_emerged.bind())
 	water_check.started_floating.connect(_on_water_check_started_floating.bind())
@@ -106,12 +105,8 @@ func _ready():
 	
 
 func move(_delta: float) -> void:
-	_check_fly_mode()
-	
 	var direction = _direction_input(input_axis, !is_fly_mode() and !water_check.is_floating())
-	if is_fly_mode():
-		velocity = direction * speed
-	elif water_check.is_floating():
+	if water_check.is_floating():
 		var depth = water_check.get_floating_height() - water_check.get_depth_on_water()
 		velocity = direction * speed
 		if depth < 0.1 && !is_fly_mode():
@@ -122,6 +117,9 @@ func move(_delta: float) -> void:
 	
 	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
 		velocity.y -= gravity * _delta
+	
+	if input_fly_mode: 
+		fly_ability.set_active(!fly_ability.is_actived())
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not water_check.is_floating())
 	crouch_ability.set_active((input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode())
@@ -132,6 +130,7 @@ func move(_delta: float) -> void:
 		multiplier *= ability.get_speed_modifier()
 	speed = normal_speed * _speed_modifiers * multiplier
 	
+	velocity = fly_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
 	velocity = jump_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
 	velocity = walk_ability.apply(velocity, speed, is_on_floor(), direction, _delta)
 	
@@ -147,17 +146,6 @@ func move(_delta: float) -> void:
 	else:
 		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
 	_check_head_bob(_delta)
-
-
-func _check_fly_mode():
-	if input_fly_mode:
-		_is_fly_mode = !is_fly_mode()
-		if is_fly_mode():
-			emit_signal("fly_mode_actived")
-			_speed_modifiers *= fly_mode_speed_modifier
-		else:
-			emit_signal("fly_mode_deactived")
-			_speed_modifiers /= fly_mode_speed_modifier
 
 
 func _check_landed():
@@ -224,7 +212,7 @@ func is_sprinting():
 
 
 func is_fly_mode():
-	return _is_fly_mode
+	return fly_ability.is_actived()
 
 
 func get_speed():
@@ -248,6 +236,14 @@ func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	return true
 
 # Bubbly signals
+func _on_fly_mode_actived():
+	emit_signal("fly_mode_actived")
+
+
+func _on_fly_mode_deactived():
+	emit_signal("fly_mode_deactived")
+
+
 func _on_crouched():
 	emit_signal("crouched")
 
