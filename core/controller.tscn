@@ -5,12 +5,12 @@
 [ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
 [ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
 [ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
-[ext_resource type="Script" path="res://addons/character-controller/core/water_check.gd" id="6_goby4"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="11_obyn2"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="12_3irqv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
@@ -22,7 +22,7 @@ amount = 0.1
 [node name="Controller" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
-abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D")]
+abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D")]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -43,15 +43,6 @@ lerp_bob_curve = SubResource("Resource_ojc2q")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.236723, 0)
 target_position = Vector3(0, 1, 0)
 
-[node name="Water Check" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-target_position = Vector3(0, -2, 0)
-collision_mask = 8
-hit_from_inside = true
-collide_with_areas = true
-collide_with_bodies = false
-script = ExtResource("6_goby4")
-
 [node name="Crouch Ability 3D" type="Node3D" parent="."]
 script = ExtResource("7_kh76d")
 
@@ -66,3 +57,14 @@ script = ExtResource("10_abxar")
 
 [node name="Fly Ability 3D" type="Node3D" parent="."]
 script = ExtResource("11_obyn2")
+
+[node name="Swim Ability 3D" type="Node3D" parent="."]
+script = ExtResource("12_3irqv")
+
+[node name="RayCast3D" type="RayCast3D" parent="Swim Ability 3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
