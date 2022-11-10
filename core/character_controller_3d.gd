@@ -213,6 +213,10 @@ func is_fly_mode():
 
 func get_speed():
 	return speed
+	
+
+func is_on_water():
+	return swim_ability.is_on_water()
 
 
 func is_submerged():
