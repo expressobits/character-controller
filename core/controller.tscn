@@ -27,30 +27,18 @@ abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
 
-[node name="Head" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
-script = ExtResource("2_1o423")
-
-[node name="Camera" type="Camera3D" parent="Head"]
-current = true
-
-[node name="Head Bob" type="Node" parent="Head"]
-script = ExtResource("3_7s0qe")
-bob_curve = ExtResource("5_ql48t")
-lerp_bob_curve = SubResource("Resource_ojc2q")
-
 [node name="Head Check" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.236723, 0)
 target_position = Vector3(0, 1, 0)
 
-[node name="Crouch Ability 3D" type="Node3D" parent="."]
-script = ExtResource("7_kh76d")
+[node name="Walk Ability 3D" type="Node3D" parent="."]
+script = ExtResource("9_laych")
 
 [node name="Sprint Ability 3D" type="Node3D" parent="."]
 script = ExtResource("8_8b02o")
 
-[node name="Walk Ability 3D" type="Node3D" parent="."]
-script = ExtResource("9_laych")
+[node name="Crouch Ability 3D" type="Node3D" parent="."]
+script = ExtResource("7_kh76d")
 
 [node name="Jump Ability 3D" type="Node3D" parent="."]
 script = ExtResource("10_abxar")
@@ -68,3 +56,15 @@ collision_mask = 8
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Head" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+script = ExtResource("2_1o423")
+
+[node name="Camera" type="Camera3D" parent="Head"]
+current = true
+
+[node name="Head Bob" type="Node" parent="Head"]
+script = ExtResource("3_7s0qe")
+bob_curve = ExtResource("5_ql48t")
+lerp_bob_curve = SubResource("Resource_ojc2q")

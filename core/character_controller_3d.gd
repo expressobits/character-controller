@@ -18,9 +18,13 @@ signal exit_the_water
 @export var gravity_multiplier := 3.0
 @export var speed := 10
 @export var fov_change_speed := 4
+@export var acceleration := 8
+@export var deceleration := 10
+@export var air_control := 0.3
 
 @export_group("Sprint")
 @export var sprint_fov_multiplier := 1.1
+@export var sprint_speed_multiplier := 1.6
 
 @export_group("Footsteps")
 @export var step_lengthen = 0.7
@@ -29,9 +33,20 @@ signal exit_the_water
 @export_group("Crouch")
 @export var height_in_crouch = 1.0
 @export var crouch_fov_multiplier := 0.95
+@export var crouch_speed_multiplier := 0.7
+
+@export_group("Jump")
+@export var jump_height := 10
+
+@export_group("Fly")
+@export var fly_mode_speed_modifier := 2
 
 @export_group("Swim")
 @export var swim_fov_multiplier := 1.0
+@export var submerged_height := 0.36
+@export var floating_height := 0.75
+@export var on_water_speed_multiplier := 0.75
+@export var submerged_speed_multiplier := 0.5
 
 @export_group("Abilities")
 @export var abilities_path: Array[NodePath]
@@ -92,6 +107,10 @@ func _ready():
 	abilities = load_nodes(abilities_path)
 	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
+	_connect_signals()
+	_start_variables()
+
+func _connect_signals():
 	crouch_ability.actived.connect(_on_crouched.bind())
 	crouch_ability.deactived.connect(_on_uncrouched.bind())
 	sprint_ability.actived.connect(_on_sprinted.bind())
@@ -104,7 +123,19 @@ func _ready():
 	swim_ability.stopped_floating.connect(_on_swim_ability_stop_floating.bind())
 	swim_ability.entered_the_water.connect(_on_swim_ability_entered_the_water.bind())
 	swim_ability.exit_the_water.connect(_on_swim_ability_exit_the_water.bind())
-	
+
+func _start_variables():
+	walk_ability.acceleration = acceleration
+	walk_ability.deceleration = deceleration
+	walk_ability.air_control = air_control
+	sprint_ability.speed_multiplier = sprint_speed_multiplier
+	crouch_ability.speed_multiplier = crouch_speed_multiplier
+	jump_ability.height = jump_height
+	fly_ability.speed_modifier = fly_mode_speed_modifier
+	swim_ability.submerged_height = submerged_height
+	swim_ability.floating_height = floating_height
+	swim_ability.on_water_speed_multiplier = on_water_speed_multiplier
+	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
 
 func move(_delta: float) -> void:
 	var direction = _direction_input(input_axis, !is_fly_mode() and !swim_ability.is_floating())

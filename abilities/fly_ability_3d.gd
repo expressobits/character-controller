@@ -2,11 +2,11 @@ extends MovementAbility3D
 
 class_name FlyAbility3D
 
-@export var fly_mode_speed_modifier := 2.0
+@export var speed_modifier := 2.0
 	
 func get_speed_modifier() -> float:
 	if is_actived():
-		return fly_mode_speed_modifier
+		return speed_modifier
 	else:
 		return super.get_speed_modifier()
 		
