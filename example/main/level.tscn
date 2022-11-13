@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://doqa1vfxkqwfr"]
+[gd_scene load_steps=28 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
 [ext_resource type="PackedScene" uid="uid://ctm1f0n5w5duy" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c3jgyc7kqd0jt" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" uid="uid://bsmm2hh5s7453" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
+[ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="7_pqwbx"]
+[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="8_04xdu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -117,6 +119,7 @@ mesh = SubResource("BoxMesh_egctf")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Cube"]
+physics_material_override = ExtResource("7_pqwbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Cube/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_4rksp")
@@ -127,6 +130,7 @@ mesh = SubResource("BoxMesh_23v81")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Slope1"]
+physics_material_override = ExtResource("7_pqwbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Slope1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mwbuo")
@@ -137,6 +141,7 @@ mesh = SubResource("BoxMesh_23v81")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Slope2"]
+physics_material_override = ExtResource("7_pqwbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Slope2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mwbuo")
@@ -147,6 +152,7 @@ mesh = SubResource("BoxMesh_hf657")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Platform1"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Platform1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_makhu")
@@ -157,6 +163,7 @@ mesh = SubResource("BoxMesh_hf657")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Platform2"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Platform2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_makhu")
@@ -167,6 +174,7 @@ mesh = SubResource("BoxMesh_ook3l")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Platform3"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Platform3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_gl53m")
@@ -177,6 +185,7 @@ mesh = SubResource("BoxMesh_ook3l")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Platform4"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Platform4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_gl53m")
@@ -187,6 +196,7 @@ mesh = SubResource("BoxMesh_qmaip")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Bridge"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Bridge/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_okliu")
@@ -197,6 +207,7 @@ mesh = SubResource("BoxMesh_wgm2j")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat1"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ioobg")
@@ -207,6 +218,7 @@ mesh = SubResource("BoxMesh_wgm2j")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat2"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ioobg")
@@ -217,6 +229,7 @@ mesh = SubResource("BoxMesh_1xrj7")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgeSlope1"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgeSlope1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mr3ar")
@@ -227,6 +240,7 @@ mesh = SubResource("BoxMesh_1xrj7")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgeSlope2"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgeSlope2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mr3ar")
@@ -237,6 +251,7 @@ mesh = SubResource("BoxMesh_006tu")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/TooSteep1"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/TooSteep1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_do582")
@@ -247,6 +262,7 @@ mesh = SubResource("BoxMesh_006tu")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/TooSteep2"]
+physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/TooSteep2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_do582")
