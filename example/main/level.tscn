@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://doqa1vfxkqwfr"]
+[gd_scene load_steps=26 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
 [ext_resource type="PackedScene" uid="uid://ctm1f0n5w5duy" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
-[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
+[ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
+[ext_resource type="PackedScene" uid="uid://c3jgyc7kqd0jt" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" uid="uid://bsmm2hh5s7453" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
 
@@ -72,18 +73,37 @@ glow_enabled = true
 [node name="Level" type="Node3D"]
 script = ExtResource("1_cikgd")
 
+[node name="Floor" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, -12, -5, 0)
+
+[node name="Floor2" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, 12, -5, 0)
+
+[node name="Floor3" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3, -7, -12)
+
+[node name="Floor4" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3.00758, -6, 11.9858)
+
+[node name="Floor5" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-4.37114e-07, 0, -10, 0, 10, 0, 10, 0, -4.37114e-07, 0, -10, 0)
+
+[node name="Floor6" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-8.74228e-07, 0, -10, 0, 10, 0, 20, 0, -4.37114e-07, 8.46792e-08, -5, -21.9372)
+
 [node name="Player" parent="." instance=ExtResource("2_nvo2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 6, -17)
+
+[node name="Area3D" parent="." instance=ExtResource("3_ebamq")]
+transform = Transform3D(10, 0, 0, 0, 5, 0, 0, 0, 40, -0.00174904, -3, -0.0401268)
 
 [node name="ArenaGeometry" type="Node3D" parent="."]
-
-[node name="Floor" parent="ArenaGeometry" instance=ExtResource("3_80rlo")]
 
 [node name="Wall" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.75, -20)
 
 [node name="Wall2" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.75, 20)
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 5.15, 20)
 
 [node name="Wall3" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 20, 5.75, 0)
@@ -109,6 +129,16 @@ surface_material_override/0 = ExtResource("5_dnvjb")
 [node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Slope1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Slope1/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mwbuo")
+
+[node name="Slope2" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, -3.54173, -9.32374)
+mesh = SubResource("BoxMesh_23v81")
+surface_material_override/0 = ExtResource("5_dnvjb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Slope2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Slope2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_mwbuo")
 
 [node name="Platform1" type="MeshInstance3D" parent="ArenaGeometry"]

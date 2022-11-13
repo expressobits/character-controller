@@ -5,7 +5,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://1m1atgydn5ra" path="res://physics/concrete.tres" id="3_uuej6"]
 [ext_resource type="PhysicsMaterial" uid="uid://bsrgnm6saajv3" path="res://physics/grass.tres" id="4_5hudx"]
 [ext_resource type="Resource" uid="uid://ci8kg40ae4vnl" path="res://addons/character-controller/example/main/audio_interacts/stone_audio_interact.tres" id="5_fv0qi"]
-[ext_resource type="Resource" path="res://addons/character-controller/example/main/audio_interacts/water_audio_interact.tres" id="6_fohsf"]
+[ext_resource type="Resource" uid="uid://clro80qf2tdqi" path="res://addons/character-controller/example/main/audio_interacts/water_audio_interact.tres" id="6_fohsf"]
 [ext_resource type="AudioStream" uid="uid://cfjyqmf1egajs" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 1.wav" id="7_lh66n"]
 [ext_resource type="AudioStream" uid="uid://bfai8kavtbma6" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 2.wav" id="8_so2op"]
 [ext_resource type="AudioStream" uid="uid://cw3bfbkxx3jtn" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 4.wav" id="9_7t2y5"]

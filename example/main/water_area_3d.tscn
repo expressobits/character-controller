@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3jgyc7kqd0jt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mctgj"]
+
+[sub_resource type="Gradient" id="Gradient_4nedw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bdk4p"]
+seed = 2
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ewlqw"]
+generate_mipmaps = false
+as_normal_map = true
+bump_strength = 18.7
+color_ramp = SubResource("Gradient_4nedw")
+noise = SubResource("FastNoiseLite_bdk4p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_870ue"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0.631373, 1, 0.729412)
+albedo_texture = SubResource("NoiseTexture2D_ewlqw")
+uv1_scale = Vector3(16, 16, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgr5n"]
+material = SubResource("StandardMaterial3D_870ue")
+
+[node name="Area3D" type="Area3D"]
+collision_layer = 8
+collision_mask = 8
+monitoring = false
+reverb_bus_enabled = true
+reverb_bus_amount = 0.47
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_mctgj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_pgr5n")
