@@ -13,8 +13,10 @@ var head_bob_path := NodePath("Head/Head Bob")
 @export_group("Head Bob - Steps")
 @export var step_bob_enabled := true
 @export var vertical_horizontal_ratio = 2
+
 @export_group("Head Bob - Jump")
 @export var jump_bop_enabled := true
+
 @export_group("Head Bob - Rotation When Move (Quake Like)")
 @export var rotation_to_move := true
 @export var speed_rotation := 4.0
@@ -23,7 +25,6 @@ var head_bob_path := NodePath("Head/Head Bob")
 @onready var head: HeadMovement = get_node(head_path)
 @onready var camera: Camera3D = get_node(camera_path)
 @onready var head_bob: HeadBob = get_node(head_bob_path)
-
 @onready var normal_fov: float = camera.fov
 
 func setup():

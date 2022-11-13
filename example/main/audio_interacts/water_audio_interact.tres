@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/audio_interact.gd" id="1_h7qps"]
+
+[resource]
+script = ExtResource("1_h7qps")
+step_audios = null

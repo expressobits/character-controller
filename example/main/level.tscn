@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
-[ext_resource type="PackedScene" uid="uid://47sxq212e4ko" path="res://addons/character-controller/core/controller.tscn" id="2_tes6m"]
+[ext_resource type="PackedScene" uid="uid://ctm1f0n5w5duy" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
-[ext_resource type="Material" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
+[ext_resource type="Material" uid="uid://bsmm2hh5s7453" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -72,8 +72,8 @@ glow_enabled = true
 [node name="Level" type="Node3D"]
 script = ExtResource("1_cikgd")
 
-[node name="Player" parent="." instance=ExtResource("2_tes6m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="Player" parent="." instance=ExtResource("2_nvo2f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="ArenaGeometry" type="Node3D" parent="."]
 

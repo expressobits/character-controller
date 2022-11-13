@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3 uid="uid://dr814b7u4f0a5"]
+
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/player_audios.gd" id="1_5jhob"]
+[ext_resource type="Resource" uid="uid://boafje76qrf27" path="res://addons/character-controller/example/main/audio_interacts/grass_audio_interact.tres" id="2_m88gv"]
+[ext_resource type="PhysicsMaterial" uid="uid://1m1atgydn5ra" path="res://physics/concrete.tres" id="3_uuej6"]
+[ext_resource type="PhysicsMaterial" uid="uid://bsrgnm6saajv3" path="res://physics/grass.tres" id="4_5hudx"]
+[ext_resource type="Resource" uid="uid://ci8kg40ae4vnl" path="res://addons/character-controller/example/main/audio_interacts/stone_audio_interact.tres" id="5_fv0qi"]
+[ext_resource type="Resource" path="res://addons/character-controller/example/main/audio_interacts/water_audio_interact.tres" id="6_fohsf"]
+[ext_resource type="AudioStream" uid="uid://cfjyqmf1egajs" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 1.wav" id="7_lh66n"]
+[ext_resource type="AudioStream" uid="uid://bfai8kavtbma6" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 2.wav" id="8_so2op"]
+[ext_resource type="AudioStream" uid="uid://cw3bfbkxx3jtn" path="res://addons/Steps/GRASS/Barefoot Grass footsteps 4.wav" id="9_7t2y5"]
+
+[node name="Player Audios" type="Node3D"]
+script = ExtResource("1_5jhob")
+audio_interact = ExtResource("2_m88gv")
+physic_materials = [ExtResource("3_uuej6"), ExtResource("4_5hudx")]
+audio_interacts = [ExtResource("2_m88gv"), ExtResource("5_fv0qi")]
+water_audio_interact = ExtResource("6_fohsf")
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_lh66n")
+
+[node name="Land" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_so2op")
+
+[node name="Step" type="AudioStreamPlayer3D" parent="."]
+max_db = -1.88
+attenuation_filter_db = -65.4
+
+[node name="Crouch" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_7t2y5")
+max_db = -1.88
+attenuation_filter_db = -65.4
+
+[node name="Uncrouch" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_7t2y5")
+max_db = -1.88
+attenuation_filter_db = -65.4
+
+[node name="Detect Ground" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1.5, 0)

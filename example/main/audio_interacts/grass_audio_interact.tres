@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://boafje76qrf27"]
+
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/audio_interact.gd" id="1_h7qps"]
+[ext_resource type="AudioStream" uid="uid://dehjhxw51agwv" path="res://addons/character-controller/example/main/kenney_impactsounds/Audio/footstep_grass_004.ogg" id="1_tce4f"]
+[ext_resource type="AudioStream" uid="uid://ctce5oc1o4n0w" path="res://addons/character-controller/example/main/kenney_impactsounds/Audio/footstep_grass_003.ogg" id="2_ivf36"]
+[ext_resource type="AudioStream" uid="uid://br1wqqxawkefo" path="res://addons/character-controller/example/main/kenney_impactsounds/Audio/footstep_grass_000.ogg" id="4_5vlna"]
+[ext_resource type="AudioStream" uid="uid://f3f0hc18itnc" path="res://addons/character-controller/example/main/kenney_impactsounds/Audio/footstep_grass_001.ogg" id="5_26u4y"]
+[ext_resource type="AudioStream" uid="uid://dg2ixbqpihpc5" path="res://addons/character-controller/example/main/kenney_impactsounds/Audio/footstep_grass_002.ogg" id="6_o645h"]
+
+[resource]
+script = ExtResource("1_h7qps")
+jump_audio = ExtResource("1_tce4f")
+landed_audio = ExtResource("2_ivf36")
+step_audios = [ExtResource("4_5vlna"), ExtResource("5_26u4y"), ExtResource("6_o645h"), ExtResource("2_ivf36"), ExtResource("1_tce4f")]
