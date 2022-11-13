@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
-[ext_resource type="PackedScene" uid="uid://ctm1f0n5w5duy" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
+[ext_resource type="PackedScene" uid="uid://dgm3guueulnmd" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
 [ext_resource type="Material" uid="uid://cilhhadte7jqe" path="res://addons/character-controller/example/main/materials/grass.tres" id="3_7vb8p"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
 [ext_resource type="PackedScene" uid="uid://c3jgyc7kqd0jt" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
