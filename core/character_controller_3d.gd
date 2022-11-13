@@ -145,8 +145,7 @@ func move(_delta: float) -> void:
 	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
 		velocity.y -= gravity * _delta
 	
-	if input_fly_mode: 
-		fly_ability.set_active(!fly_ability.is_actived())
+	fly_ability.set_active(input_fly_mode)
 	swim_ability.set_active(!fly_ability.is_actived())
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
