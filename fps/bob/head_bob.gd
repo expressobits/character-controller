@@ -11,6 +11,7 @@ class_name HeadBob
 @export var bob_range = Vector2(0.07, 0.07)
 @export var bob_curve : Curve
 @export var curve_multiplier = Vector2(2,2)
+@export var vertical_horizontal_ratio = 2
 
 @export_group("Jump Bob")
 @export var jump_bop_enabled := true
@@ -20,7 +21,6 @@ class_name HeadBob
 @export var rotation_to_move := true
 @export var speed_rotation := 4.0
 @export var angle_limit_for_rotation := 0.1
-@export var vertical_horizontal_ratio = 2
 
 var speed : float = 0
 var original_position : Vector3
