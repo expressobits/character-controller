@@ -1,10 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://ciu2qgckgu5sr"]
+[gd_scene load_steps=9 format=3 uid="uid://ciu2qgckgu5sr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
-[ext_resource type="Script" path="res://addons/character-controller/core/head_movement.gd" id="2_1o423"]
-[ext_resource type="Script" path="res://addons/character-controller/bob/head_bob.gd" id="3_7s0qe"]
-[ext_resource type="Script" path="res://addons/character-controller/bob/lerp_bob_curve.gd" id="4_0bgly"]
-[ext_resource type="Curve" path="res://addons/character-controller/bob/bob_curve.tres" id="5_ql48t"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
 [ext_resource type="Script" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
@@ -14,12 +10,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
-[sub_resource type="Resource" id="Resource_ojc2q"]
-script = ExtResource("4_0bgly")
-duration = 0.2
-amount = 0.1
-
-[node name="Controller" type="CharacterBody3D"]
+[node name="CharacterController3D" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
 abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D")]
@@ -56,15 +47,3 @@ collision_mask = 8
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
-
-[node name="Head" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
-script = ExtResource("2_1o423")
-
-[node name="Camera" type="Camera3D" parent="Head"]
-current = true
-
-[node name="Head Bob" type="Node" parent="Head"]
-script = ExtResource("3_7s0qe")
-bob_curve = ExtResource("5_ql48t")
-lerp_bob_curve = SubResource("Resource_ojc2q")

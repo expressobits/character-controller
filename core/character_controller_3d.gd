@@ -27,11 +27,11 @@ signal exit_the_water
 @export var sprint_speed_multiplier := 1.6
 
 @export_group("Footsteps")
-@export var step_lengthen = 0.7
+@export var step_lengthen := 0.7
 @export var step_interval := 6.0
 
 @export_group("Crouch")
-@export var height_in_crouch = 1.0
+@export var height_in_crouch := 1.0
 @export var crouch_fov_multiplier := 0.95
 @export var crouch_speed_multiplier := 0.7
 
@@ -61,9 +61,6 @@ func load_nodes(nodePaths: Array) -> Array:
 			nodes.append(node)
 	return nodes
 
-var head_path := NodePath("Head")
-var camera_path := NodePath("Head/Camera")
-var head_bob_path := NodePath("Head/Head Bob")
 var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
 var walk_ability_path := NodePath("Walk Ability 3D")
@@ -82,11 +79,9 @@ var input_fly_mode := false
 var step_cycle : float = 0
 var next_step : float = 0
 var horizontal_velocity
+var direction_base_node : Node3D
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 @onready var gravity: float = (ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier)
-@onready var head: Marker3D = get_node(head_path)
-@onready var head_bob: HeadBob = get_node(head_bob_path)
-@onready var camera: Camera3D = get_node(camera_path)
 @onready var collision: CollisionShape3D = get_node(collision_path)
 @onready var head_check: RayCast3D = get_node(head_check_path)
 @onready var walk_ability: WalkAbility3D = get_node(walk_ability_path)
@@ -96,16 +91,15 @@ var horizontal_velocity
 @onready var fly_ability: FlyAbility3D = get_node(fly_ability_path)
 @onready var swim_ability: SwimAbility3D = get_node(swim_ability_path)
 @onready var normal_speed: int = speed
-@onready var normal_fov: float = camera.fov
 
 var _last_is_on_floor := false
 var _default_height : float
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
 
-func _ready():
+func setup():
+	direction_base_node = self
 	abilities = load_nodes(abilities_path)
-	head_bob.setup_bob(step_interval * 2);
 	_default_height = collision.shape.height
 	_connect_signals()
 	_start_variables()
@@ -138,8 +132,7 @@ func _start_variables():
 	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
 
 func move(_delta: float) -> void:
-	var direction = _direction_input(input_axis, !is_fly_mode() and !swim_ability.is_floating())
-	
+	var direction = _direction_input(input_axis, direction_base_node)
 	if not swim_ability.is_floating():
 		_check_landed()
 	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
@@ -165,13 +158,11 @@ func move(_delta: float) -> void:
 	
 	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
 		_check_step(_delta)
-		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
 	
 	if is_crouching():
 		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
 	else:
 		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
-	_check_head_bob(_delta)
 
 
 func _check_landed():
@@ -186,13 +177,9 @@ func _check_step(_delta):
 		_step(is_on_floor())
 
 
-func _direction_input(input : Vector2, horizontal_only : bool) -> Vector3:
+func _direction_input(input : Vector2, aim_node : Node3D) -> Vector3:
 	direction = Vector3()
-	var aim : Basis
-	if horizontal_only:
-		aim = self.get_global_transform().basis
-	else:
-		aim = head.get_global_transform().basis
+	var aim = aim_node.get_global_transform().basis
 	if input.x >= 0.5:
 		direction -= aim.z
 	if input.x <= -0.5:
@@ -207,9 +194,8 @@ func _direction_input(input : Vector2, horizontal_only : bool) -> Vector3:
 			direction.y += 1.0
 		elif input_crouch:
 			direction.y -= 1.0
-			
-	if horizontal_only:
-		direction.y = 0
+	else:
+		direction.y = 0	
 	return direction.normalized()
 	
 
@@ -220,9 +206,6 @@ func _step(is_on_floor:bool) -> bool:
 		return true
 	return false
 	
-
-func _check_head_bob(_delta):
-	head_bob.head_bob_process(horizontal_velocity, input_axis, is_sprinting(), is_on_floor(), _delta)
 	
 
 func reset_step():
@@ -284,11 +267,10 @@ func _on_uncrouched():
 
 func _on_sprinted():
 	emit_signal("sprinted")
-	
+
+
 func _on_jumped():
 	emit_signal("jumped")
-	head_bob.do_bob_jump()
-	head_bob.reset()
 
 
 func _on_swim_ability_emerged():
@@ -297,8 +279,8 @@ func _on_swim_ability_emerged():
 
 func _on_swim_ability_submerged():
 	emit_signal("submerged")
-	
-	
+
+
 func _on_swim_ability_entered_the_water():
 	emit_signal("entered_the_water")
 
@@ -308,8 +290,8 @@ func _on_swim_ability_exit_the_water():
 
 
 func _on_swim_ability_started_floating():
-	_fov_modifiers *= swim_fov_multiplier
+	pass
 
 
 func _on_swim_ability_stop_floating():
-	_fov_modifiers /= swim_fov_multiplier
+	pass
