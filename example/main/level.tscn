@@ -1,13 +1,18 @@
-[gd_scene load_steps=28 format=3 uid="uid://doqa1vfxkqwfr"]
+[gd_scene load_steps=33 format=3 uid="uid://doqa1vfxkqwfr"]
 
 [ext_resource type="Script" path="res://addons/character-controller/example/main/level.gd" id="1_cikgd"]
 [ext_resource type="PackedScene" uid="uid://ctm1f0n5w5duy" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
+[ext_resource type="Material" uid="uid://cilhhadte7jqe" path="res://addons/character-controller/example/main/materials/grass.tres" id="3_7vb8p"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
 [ext_resource type="PackedScene" uid="uid://c3jgyc7kqd0jt" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
-[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
+[ext_resource type="PackedScene" uid="uid://cnql7c7f32b46" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" uid="uid://bsmm2hh5s7453" path="res://addons/character-controller/example/main/materials/dark.tres" id="5_dnvjb"]
+[ext_resource type="Material" uid="uid://djehr852lkxvg" path="res://addons/character-controller/example/main/materials/rock.tres" id="7_ngjv3"]
 [ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="7_pqwbx"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="8_04xdu"]
+[ext_resource type="Material" uid="uid://b52vvq7u3assk" path="res://addons/character-controller/example/main/materials/leaves.tres" id="8_fcbu8"]
+[ext_resource type="Material" uid="uid://b0jmck7iiyd4j" path="res://addons/character-controller/example/main/materials/wood.tres" id="11_cakef"]
+[ext_resource type="Texture2D" uid="uid://ccxc6e5t8fmod" path="res://addons/character-controller/example/main/materials/Free DEMO Pixel Skies Background pack by Digital Moons/Pixel Skies 1920x1080px (Full HD)/demo01_PixelSky_1920x1080.png" id="13_giyoi"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -57,15 +62,17 @@ size = Vector3(14, 0.5, 4)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_do582"]
 data = PackedVector3Array(-7, 0.25, 2, 7, 0.25, 2, -7, -0.25, 2, 7, 0.25, 2, 7, -0.25, 2, -7, -0.25, 2, 7, 0.25, -2, -7, 0.25, -2, 7, -0.25, -2, -7, 0.25, -2, -7, -0.25, -2, 7, -0.25, -2, 7, 0.25, 2, 7, 0.25, -2, 7, -0.25, 2, 7, 0.25, -2, 7, -0.25, -2, 7, -0.25, 2, -7, 0.25, -2, -7, 0.25, 2, -7, -0.25, -2, -7, 0.25, 2, -7, -0.25, 2, -7, -0.25, -2, 7, 0.25, 2, -7, 0.25, 2, 7, 0.25, -2, -7, 0.25, 2, -7, 0.25, -2, 7, 0.25, -2, -7, -0.25, 2, 7, -0.25, 2, -7, -0.25, -2, 7, -0.25, 2, 7, -0.25, -2, -7, -0.25, -2)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ggqlx"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_l566q"]
+panorama = ExtResource("13_giyoi")
+filter = false
 
 [sub_resource type="Sky" id="Sky_t5ash"]
-sky_material = SubResource("ProceduralSkyMaterial_ggqlx")
+sky_material = SubResource("PanoramaSkyMaterial_l566q")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_7ofk6"]
 background_mode = 2
+background_energy_multiplier = 0.5
 sky = SubResource("Sky_t5ash")
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.95
@@ -77,44 +84,55 @@ script = ExtResource("1_cikgd")
 
 [node name="Floor" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, -12, -5, 0)
+material_override = ExtResource("3_7vb8p")
 
 [node name="Floor2" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, 12, -5, 0)
+material_override = ExtResource("3_7vb8p")
 
 [node name="Floor3" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3, -7, -12)
+material_override = ExtResource("7_ngjv3")
 
 [node name="Floor4" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3.00758, -6, 11.9858)
+material_override = ExtResource("7_ngjv3")
 
 [node name="Floor5" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(-4.37114e-07, 0, -10, 0, 10, 0, 10, 0, -4.37114e-07, 0, -10, 0)
+material_override = ExtResource("7_ngjv3")
 
 [node name="Floor6" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(-8.74228e-07, 0, -10, 0, 10, 0, 20, 0, -4.37114e-07, 8.46792e-08, -5, -21.9372)
+material_override = ExtResource("3_7vb8p")
 
 [node name="Player" parent="." instance=ExtResource("2_nvo2f")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 6, -17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62268e-06, 6, 13)
 
 [node name="Area3D" parent="." instance=ExtResource("3_ebamq")]
-transform = Transform3D(10, 0, 0, 0, 5, 0, 0, 0, 40, -0.00174904, -3, -0.0401268)
+transform = Transform3D(10, 0, 0, 0, 5, 0, 0, 0, 40, 0, -3, 0)
 
 [node name="ArenaGeometry" type="Node3D" parent="."]
 
 [node name="Wall" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.75, -20)
+material_override = ExtResource("8_fcbu8")
 
 [node name="Wall2" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 5.15, 20)
+material_override = ExtResource("8_fcbu8")
 
 [node name="Wall3" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 20, 5.75, 0)
+material_override = ExtResource("8_fcbu8")
 
 [node name="Wall4" parent="ArenaGeometry" instance=ExtResource("4_36qp7")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -20, 5.75, 0)
+material_override = ExtResource("8_fcbu8")
 
 [node name="Cube" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -17.5)
+material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_egctf")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -126,6 +144,7 @@ shape = SubResource("ConcavePolygonShape3D_4rksp")
 
 [node name="Slope1" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0.315, -13.92)
+material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_23v81")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -137,6 +156,7 @@ shape = SubResource("ConcavePolygonShape3D_mwbuo")
 
 [node name="Slope2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, -3.54173, -9.32374)
+material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_23v81")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -148,6 +168,7 @@ shape = SubResource("ConcavePolygonShape3D_mwbuo")
 
 [node name="Platform1" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.25, 5.75, -17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_hf657")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -159,6 +180,7 @@ shape = SubResource("ConcavePolygonShape3D_makhu")
 
 [node name="Platform2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.25, 5.75, -17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_hf657")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -170,6 +192,7 @@ shape = SubResource("ConcavePolygonShape3D_makhu")
 
 [node name="Platform3" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -17.5, 5.75, -1.75)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_ook3l")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -181,6 +204,7 @@ shape = SubResource("ConcavePolygonShape3D_gl53m")
 
 [node name="Platform4" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17.5, 5.75, -1.75)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_ook3l")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -192,6 +216,7 @@ shape = SubResource("ConcavePolygonShape3D_gl53m")
 
 [node name="Bridge" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 13.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_qmaip")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -203,6 +228,7 @@ shape = SubResource("ConcavePolygonShape3D_okliu")
 
 [node name="BridgePlat1" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 3.5, 17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_wgm2j")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -214,6 +240,7 @@ shape = SubResource("ConcavePolygonShape3D_ioobg")
 
 [node name="BridgePlat2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 3.5, 17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_wgm2j")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -225,6 +252,7 @@ shape = SubResource("ConcavePolygonShape3D_ioobg")
 
 [node name="BridgeSlope1" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(-0.866026, -0.5, 8.74228e-08, -0.5, 0.866025, -1.77636e-15, -7.57104e-08, -4.37114e-08, -1, 12.87, 1.66, 17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_1xrj7")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -236,6 +264,7 @@ shape = SubResource("ConcavePolygonShape3D_mr3ar")
 
 [node name="BridgeSlope2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(0.866026, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -12.87, 1.66, 17.5)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_1xrj7")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -247,6 +276,7 @@ shape = SubResource("ConcavePolygonShape3D_mr3ar")
 
 [node name="TooSteep1" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(-0.5, -0.866025, 8.74228e-08, -0.866025, 0.5, 0, -4.37114e-08, -7.57103e-08, -1, 16.5, 5.5, 8)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_006tu")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -258,6 +288,7 @@ shape = SubResource("ConcavePolygonShape3D_do582")
 
 [node name="TooSteep2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, -16.5, 5.5, 8)
+material_override = ExtResource("11_cakef")
 mesh = SubResource("BoxMesh_006tu")
 surface_material_override/0 = ExtResource("5_dnvjb")
 
@@ -274,5 +305,6 @@ environment = SubResource("Environment_7ofk6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866026, -0.5, 0.75, -0.433013, 0, 5, 0)
+light_indirect_energy = 0.0
 shadow_enabled = true
 directional_shadow_max_distance = 250.0

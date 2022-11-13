@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://cnql7c7f32b46"]
 
-[ext_resource type="Material" path="res://addons/character-controller/example/main/materials/dark.tres" id="1_h7iyj"]
+[ext_resource type="Material" uid="uid://b0jmck7iiyd4j" path="res://addons/character-controller/example/main/materials/wood.tres" id="1_7lrh3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7y6gq"]
 size = Vector3(40, 12, 1)
@@ -10,7 +10,7 @@ data = PackedVector3Array(-20, 6, 0.5, 20, 6, 0.5, -20, -6, 0.5, 20, 6, 0.5, 20,
 
 [node name="Wall" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_7y6gq")
-surface_material_override/0 = ExtResource("1_h7iyj")
+surface_material_override/0 = ExtResource("1_7lrh3")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

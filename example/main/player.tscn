@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctm1f0n5w5duy"]
+[gd_scene load_steps=11 format=3 uid="uid://dgm3guueulnmd"]
 
 [ext_resource type="PackedScene" uid="uid://ckh3jbjevcypx" path="res://addons/character-controller/fps/fps_controller_3d.tscn" id="1_fbpun"]
 [ext_resource type="Script" path="res://addons/character-controller/example/main/player.gd" id="2_8r0nc"]
-[ext_resource type="Environment" uid="uid://b3cn01u84faiy" path="res://scenes/underwater.tres" id="3_vp73n"]
+[ext_resource type="Environment" uid="uid://b3cn01u84faiy" path="res://addons/character-controller/example/main/underwater.tres" id="3_dxksd"]
 [ext_resource type="PackedScene" uid="uid://dr814b7u4f0a5" path="res://addons/character-controller/example/main/audios/player_audios.tscn" id="4_ux8kv"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="5_ryq4d"]
 [ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="6_c2mmg"]
@@ -21,7 +21,7 @@ input_sprint_action_name = "move_sprint"
 input_jump_action_name = "move_jump"
 input_crouch_action_name = "move_crouch"
 input_fly_mode_action_name = "move_fly_mode"
-underwater_env = ExtResource("3_vp73n")
+underwater_env = ExtResource("3_dxksd")
 abilities_path = null
 
 [node name="Player Audios" parent="." index="9" instance=ExtResource("4_ux8kv")]
