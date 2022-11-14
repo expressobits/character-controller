@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="3_7vb8p"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
 [ext_resource type="PackedScene" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
-[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
+[ext_resource type="PackedScene" uid="uid://cbfe8rkt51tf8" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="7_ngjv3"]
 [ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="7_pqwbx"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="8_04xdu"]
@@ -87,6 +87,14 @@ material_override = ExtResource("3_7vb8p")
 
 [node name="Floor2" parent="." instance=ExtResource("3_80rlo")]
 transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, 12, -5, 0)
+material_override = ExtResource("3_7vb8p")
+
+[node name="Floor7" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(1.73205, -0.5, 0, 1, 0.866025, 0, 0, 0, 15, 3.88, -0.93, 12.5)
+material_override = ExtResource("3_7vb8p")
+
+[node name="Floor8" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(1.73205, 0.5, 0, -1, 0.866025, 0, 0, 0, 15, -3.88, -0.93, 12.5)
 material_override = ExtResource("3_7vb8p")
 
 [node name="Floor3" parent="." instance=ExtResource("3_80rlo")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b3wdcta6c4k4t"]
 
-[ext_resource type="Material" path="res://addons/character-controller/example/main/materials/grass.tres" id="1_sl4h5"]
+[ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="1_sl4h5"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="2_3we8r"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_srxwf"]

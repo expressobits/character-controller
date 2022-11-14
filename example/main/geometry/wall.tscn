@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://cbfe8rkt51tf8"]
 
-[ext_resource type="Material" uid="uid://b0jmck7iiyd4j" path="res://addons/character-controller/example/main/materials/wood.tres" id="1_7lrh3"]
+[ext_resource type="Material" uid="uid://ckvcdcn2iue87" path="res://addons/character-controller/example/main/materials/wood.tres" id="1_7lrh3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7y6gq"]
 size = Vector3(40, 12, 1)
