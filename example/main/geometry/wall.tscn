@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnql7c7f32b46"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Material" uid="uid://b0jmck7iiyd4j" path="res://addons/character-controller/example/main/materials/wood.tres" id="1_7lrh3"]
 

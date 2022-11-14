@@ -1,6 +1,6 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b52vvq7u3assk"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c72msuxs6n2a8"]
 
-[ext_resource type="Texture2D" uid="uid://bqmq2qs2ybrg5" path="res://addons/character-controller/example/main/materials/leaves.png" id="1_bwek8"]
+[ext_resource type="Texture2D" uid="uid://bqmq2qs2ybrg5" path="res://addons/character-controller/example/main/textures/leaves.png" id="1_bwek8"]
 
 [resource]
 albedo_texture = ExtResource("1_bwek8")

@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbkig6ttx0fxg"
-path="res://.godot/imported/grass.png-70e56204bdb3c113af615011f53cae3e.ctex"
+uid="uid://bqmq2qs2ybrg5"
+path="res://.godot/imported/leaves.png-158232e083d161143dba94e37a5bcc15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/character-controller/example/main/materials/grass.png"
-dest_files=["res://.godot/imported/grass.png-70e56204bdb3c113af615011f53cae3e.ctex"]
+source_file="res://addons/character-controller/example/main/textures/leaves.png"
+dest_files=["res://.godot/imported/leaves.png-158232e083d161143dba94e37a5bcc15.ctex"]
 
 [params]
 
-compress/mode=3
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/bptc_ldr=0

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ccxc6e5t8fmod"
-path="res://.godot/imported/demo01_PixelSky_1920x1080.png-317ea1b6ffc7539604f68f3ce811c809.ctex"
+path="res://.godot/imported/demo01_PixelSky_1920x1080.png-3de0337b01f41854275bc4e0e611fa3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/character-controller/example/main/materials/Free DEMO Pixel Skies Background pack by Digital Moons/Pixel Skies 1920x1080px (Full HD)/demo01_PixelSky_1920x1080.png"
-dest_files=["res://.godot/imported/demo01_PixelSky_1920x1080.png-317ea1b6ffc7539604f68f3ce811c809.ctex"]
+source_file="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/Pixel Skies 1920x1080px (Full HD)/demo01_PixelSky_1920x1080.png"
+dest_files=["res://.godot/imported/demo01_PixelSky_1920x1080.png-3de0337b01f41854275bc4e0e611fa3b.ctex"]
 
 [params]
 

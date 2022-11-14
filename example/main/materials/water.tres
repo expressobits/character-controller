@@ -1,6 +1,6 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://devkk7v66w112"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://wh8m6jb8ktpj"]
 
-[ext_resource type="Texture2D" uid="uid://bvvc2rijdu6hy" path="res://addons/character-controller/example/main/materials/water01.png" id="1_121nf"]
+[ext_resource type="Texture2D" uid="uid://bvvc2rijdu6hy" path="res://addons/character-controller/example/main/textures/water01.png" id="1_121nf"]
 
 [resource]
 transparency = 1

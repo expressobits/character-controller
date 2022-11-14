@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3jgyc7kqd0jt"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Material" uid="uid://devkk7v66w112" path="res://addons/character-controller/example/main/materials/water.tres" id="1_esg5h"]
 

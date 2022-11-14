@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://q3ivnhsfep4v"
-path.s3tc="res://.godot/imported/wood.png-a6992a7f62a1e9179eb78bc71e38adc3.s3tc.ctex"
-path.etc2="res://.godot/imported/wood.png-a6992a7f62a1e9179eb78bc71e38adc3.etc2.ctex"
+path="res://.godot/imported/wood.png-605cda65c97c7e2af54db348885dc9e2.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/character-controller/example/main/materials/wood.png"
-dest_files=["res://.godot/imported/wood.png-a6992a7f62a1e9179eb78bc71e38adc3.s3tc.ctex", "res://.godot/imported/wood.png-a6992a7f62a1e9179eb78bc71e38adc3.etc2.ctex"]
+source_file="res://addons/character-controller/example/main/textures/wood.png"
+dest_files=["res://.godot/imported/wood.png-605cda65c97c7e2af54db348885dc9e2.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/bptc_ldr=0
