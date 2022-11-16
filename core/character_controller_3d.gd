@@ -13,6 +13,8 @@ signal emerged
 signal submerged
 signal entered_the_water
 signal exit_the_water
+signal started_floating
+signal stopped_floating
 
 @export_group("Movement")
 @export var gravity_multiplier := 3.0
@@ -74,6 +76,7 @@ var direction := Vector3()
 var input_axis := Vector2()
 var input_crouch := false
 var input_jump := false
+var input_up := false
 var input_sprint := false
 var input_fly_mode := false
 var step_cycle : float = 0
@@ -114,7 +117,7 @@ func _connect_signals():
 	swim_ability.actived.connect(_on_swim_ability_submerged.bind())
 	swim_ability.deactived.connect(_on_swim_ability_emerged.bind())
 	swim_ability.started_floating.connect(_on_swim_ability_started_floating.bind())
-	swim_ability.stopped_floating.connect(_on_swim_ability_stop_floating.bind())
+	swim_ability.stopped_floating.connect(_on_swim_ability_stopped_floating.bind())
 	swim_ability.entered_the_water.connect(_on_swim_ability_entered_the_water.bind())
 	swim_ability.exit_the_water.connect(_on_swim_ability_exit_the_water.bind())
 
@@ -190,7 +193,7 @@ func _direction_input(input : Vector2, aim_node : Node3D) -> Vector3:
 		direction += aim.x
 	# NOTE: For free-flying and swimming movements
 	if is_fly_mode() or is_floating():
-		if input_jump:
+		if input_up:
 			direction.y += 1.0
 		elif input_crouch:
 			direction.y -= 1.0
@@ -290,8 +293,8 @@ func _on_swim_ability_exit_the_water():
 
 
 func _on_swim_ability_started_floating():
-	pass
+	emit_signal("started_floating")
 
 
-func _on_swim_ability_stop_floating():
-	pass
+func _on_swim_ability_stopped_floating():
+	emit_signal("stopped_floating")

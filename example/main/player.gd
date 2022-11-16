@@ -22,7 +22,8 @@ func _ready():
 func _physics_process(delta):
 	input_axis = Input.get_vector(input_back_action_name, input_forward_action_name, input_left_action_name, input_right_action_name)
 	input_crouch = Input.is_action_pressed(input_crouch_action_name)
-	input_jump = Input.is_action_pressed(input_jump_action_name)
+	input_jump = Input.is_action_just_pressed(input_jump_action_name)
+	input_up = Input.is_action_pressed(input_jump_action_name)
 	input_sprint = Input.is_action_pressed(input_sprint_action_name)
 	if Input.is_action_just_pressed(input_fly_mode_action_name):
 		input_fly_mode = !input_fly_mode
@@ -30,7 +31,6 @@ func _physics_process(delta):
 	
 func _on_controller_emerged():
 	camera.environment = null
-	print("emerged")
 
 func _on_controller_subemerged():
 	camera.environment = underwater_env
