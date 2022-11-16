@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccxc6e5t8fmod"
-path="res://.godot/imported/demo01_PixelSky_1920x1080.png-3de0337b01f41854275bc4e0e611fa3b.ctex"
+uid="uid://svijnbaaeuol"
+path="res://.godot/imported/demo01_PixelSky.png-9dc88074652f1cf1cbde52ac5796abdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/Pixel Skies 1920x1080px (Full HD)/demo01_PixelSky_1920x1080.png"
-dest_files=["res://.godot/imported/demo01_PixelSky_1920x1080.png-3de0337b01f41854275bc4e0e611fa3b.ctex"]
+source_file="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/demo01_PixelSky.png"
+dest_files=["res://.godot/imported/demo01_PixelSky.png-9dc88074652f1cf1cbde52ac5796abdf.ctex"]
 
 [params]
 

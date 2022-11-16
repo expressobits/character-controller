@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://dh7wg5y8ky5d8"]
 
-[ext_resource type="Material" uid="uid://devkk7v66w112" path="res://addons/character-controller/example/main/materials/water.tres" id="1_esg5h"]
+[ext_resource type="Material" uid="uid://wh8m6jb8ktpj" path="res://addons/character-controller/example/main/materials/water.tres" id="1_esg5h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mctgj"]
+size = Vector3(20, 5, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pgr5n"]
 material = ExtResource("1_esg5h")
+size = Vector3(20, 5, 50)
 
 [node name="Area3D" type="Area3D"]
 collision_layer = 8

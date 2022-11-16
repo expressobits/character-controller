@@ -7,6 +7,5 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(0, 0.631373, 1, 0.729412)
 albedo_texture = ExtResource("1_121nf")
-uv1_scale = Vector3(16, 16, 16)
 uv1_triplanar = true
 texture_filter = 0

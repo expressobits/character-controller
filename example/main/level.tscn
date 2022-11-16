@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://dgm3guueulnmd" path="res://addons/character-controller/example/main/player.tscn" id="2_nvo2f"]
 [ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="3_7vb8p"]
 [ext_resource type="PackedScene" uid="uid://b3wdcta6c4k4t" path="res://addons/character-controller/example/main/geometry/floor.tscn" id="3_80rlo"]
-[ext_resource type="PackedScene" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
+[ext_resource type="PackedScene" uid="uid://dh7wg5y8ky5d8" path="res://addons/character-controller/example/main/water_area_3d.tscn" id="3_ebamq"]
 [ext_resource type="PackedScene" uid="uid://cbfe8rkt51tf8" path="res://addons/character-controller/example/main/geometry/wall.tscn" id="4_36qp7"]
 [ext_resource type="Material" uid="uid://o0b4tbh6yup4" path="res://addons/character-controller/example/main/materials/rock.tres" id="7_ngjv3"]
 [ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="7_pqwbx"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="8_04xdu"]
 [ext_resource type="Material" uid="uid://c72msuxs6n2a8" path="res://addons/character-controller/example/main/materials/leaves.tres" id="8_fcbu8"]
 [ext_resource type="Material" uid="uid://ckvcdcn2iue87" path="res://addons/character-controller/example/main/materials/wood.tres" id="11_cakef"]
-[ext_resource type="Texture2D" uid="uid://ccxc6e5t8fmod" path="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/Pixel Skies 1920x1080px (Full HD)/demo01_PixelSky_1920x1080.png" id="13_giyoi"]
+[ext_resource type="Texture2D" uid="uid://svijnbaaeuol" path="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/demo01_PixelSky.png" id="12_olhen"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_egctf"]
 size = Vector3(8, 4, 4)
@@ -62,7 +62,7 @@ size = Vector3(14, 0.5, 4)
 data = PackedVector3Array(-7, 0.25, 2, 7, 0.25, 2, -7, -0.25, 2, 7, 0.25, 2, 7, -0.25, 2, -7, -0.25, 2, 7, 0.25, -2, -7, 0.25, -2, 7, -0.25, -2, -7, 0.25, -2, -7, -0.25, -2, 7, -0.25, -2, 7, 0.25, 2, 7, 0.25, -2, 7, -0.25, 2, 7, 0.25, -2, 7, -0.25, -2, 7, -0.25, 2, -7, 0.25, -2, -7, 0.25, 2, -7, -0.25, -2, -7, 0.25, 2, -7, -0.25, 2, -7, -0.25, -2, 7, 0.25, 2, -7, 0.25, 2, 7, 0.25, -2, -7, 0.25, 2, -7, 0.25, -2, 7, 0.25, -2, -7, -0.25, 2, 7, -0.25, 2, -7, -0.25, -2, 7, -0.25, 2, 7, -0.25, -2, -7, -0.25, -2)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_l566q"]
-panorama = ExtResource("13_giyoi")
+panorama = ExtResource("12_olhen")
 filter = false
 
 [sub_resource type="Sky" id="Sky_t5ash"]
@@ -117,7 +117,7 @@ material_override = ExtResource("3_7vb8p")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62268e-06, 6, 13)
 
 [node name="Area3D" parent="." instance=ExtResource("3_ebamq")]
-transform = Transform3D(10, 0, 0, 0, 5, 0, 0, 0, 40, 0, -3, 9.5954)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 9.5954)
 
 [node name="ArenaGeometry" type="Node3D" parent="."]
 
