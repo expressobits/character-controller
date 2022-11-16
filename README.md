@@ -54,13 +54,12 @@ Contributions, issues and feature requests are welcome!
 
 Feel free to check [issues page](https://github.com/ExpressoBits/character-controller/issues).
 
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
 
 ## 📝 License
-
-Copyright © 2020 [Rafael Correa](https://github.com/scriptsengineer).
 
 This project is [MIT](MIT) licensed.
