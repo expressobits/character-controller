@@ -13,8 +13,6 @@ class_name Player
 @export var underwater_env: Environment
 
 func _ready():
-#	DeviceStats.add_variable("HEAD BOB: ", self.character_body.get_node("Head/Head Bob"), "cycle_position_x")
-#	DeviceStats.add_variable("STEP CYCLE: ", self.character_body, "step_cycle")
 	setup()
 	emerged.connect(_on_controller_emerged.bind())
 	submerged.connect(_on_controller_subemerged.bind())
