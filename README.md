@@ -1,27 +1,63 @@
-# First Person Starter ![Godot 4.0.aplha6](https://img.shields.io/badge/godot-v4.0.alpha6-%23478cbf)
-![Screenshot of FirstPersonStarter Template](https://i.imgur.com/gFDpPlj.png)
+# Welcome to Expresso Character Controller 👋
+![Version](https://img.shields.io/badge/version-0.3.1-blue.svg?cacheSeconds=2592000)
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
+[![Twitter: ScriptsEngineer](https://img.shields.io/twitter/follow/ScriptsEngineer.svg?style=social)](https://twitter.com/ScriptsEngineer)
 
-FPS template for Godot to give starter content for a new or already existing project!
 
-#### Includes:
-- 3D Character Controller
-  - Smooth Movement (Acceleration and Deceleration)
-  - Smooth Camera Rotation
-  - Handles Slopes
-  - Optional Sprinting
-  - Air Control
-  - Highly Modular
-  - Easily Adjustable from the Inspector
-- Example 3D Scene
+## Features
 
-#### Project Controls:
-- Move with `W` `A` `S` `D` or `↑` `←` `↓` `→`
-- Jump with `Space`. Sprint with `Shift`
-- Unlock/Lock Mouse with `Shift + F1`
-- Close Game with `Esc`
-- *If you haven't imported the whole project, you should add them manually!*
+✔️ Modular Abilities
 
-#### Credits:
-- Grid Texture/s from [KenneyNL](https://www.kenney.nl/assets/prototype-textures)
-- To create this project I watched [Jeremy Bullock's Godot First Person Controller Series](https://www.youtube.com/watch?v=Etpq-d5af6M&list=PLTZoMpB5Z4aD-rCpluXsQjkGYgUGUZNIV)
-- Thanks to the awesome Godot community for being helpful to anyone with problems, for making amazing tutorials, for writing the documentation and being supportive.
+✔️ FPS Character Controller and non FPS Character Controller
+
+✔️ Smooth Movement (Acceleration and Deceleration)
+
+✔️ Handles Slopes
+
+✔️ Air Control
+
+✔️ Easily Adjustable from the Inspector
+
+✔️ Sprint Ability
+
+✔️ Crouch Ability
+
+✔️ Crouch Ability
+
+✔️ Fly Mode Ability
+
+✔️ Jump Ability
+
+🔨 Swim Ability.
+
+
+## Install
+
+
+## Authors
+
+👤 **Rafael Correa**
+* Twitter: [@ScriptsEngineer](https://twitter.com/ScriptsEngineer)
+* Github: [@scriptsengineer](https://github.com/scriptsengineer)
+
+Based on the plugin:
+👤 **Whimfoome**
+* Github: [@Whimfoome](https://github.com/Whimfoome)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check [issues page](https://github.com/ExpressoBits/character-controller/issues).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+
+## 📝 License
+
+Copyright © 2020 [Rafael Correa](https://github.com/scriptsengineer).
+
+This project is [MIT](MIT) licensed.
