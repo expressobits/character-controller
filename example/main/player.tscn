@@ -1,15 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgm3guueulnmd"]
+[gd_scene load_steps=5 format=3 uid="uid://2oxdgu03lnbk"]
 
 [ext_resource type="PackedScene" uid="uid://ckh3jbjevcypx" path="res://addons/character-controller/fps/fps_controller_3d.tscn" id="1_fbpun"]
 [ext_resource type="Script" path="res://addons/character-controller/example/main/player.gd" id="2_8r0nc"]
-[ext_resource type="Environment" uid="uid://b3cn01u84faiy" path="res://addons/character-controller/example/main/underwater.tres" id="3_dxksd"]
+[ext_resource type="Environment" path="res://addons/character-controller/example/main/underwater.tres" id="3_dxksd"]
 [ext_resource type="PackedScene" uid="uid://dr814b7u4f0a5" path="res://addons/character-controller/example/main/audios/player_audios.tscn" id="4_ux8kv"]
-[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="5_ryq4d"]
-[ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="6_c2mmg"]
-[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="7_rlw7h"]
-[ext_resource type="Resource" uid="uid://boafje76qrf27" path="res://addons/character-controller/example/main/audio_interacts/grass_audio_interact.tres" id="8_06rya"]
-[ext_resource type="Resource" uid="uid://ci8kg40ae4vnl" path="res://addons/character-controller/example/main/audio_interacts/stone_audio_interact.tres" id="9_1u37a"]
-[ext_resource type="Resource" uid="uid://dx5kojv0cn4yl" path="res://addons/character-controller/example/main/audio_interacts/wood_audio_interact.tres" id="10_1c1vw"]
 
 [node name="Player" instance=ExtResource("1_fbpun")]
 script = ExtResource("2_8r0nc")
@@ -22,8 +16,5 @@ input_jump_action_name = "move_jump"
 input_crouch_action_name = "move_crouch"
 input_fly_mode_action_name = "move_fly_mode"
 underwater_env = ExtResource("3_dxksd")
-abilities_path = null
 
 [node name="Player Audios" parent="." index="9" instance=ExtResource("4_ux8kv")]
-physic_materials = [ExtResource("5_ryq4d"), ExtResource("6_c2mmg"), ExtResource("7_rlw7h")]
-audio_interacts = [ExtResource("8_06rya"), ExtResource("9_1u37a"), ExtResource("10_1c1vw")]
