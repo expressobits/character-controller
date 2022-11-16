@@ -33,7 +33,7 @@
 
 
 ## Install
-
+See in [Wiki](https://github.com/ExpressoBits/character-controller/wiki)
 
 ## Structure
 ![UML](https://raw.githubusercontent.com/wiki/ExpressoBits/character-controller/UML.png)
