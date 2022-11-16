@@ -35,6 +35,9 @@
 ## Install
 
 
+## Structure
+![UML](https://raw.githubusercontent.com/wiki/ExpressoBits/character-controller/UML.png)
+
 ## Authors
 
 👤 **Rafael Correa**
