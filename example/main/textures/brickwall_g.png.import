@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bkajhta5rmbdk"
-path.s3tc="res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.s3tc.ctex"
-path.etc2="res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.etc2.ctex"
+path="res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://addons/character-controller/example/main/textures/brickwall_g.png"
-dest_files=["res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.s3tc.ctex", "res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.etc2.ctex"]
+dest_files=["res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e702.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/bptc_ldr=0
