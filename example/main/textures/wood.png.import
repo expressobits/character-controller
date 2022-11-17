@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wood.png-605cda65c97c7e2af54db348885dc9e2.cte
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/bptc_ldr=0
