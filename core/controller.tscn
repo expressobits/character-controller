@@ -19,6 +19,7 @@ abilities_path = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), 
 shape = SubResource("CapsuleShape3D_fn1rj")
 
 [node name="Head Check" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100359, 0)
 target_position = Vector3(0, 1, 0)
 
 [node name="Walk Ability 3D" type="Node3D" parent="."]

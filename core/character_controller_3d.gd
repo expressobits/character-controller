@@ -127,6 +127,10 @@ func _start_variables():
 	walk_ability.air_control = air_control
 	sprint_ability.speed_multiplier = sprint_speed_multiplier
 	crouch_ability.speed_multiplier = crouch_speed_multiplier
+	crouch_ability.default_height = _default_height
+	crouch_ability.height_in_crouch = height_in_crouch
+	crouch_ability.collision = collision
+	crouch_ability.head_check = head_check
 	jump_ability.height = jump_height
 	fly_ability.speed_modifier = fly_mode_speed_modifier
 	swim_ability.submerged_height = submerged_height
@@ -145,7 +149,7 @@ func move(_delta: float) -> void:
 	swim_ability.set_active(!fly_ability.is_actived())
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
-	crouch_ability.set_active((input_crouch or (head_check.is_colliding() and is_on_floor())) and not is_floating() and not is_submerged() and not is_fly_mode())
+	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode())
 	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
 	
 	var multiplier = 1.0
@@ -162,10 +166,7 @@ func move(_delta: float) -> void:
 	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
 		_check_step(_delta)
 	
-	if is_crouching():
-		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
-	else:
-		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
+	
 
 
 func _check_landed():
