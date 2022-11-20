@@ -163,9 +163,11 @@ func move(_delta: float) -> void:
 		_check_step(_delta)
 	
 	if is_crouching():
-		collision.shape.height = lerp(collision.shape.height, height_in_crouch, _delta * 8)
-	else:
-		collision.shape.height = lerp(collision.shape.height, _default_height, _delta * 8)
+		collision.shape.height -= _delta * 8
+	elif not head_check.is_colliding():
+		collision.shape.height += _delta * 8
+		
+	collision.shape.height = clamp(collision.shape.height , height_in_crouch, _default_height)
 
 
 func _check_landed():
