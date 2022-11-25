@@ -80,43 +80,47 @@ glow_enabled = true
 [node name="Level" type="Node3D"]
 script = ExtResource("1_cikgd")
 
-[node name="Floor" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, -12, -5, 0)
+[node name="Floor2" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 40, 12, -0.5, 0)
 material_override = ExtResource("3_7vb8p")
 
-[node name="Floor2" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(15, 0, 0, 0, 10, 0, 0, 0, 40, 12, -5, 0)
+[node name="Floor9" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 40, -11.9786, -0.5, 0)
 material_override = ExtResource("3_7vb8p")
 
 [node name="Floor7" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(1.73205, -0.5, 0, 1, 0.866025, 0, 0, 0, 15, 3.88, -0.93, 12.5)
+transform = Transform3D(1.73205, -0.5, 0, 1, 0.866025, 0, 0, 0, 15, 3.88, -0.935, 12.5)
 material_override = ExtResource("3_7vb8p")
 
 [node name="Floor8" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(1.73205, 0.5, 0, -1, 0.866025, 0, 0, 0, 15, -3.88, -0.93, 12.5)
+transform = Transform3D(1.73205, 0.5, 0, -1, 0.866025, 0, 0, 0, 15, -3.86087, -0.931208, 12.4865)
 material_override = ExtResource("3_7vb8p")
 
-[node name="Floor3" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3, -7, -13.1297)
+[node name="Floor4" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-6.55671e-07, 0, -10, 0, 5, 0, 15, 0, -4.37114e-07, -0.00529146, -3.47481, 11.9858)
 material_override = ExtResource("7_ngjv3")
 
-[node name="Floor4" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(-6.55671e-07, 0, -40, 0, 10, 0, 15, 0, -1.74846e-06, -3.00758, -6, 11.9858)
+[node name="Floor10" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-6.55671e-07, 0, -1, 0, 5, 0, 15, 0, -4.37114e-08, 5.00169, -3.47481, -1.26244)
+material_override = ExtResource("7_ngjv3")
+
+[node name="Floor11" parent="." instance=ExtResource("3_80rlo")]
+transform = Transform3D(-6.55671e-07, 0, -1, 0, 5, 0, 15, 0, -4.37114e-08, -4.979, -3.475, -1.262)
 material_override = ExtResource("7_ngjv3")
 
 [node name="Floor5" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(-4.37114e-07, 0, -10, 0, 10, 0, 10, 0, -4.37114e-07, 0, -10, 0)
+transform = Transform3D(-4.37114e-07, 0, -10, 0, 1, 0, 10, 0, -4.37114e-07, 0, -5.5497, 0)
 material_override = ExtResource("7_ngjv3")
 
 [node name="Floor6" parent="." instance=ExtResource("3_80rlo")]
-transform = Transform3D(-8.74228e-07, 0, -10, 0, 10, 0, 20, 0, -4.37114e-07, 8.46792e-08, -5, -21.9372)
+transform = Transform3D(-2.98942e-07, 0, -10, 0, 1, 0, 6.839, 0, -4.37114e-07, 0, -0.5, -16.512)
 material_override = ExtResource("3_7vb8p")
 
 [node name="Player" parent="." instance=ExtResource("2_nvo2f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62268e-06, 6, 13)
 
 [node name="Area3D" parent="." instance=ExtResource("3_ebamq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 9.5954)
+transform = Transform3D(0.491574, 0, 0, 0, 1, 0, 0, 0, 0.555284, 0, -3, 5.93584)
 
 [node name="ArenaGeometry" type="Node3D" parent="."]
 
@@ -137,7 +141,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -20, 5.75, 0)
 material_override = ExtResource("8_fcbu8")
 
 [node name="Cube" type="MeshInstance3D" parent="ArenaGeometry"]
-transform = Transform3D(1.12259, 0, 0, 0, 1.2, 0, 0, 0, 0.65, 0, 1.85382, -13.8123)
+transform = Transform3D(1.12259, 0, 0, 0, 1.2, 0, 0, 0, 0.65, 0, 1.8571, -13.8123)
 material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_egctf")
 
@@ -158,8 +162,36 @@ physics_material_override = ExtResource("7_pqwbx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Cube4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_4rksp")
 
+[node name="Cube6" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.295931, 0, 0, 0, 1.01676, 0, 0, 0, 0.633337, 11.8998, 0.191363, -5.23253)
+material_override = ExtResource("7_ngjv3")
+mesh = SubResource("BoxMesh_egctf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Cube6"]
+physics_material_override = ExtResource("7_pqwbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Cube6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4rksp")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ArenaGeometry/Cube6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4rksp")
+
+[node name="Cube8" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.295931, 0, 0, 0, 1.01676, 0, 0, 0, 0.633337, 11.8998, -0.559413, -10.0766)
+material_override = ExtResource("7_ngjv3")
+mesh = SubResource("BoxMesh_egctf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/Cube8"]
+physics_material_override = ExtResource("7_pqwbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/Cube8/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4rksp")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ArenaGeometry/Cube8/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4rksp")
+
 [node name="Cube2" type="MeshInstance3D" parent="ArenaGeometry"]
-transform = Transform3D(1.12259, 0, 0, 0, 1.2, 0, 0, 0, 0.65, 0, 1.85382, -18.8123)
+transform = Transform3D(1.12259, 0, 0, 0, 1.2, 0, 0, 0, 0.65, 0, 1.88, -18.812)
 material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_egctf")
 
@@ -170,7 +202,7 @@ physics_material_override = ExtResource("7_pqwbx")
 shape = SubResource("ConcavePolygonShape3D_4rksp")
 
 [node name="Cube3" type="MeshInstance3D" parent="ArenaGeometry"]
-transform = Transform3D(1.12379, 0, 0, 0, 0.713561, 0, 0, 0, 0.650693, 0, 2.85382, -16.3191)
+transform = Transform3D(1.12379, 0, 0, 0, 0.702028, 0, 0, 0, 0.650693, 0, 2.85382, -16.3191)
 material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_egctf")
 
@@ -181,7 +213,7 @@ physics_material_override = ExtResource("7_pqwbx")
 shape = SubResource("ConcavePolygonShape3D_4rksp")
 
 [node name="Slope1" type="MeshInstance3D" parent="ArenaGeometry"]
-transform = Transform3D(1.28, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0.315, -10.92)
+transform = Transform3D(1.28, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, 0.317887, -10.92)
 material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_23v81")
 
@@ -192,7 +224,7 @@ physics_material_override = ExtResource("7_pqwbx")
 shape = SubResource("ConcavePolygonShape3D_mwbuo")
 
 [node name="Slope2" type="MeshInstance3D" parent="ArenaGeometry"]
-transform = Transform3D(1.28, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, -4.22625, -5.50796)
+transform = Transform3D(1.28, 0, 0, 0, 0.766044, -0.642788, 0, 0.642788, 0.766044, 0, -4.21692, -5.50796)
 material_override = ExtResource("7_ngjv3")
 mesh = SubResource("BoxMesh_23v81")
 
@@ -268,6 +300,94 @@ physics_material_override = ExtResource("8_04xdu")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat1/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ioobg")
 
+[node name="BridgePlat3" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, 30, 0, 0, 0, 0.3, 18.9025, 5.55493, 18.8874)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat3"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat4" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, 30, 0, 0, 0, 0.3, -18.8939, 5.55493, 18.8893)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat4"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat5" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, 30, 0, 0, 0, 0.3, -18.8939, 5.55493, -18.8897)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat5"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat6" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, 30, 0, 0, 0, 0.3, 18.8887, 5.55493, -18.8897)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat6"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat7" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, -3.49691e-06, -0.3, 0, 80, -1.31134e-08, 18.8938, 12.3411, 0.0363693)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat7"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat7/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat8" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(0.3, 0, 0, 0, -3.49691e-06, -0.3, 0, 80, -1.31134e-08, -18.8988, 12.3411, 0.0363693)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat8"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat8/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat9" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(-1.31134e-08, 80, -1.31134e-08, 0, -3.49691e-06, -0.3, -0.3, -3.49691e-06, 5.73206e-16, -0.0608397, 12.3411, 18.8918)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat9"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat9/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat10" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(-1.31134e-08, 80, -1.31134e-08, 0, -3.49691e-06, -0.3, -0.3, -3.49691e-06, 5.73206e-16, -0.0608397, 12.3411, -18.9317)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat10"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat10/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
 [node name="BridgePlat2" type="MeshInstance3D" parent="ArenaGeometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 3.5, 17.5)
 material_override = ExtResource("11_cakef")
@@ -277,6 +397,17 @@ mesh = SubResource("BoxMesh_wgm2j")
 physics_material_override = ExtResource("8_04xdu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ioobg")
+
+[node name="BridgePlat11" type="MeshInstance3D" parent="ArenaGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.054476, 4.03285, -17.5191)
+material_override = ExtResource("11_cakef")
+mesh = SubResource("BoxMesh_wgm2j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ArenaGeometry/BridgePlat11"]
+physics_material_override = ExtResource("8_04xdu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGeometry/BridgePlat11/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ioobg")
 
 [node name="BridgeSlope1" type="MeshInstance3D" parent="ArenaGeometry"]
