@@ -100,12 +100,14 @@ var _default_height : float
 var _speed_modifiers := 1.0
 var _fov_modifiers := 1.0
 
+
 func setup():
 	direction_base_node = self
 	abilities = load_nodes(abilities_path)
 	_default_height = collision.shape.height
 	_connect_signals()
 	_start_variables()
+
 
 func _connect_signals():
 	crouch_ability.actived.connect(_on_crouched.bind())
@@ -120,6 +122,7 @@ func _connect_signals():
 	swim_ability.stopped_floating.connect(_on_swim_ability_stopped_floating.bind())
 	swim_ability.entered_the_water.connect(_on_swim_ability_entered_the_water.bind())
 	swim_ability.exit_the_water.connect(_on_swim_ability_exit_the_water.bind())
+
 
 func _start_variables():
 	walk_ability.acceleration = acceleration
@@ -137,6 +140,7 @@ func _start_variables():
 	swim_ability.floating_height = floating_height
 	swim_ability.on_water_speed_multiplier = on_water_speed_multiplier
 	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
+
 
 func move(_delta: float) -> void:
 	var direction = _direction_input(input_axis, direction_base_node)
@@ -165,8 +169,6 @@ func move(_delta: float) -> void:
 	
 	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
 		_check_step(_delta)
-	
-	
 
 
 func _check_landed():
@@ -201,7 +203,7 @@ func _direction_input(input : Vector2, aim_node : Node3D) -> Vector3:
 	else:
 		direction.y = 0	
 	return direction.normalized()
-	
+
 
 func _step(is_on_floor:bool) -> bool:
 	reset_step()
@@ -209,8 +211,7 @@ func _step(is_on_floor:bool) -> bool:
 		emit_signal("stepped")
 		return true
 	return false
-	
-	
+
 
 func reset_step():
 	next_step = step_cycle + step_interval
