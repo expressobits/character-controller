@@ -7,7 +7,6 @@ class_name HeadMovement
 
 @export var mouse_sensitivity := 0.002
 @export var vertical_angle_limit := 90.0
-var mouse_axis := Vector2()
 var rot := Vector3()
 
 
@@ -19,15 +18,7 @@ func set_vertical_angle_limit(limit : float):
 	vertical_angle_limit = deg_to_rad(limit)
 
 
-# Called when there is an input event
-func _input(event: InputEvent) -> void:
-	# Mouse look (only if the mouse is captured).
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		mouse_axis = event.relative
-		_camera_rotation()
-
-
-func _camera_rotation() -> void:
+func rotate_camera(mouse_axis : Vector2) -> void:
 	# Horizontal mouse look.
 	rot.y -= mouse_axis.x * mouse_sensitivity
 	# Vertical mouse look.

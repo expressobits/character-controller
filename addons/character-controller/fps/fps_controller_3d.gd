@@ -42,6 +42,9 @@ func setup():
 func _check_head_bob(_delta):
 	head_bob.head_bob_process(horizontal_velocity, input_axis, is_sprinting(), is_on_floor(), _delta)
 	
+func rotate_head(mouse_axis : Vector2) -> void:
+	head.rotate_camera(mouse_axis)
+	
 func move(_delta: float):
 	if is_fly_mode() or is_floating():
 		direction_base_node = head
