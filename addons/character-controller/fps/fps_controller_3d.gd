@@ -45,12 +45,12 @@ func _check_head_bob(_delta, input_axis : Vector2):
 func rotate_head(mouse_axis : Vector2) -> void:
 	head.rotate_camera(mouse_axis)
 	
-func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false):
+func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false, input_swim_down := false, input_swim_up := false):
 	if is_fly_mode() or is_floating():
 		direction_base_node = head
 	else:
 		direction_base_node = self
-	super.move(_delta, input_axis, input_jump, input_crouch, input_sprint)
+	super.move(_delta, input_axis, input_jump, input_crouch, input_sprint, input_swim_down, input_swim_up)
 	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
 	_check_head_bob(_delta, input_axis)

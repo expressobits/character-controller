@@ -73,7 +73,6 @@ var fly_ability_path := NodePath("Fly Ability 3D")
 var swim_ability_path := NodePath("Swim Ability 3D")
 
 var direction := Vector3()
-var input_up := false
 var step_cycle : float = 0
 var next_step : float = 0
 var horizontal_velocity
@@ -137,8 +136,8 @@ func _start_variables():
 	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
 
 
-func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false) -> void:
-	var direction = _direction_input(input_axis, input_crouch, direction_base_node)
+func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false, input_swim_down := false, input_swim_up := false) -> void:
+	var direction = _direction_input(input_axis, input_swim_down, input_swim_up, direction_base_node)
 	if not swim_ability.is_floating():
 		_check_landed()
 	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
@@ -177,7 +176,7 @@ func _check_step(_delta):
 		_step(is_on_floor())
 
 
-func _direction_input(input : Vector2, input_crouch : bool, aim_node : Node3D) -> Vector3:
+func _direction_input(input : Vector2, input_down : bool, input_up : bool, aim_node : Node3D) -> Vector3:
 	direction = Vector3()
 	var aim = aim_node.get_global_transform().basis
 	if input.x >= 0.5:
@@ -192,7 +191,7 @@ func _direction_input(input : Vector2, input_crouch : bool, aim_node : Node3D) -
 	if is_fly_mode() or is_floating():
 		if input_up:
 			direction.y += 1.0
-		elif input_crouch:
+		elif input_down:
 			direction.y -= 1.0
 	else:
 		direction.y = 0	
