@@ -39,21 +39,21 @@ func setup():
 	head_bob.vertical_horizontal_ratio = vertical_horizontal_ratio
 	head_bob.setup_bob(step_interval * 2);
 	
-func _check_head_bob(_delta):
+func _check_head_bob(_delta, input_axis : Vector2):
 	head_bob.head_bob_process(horizontal_velocity, input_axis, is_sprinting(), is_on_floor(), _delta)
 	
 func rotate_head(mouse_axis : Vector2) -> void:
 	head.rotate_camera(mouse_axis)
 	
-func move(_delta: float):
+func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false):
 	if is_fly_mode() or is_floating():
 		direction_base_node = head
 	else:
 		direction_base_node = self
-	super.move(_delta)
+	super.move(_delta, input_axis, input_jump, input_crouch, input_sprint)
 	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
 		camera.set_fov(lerp(camera.fov, normal_fov * _fov_modifiers, _delta * fov_change_speed))
-	_check_head_bob(_delta)
+	_check_head_bob(_delta, input_axis)
 	
 func _on_jumped():
 	super._on_jumped()

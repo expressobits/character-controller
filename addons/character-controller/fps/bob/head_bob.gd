@@ -52,7 +52,7 @@ func _do_head_bob(speed: float, delta: float) -> Vector3:
 
 	return Vector3(x_pos,y_pos,0)
 	
-func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint, is_on_floor:bool, _delta:float):
+func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint:bool, is_on_floor:bool, _delta:float):
 	if jump_bop_enabled:
 		lerp_bob_curve.bob_process(_delta)
 	

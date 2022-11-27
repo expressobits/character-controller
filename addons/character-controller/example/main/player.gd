@@ -18,14 +18,19 @@ func _ready():
 	submerged.connect(_on_controller_subemerged.bind())
 	
 func _physics_process(delta):
-	input_axis = Input.get_vector(input_back_action_name, input_forward_action_name, input_left_action_name, input_right_action_name)
-	input_crouch = Input.is_action_pressed(input_crouch_action_name)
-	input_jump = Input.is_action_just_pressed(input_jump_action_name)
-	input_up = Input.is_action_pressed(input_jump_action_name)
-	input_sprint = Input.is_action_pressed(input_sprint_action_name)
-	if Input.is_action_just_pressed(input_fly_mode_action_name):
-		input_fly_mode = !input_fly_mode
-	move(delta)
+	var is_valid_input := Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	
+	if is_valid_input:
+		if Input.is_action_just_pressed(input_fly_mode_action_name):
+			fly_ability.set_active(not fly_ability.is_actived())
+		var input_axis = Input.get_vector(input_back_action_name, input_forward_action_name, input_left_action_name, input_right_action_name)
+		var input_crouch = Input.is_action_pressed(input_crouch_action_name)
+		var input_jump = Input.is_action_just_pressed(input_jump_action_name)
+		var input_up = Input.is_action_pressed(input_jump_action_name)
+		var input_sprint = Input.is_action_pressed(input_sprint_action_name)
+		move(delta, input_axis, input_jump, input_crouch, input_sprint)
+	else:
+		move(delta)
 	
 # Called when there is an input event
 func _input(event: InputEvent) -> void:
