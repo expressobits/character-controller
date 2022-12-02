@@ -71,7 +71,7 @@ func _get_audio_interact_of_object(collision):
 		return
 	var mat = collision.physics_material_override
 	if mat:
-		var i = physic_materials.find_last(mat)
+		var i = physic_materials.rfind(mat)
 		if i != -1:
 			audio_interact = audio_interacts[i]
 	
