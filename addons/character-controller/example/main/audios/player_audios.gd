@@ -69,6 +69,8 @@ func _get_audio_interact_of_object(collision):
 		return
 	if !collision:
 		return
+	if not "physics_material_override" in collision:
+		return
 	var mat = collision.physics_material_override
 	if mat:
 		var i = physic_materials.rfind(mat)
