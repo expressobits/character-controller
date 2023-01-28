@@ -1,5 +1,5 @@
 # Welcome to Expresso Character Controller 👋
-![Version](https://img.shields.io/badge/version-0.3.1-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-2.1.3-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -43,7 +43,7 @@ See in [Wiki](https://github.com/ExpressoBits/character-controller/wiki)
 * Twitter: [@ScriptsEngineer](https://twitter.com/ScriptsEngineer)
 * Github: [@scriptsengineer](https://github.com/scriptsengineer)
 
-Based on the plugin:
+Based on the plugin https://github.com/Whimfoome/godot-FirstPersonStarter:
 👤 **Whimfoome**
 * Github: [@Whimfoome](https://github.com/Whimfoome)
 
