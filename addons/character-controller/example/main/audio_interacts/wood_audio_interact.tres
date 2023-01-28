@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dx5kojv0cn4yl"]
+[gd_resource type="Resource" script_class="AudioInteract" load_steps=4 format=3 uid="uid://dx5kojv0cn4yl"]
 
 [ext_resource type="AudioStream" uid="uid://bfsapqnlf7can" path="res://addons/character-controller/example/main/jute-dh-steps/stepwood_1.wav" id="1_0irbh"]
 [ext_resource type="Script" path="res://addons/character-controller/example/main/audios/audio_interact.gd" id="1_h7qps"]
