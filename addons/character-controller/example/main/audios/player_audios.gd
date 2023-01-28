@@ -1,27 +1,27 @@
 extends Node3D
 
-@export_node_path(AudioStreamPlayer3D) var step_audio_path := NodePath("Step")
+@export_node_path("AudioStreamPlayer3D") var step_audio_path := NodePath("Step")
 @onready var step: AudioStreamPlayer3D = get_node(step_audio_path)
 
-@export_node_path(AudioStreamPlayer3D) var land_audio_path := NodePath("Land")
+@export_node_path("AudioStreamPlayer3D") var land_audio_path := NodePath("Land")
 @onready var land: AudioStreamPlayer3D = get_node(land_audio_path)
 
-@export_node_path(AudioStreamPlayer3D) var jump_audio_path := NodePath("Jump")
+@export_node_path("AudioStreamPlayer3D") var jump_audio_path := NodePath("Jump")
 @onready var jump: AudioStreamPlayer3D = get_node(jump_audio_path)
 
-@export_node_path(AudioStreamPlayer3D) var crouch_audio_path := NodePath("Crouch")
+@export_node_path("AudioStreamPlayer3D") var crouch_audio_path := NodePath("Crouch")
 @onready var crouch_audio: AudioStreamPlayer3D = get_node(crouch_audio_path)
 
-@export_node_path(AudioStreamPlayer3D) var uncrouch_audio_path := NodePath("Uncrouch")
+@export_node_path("AudioStreamPlayer3D") var uncrouch_audio_path := NodePath("Uncrouch")
 @onready var uncrouch_audio: AudioStreamPlayer3D = get_node(uncrouch_audio_path)
 
-@export_node_path(RayCast3D) var raycast_path := NodePath("Detect Ground")
+@export_node_path("RayCast3D") var raycast_path := NodePath("Detect Ground")
 @onready var raycast: RayCast3D = get_node(raycast_path)
 
-@export_node_path(CharacterBody3D) var character_body_path := NodePath("..")
+@export_node_path("CharacterBody3D") var character_body_path := NodePath("..")
 @onready var character_body: CharacterBody3D = get_node(character_body_path)
 
-@export_node_path(CharacterController3D) var character_controller_path := NodePath("..")
+@export_node_path("CharacterController3D") var character_controller_path := NodePath("..")
 @onready var character_controller: CharacterController3D = get_node(character_controller_path)
 
 @export var audio_interact : Resource

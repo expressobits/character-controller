@@ -2,7 +2,7 @@ extends Node
 
 class_name HeadBob
 
-@export_node_path(Camera3D) var head_path := NodePath("../Camera")
+@export_node_path("Camera3D") var head_path := NodePath("../Camera")
 @onready var head: Camera3D = get_node(head_path)
 
 
