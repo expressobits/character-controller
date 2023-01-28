@@ -2,7 +2,7 @@ extends Marker3D
 
 class_name HeadMovement
 
-@export_node_path(Camera3D) var cam_path := NodePath("Camera")
+@export_node_path("Camera3D") var cam_path := NodePath("Camera")
 @onready var cam: Camera3D = get_node(cam_path)
 
 @export var mouse_sensitivity := 0.002
