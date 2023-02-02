@@ -1,5 +1,5 @@
 # Welcome to Expresso Character Controller 👋
-![Version](https://img.shields.io/badge/version-2.1.3-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-2.1.4-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
