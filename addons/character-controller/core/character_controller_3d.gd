@@ -55,12 +55,13 @@ signal stopped_floating
 
 var abilities: Array[MovementAbility3D]
 
-func load_nodes(nodePaths: Array) -> Array:
-	var nodes := []
+func load_nodes(nodePaths: Array) -> Array[MovementAbility3D]:
+	var nodes : Array[MovementAbility3D]
 	for nodePath in nodePaths:
 		var node := get_node(nodePath)
 		if node != null:
-			nodes.append(node)
+			var ability = node as MovementAbility3D
+			nodes.append(ability)
 	return nodes
 
 var collision_path := NodePath("Collision")

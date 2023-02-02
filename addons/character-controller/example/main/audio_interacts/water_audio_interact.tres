@@ -8,4 +8,4 @@
 script = ExtResource("1_h7qps")
 jump_audio = ExtResource("1_bqhqy")
 landed_audio = ExtResource("2_d8xo7")
-step_audios = [ExtResource("1_bqhqy"), ExtResource("2_d8xo7")]
+step_audios = Array[AudioStream]([ExtResource("1_bqhqy"), ExtResource("2_d8xo7")])
