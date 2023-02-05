@@ -17,4 +17,19 @@ input_crouch_action_name = "move_crouch"
 input_fly_mode_action_name = "move_fly_mode"
 underwater_env = ExtResource("3_dxksd")
 
+[node name="Sprint Ability 3D" parent="." index="3"]
+active = null
+
+[node name="Crouch Ability 3D" parent="." index="4"]
+active = null
+
+[node name="Jump Ability 3D" parent="." index="5"]
+active = null
+
+[node name="Fly Ability 3D" parent="." index="6"]
+active = null
+
+[node name="Swim Ability 3D" parent="." index="7"]
+active = null
+
 [node name="Player Audios" parent="." index="9" instance=ExtResource("4_ux8kv")]

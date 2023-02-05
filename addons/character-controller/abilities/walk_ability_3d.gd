@@ -1,13 +1,14 @@
 extends MovementAbility3D
-
 class_name WalkAbility3D
+
+## Basic movement ability
 
 @export var acceleration := 8
 @export var deceleration := 10
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
 	
 func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
-	if not active:
+	if not is_actived():
 		return velocity
 	
 	# Using only the horizontal velocity, interpolate towards the input.

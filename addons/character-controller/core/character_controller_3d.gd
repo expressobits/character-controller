@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name CharacterController3D
 
+## Main class of the addon, which uses [MovementAbility3D] within the abilities array for character movements.
+
 signal stepped
 signal landed
 signal jumped
@@ -53,16 +55,8 @@ signal stopped_floating
 @export_group("Abilities")
 @export var abilities_path: Array[NodePath]
 
+## List of movement skills to be used in processing this class
 var abilities: Array[MovementAbility3D]
-
-func load_nodes(nodePaths: Array) -> Array[MovementAbility3D]:
-	var nodes : Array[MovementAbility3D]
-	for nodePath in nodePaths:
-		var node := get_node(nodePath)
-		if node != null:
-			var ability = node as MovementAbility3D
-			nodes.append(ability)
-	return nodes
 
 var collision_path := NodePath("Collision")
 var head_check_path := NodePath("Head Check")
@@ -98,10 +92,76 @@ var _fov_modifiers := 1.0
 
 func setup():
 	direction_base_node = self
-	abilities = load_nodes(abilities_path)
+	abilities = _load_nodes(abilities_path)
 	_default_height = collision.shape.height
 	_connect_signals()
 	_start_variables()
+
+
+func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false, input_swim_down := false, input_swim_up := false) -> void:
+	var direction = _direction_input(input_axis, input_swim_down, input_swim_up, direction_base_node)
+	if not swim_ability.is_floating():
+		_check_landed()
+	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
+		velocity.y -= gravity * _delta
+	
+	swim_ability.set_active(!fly_ability.is_actived())
+	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
+	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
+	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode())
+	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
+	
+	var multiplier = 1.0
+	for ability in abilities:
+		multiplier *= ability.get_speed_modifier()
+	speed = normal_speed * _speed_modifiers * multiplier
+	
+	for ability in abilities:
+		velocity = ability.apply(velocity, speed, is_on_floor(), direction, _delta)
+	
+	move_and_slide()
+	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
+	
+	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
+		_check_step(_delta)
+
+
+func reset_step():
+	next_step = step_cycle + step_interval
+
+
+func is_crouching():
+	return crouch_ability.is_actived()
+
+
+func is_sprinting():
+	return sprint_ability.is_actived()
+
+
+func is_fly_mode():
+	return fly_ability.is_actived()
+
+
+func get_speed():
+	return speed
+	
+
+func is_on_water():
+	return swim_ability.is_on_water()
+
+
+func is_submerged():
+	return swim_ability.is_submerged()
+
+
+func _load_nodes(nodePaths: Array) -> Array[MovementAbility3D]:
+	var nodes : Array[MovementAbility3D]
+	for nodePath in nodePaths:
+		var node := get_node(nodePath)
+		if node != null:
+			var ability = node as MovementAbility3D
+			nodes.append(ability)
+	return nodes
 
 
 func _connect_signals():
@@ -137,34 +197,6 @@ func _start_variables():
 	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
 
 
-func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_crouch := false, input_sprint := false, input_swim_down := false, input_swim_up := false) -> void:
-	var direction = _direction_input(input_axis, input_swim_down, input_swim_up, direction_base_node)
-	if not swim_ability.is_floating():
-		_check_landed()
-	if not jump_ability.is_actived() and not is_fly_mode() and not is_submerged() and not is_floating():
-		velocity.y -= gravity * _delta
-	
-	swim_ability.set_active(!fly_ability.is_actived())
-	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
-	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
-	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode())
-	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
-	
-	var multiplier = 1.0
-	for ability in abilities:
-		multiplier *= ability.get_speed_modifier()
-	speed = normal_speed * _speed_modifiers * multiplier
-	
-	for ability in abilities:
-		velocity = ability.apply(velocity, speed, is_on_floor(), direction, _delta)
-	
-	move_and_slide()
-	horizontal_velocity = Vector3(velocity.x, 0.0, velocity.z)
-	
-	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
-		_check_step(_delta)
-
-
 func _check_landed():
 	if is_on_floor() and not _last_is_on_floor:
 		emit_signal("landed")
@@ -173,7 +205,7 @@ func _check_landed():
 	
 
 func _check_step(_delta):
-	if is_step(horizontal_velocity.length(), is_on_floor(), _delta):
+	if _is_step(horizontal_velocity.length(), is_on_floor(), _delta):
 		_step(is_on_floor())
 
 
@@ -207,39 +239,11 @@ func _step(is_on_floor:bool) -> bool:
 	return false
 
 
-func reset_step():
-	next_step = step_cycle + step_interval
-
-
-func is_crouching():
-	return crouch_ability.is_actived()
-
-
-func is_sprinting():
-	return sprint_ability.is_actived()
-
-
-func is_fly_mode():
-	return fly_ability.is_actived()
-
-
-func get_speed():
-	return speed
-	
-
-func is_on_water():
-	return swim_ability.is_on_water()
-
-
-func is_submerged():
-	return swim_ability.is_submerged()
-
-
 func is_floating():
 	return swim_ability.is_floating()
 
 
-func is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
+func _is_step(velocity:float, is_on_floor:bool, _delta:float) -> bool:
 	if(abs(velocity) < 0.1):
 		return false
 	step_cycle = step_cycle + ((velocity + step_lengthen) * _delta)

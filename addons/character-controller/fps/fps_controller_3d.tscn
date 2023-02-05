@@ -18,6 +18,21 @@ rotation_to_move = true
 speed_rotation = 4.0
 angle_limit_for_rotation = 0.1
 
+[node name="Sprint Ability 3D" parent="." index="3"]
+active = null
+
+[node name="Crouch Ability 3D" parent="." index="4"]
+active = null
+
+[node name="Jump Ability 3D" parent="." index="5"]
+active = null
+
+[node name="Fly Ability 3D" parent="." index="6"]
+active = null
+
+[node name="Swim Ability 3D" parent="." index="7"]
+active = null
+
 [node name="Head" type="Marker3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
 script = ExtResource("3_it6yb")
