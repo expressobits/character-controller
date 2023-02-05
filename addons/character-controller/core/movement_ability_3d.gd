@@ -10,8 +10,10 @@ var _last_active := false
 
 ## Emitted when ability has been active, is called when [b]set_active()[/b] is set to true
 signal actived
+
 ## Emitted when ability has been deactive, is called when [b]set_active()[/b] is set to false
 signal deactived
+
 
 ## Returns a speed modifier, 
 ## useful for abilities that when active can change the overall speed of the [CharacterController3D], for example the [SprintAbility3D].

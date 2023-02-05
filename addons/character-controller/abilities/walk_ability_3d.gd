@@ -3,10 +3,17 @@ class_name WalkAbility3D
 
 ## Basic movement ability
 
+## Time for the character to reach full speed
 @export var acceleration := 8
+
+## Time for the character to stop walking
 @export var deceleration := 10
+
+## Sets control in the air
 @export_range(0.0, 1.0, 0.05) var air_control := 0.3
-	
+
+
+## Takes direction of movement from input and turns it into horizontal velocity
 func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
 	if not is_actived():
 		return velocity
