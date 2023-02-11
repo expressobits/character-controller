@@ -1,32 +1,29 @@
 extends Node3D
+class_name PlayerAudios3D
 
-@export_node_path("AudioStreamPlayer3D") var step_audio_path := NodePath("Step")
-@onready var step: AudioStreamPlayer3D = get_node(step_audio_path)
+## Script that plays sounds based on player actions.
+## Using an [AudioInteract] array synchronized with physic_materials array to 
+## identify different sound structures for each type of physical material.
 
-@export_node_path("AudioStreamPlayer3D") var land_audio_path := NodePath("Land")
-@onready var land: AudioStreamPlayer3D = get_node(land_audio_path)
+@onready var step_stream: AudioStreamPlayer3D = get_node(NodePath("Step"))
+@onready var land_stream: AudioStreamPlayer3D = get_node(NodePath("Land"))
+@onready var jump_stream: AudioStreamPlayer3D = get_node(NodePath("Jump"))
+@onready var crouch_stream: AudioStreamPlayer3D = get_node(NodePath("Crouch"))
+@onready var uncrouch_stream: AudioStreamPlayer3D = get_node(NodePath("Uncrouch"))
+@onready var raycast: RayCast3D = get_node(NodePath("Detect Ground"))
+@onready var character_body: CharacterBody3D = get_node(NodePath(".."))
+@onready var character_controller: CharacterController3D = get_node(NodePath(".."))
 
-@export_node_path("AudioStreamPlayer3D") var jump_audio_path := NodePath("Jump")
-@onready var jump: AudioStreamPlayer3D = get_node(jump_audio_path)
-
-@export_node_path("AudioStreamPlayer3D") var crouch_audio_path := NodePath("Crouch")
-@onready var crouch_audio: AudioStreamPlayer3D = get_node(crouch_audio_path)
-
-@export_node_path("AudioStreamPlayer3D") var uncrouch_audio_path := NodePath("Uncrouch")
-@onready var uncrouch_audio: AudioStreamPlayer3D = get_node(uncrouch_audio_path)
-
-@export_node_path("RayCast3D") var raycast_path := NodePath("Detect Ground")
-@onready var raycast: RayCast3D = get_node(raycast_path)
-
-@export_node_path("CharacterBody3D") var character_body_path := NodePath("..")
-@onready var character_body: CharacterBody3D = get_node(character_body_path)
-
-@export_node_path("CharacterController3D") var character_controller_path := NodePath("..")
-@onready var character_controller: CharacterController3D = get_node(character_controller_path)
-
+## Default audio interact used
 @export var audio_interact : Resource
+
+## List of [PhysicsMaterial] synchronized with the [AudioInteract] list
 @export var physic_materials : Array[PhysicsMaterial]
+
+## List of [AudioInteract] synchronized with the [PhysicsMaterial] list
 @export var audio_interacts : Array[Resource]
+
+## Specific case of audio interact that occurs when we are in the water
 @export var water_audio_interact : Resource
 
 func _ready():
@@ -40,21 +37,21 @@ func _ready():
 	character_controller.exit_the_water.connect(_on_controller_exit_the_water.bind())
 
 func _on_controller_jumped():
-	jump.stream = audio_interact.jump_audio
-	jump.play()
+	jump_stream.stream = audio_interact.jump_audio
+	jump_stream.play()
 	
 
 func _on_controller_landed():
 	_get_audio_interact()
-	land.stream = audio_interact.landed_audio
-	land.play()
+	land_stream.stream = audio_interact.landed_audio
+	land_stream.play()
 	
 
 func _on_controller_stepped():
 	var collision = raycast.get_collider()
 	_get_audio_interact_of_object(collision)
-	step.stream = audio_interact.random_step()
-	step.play()
+	step_stream.stream = audio_interact.random_step()
+	step_stream.play()
 	
 	
 func _get_audio_interact():
@@ -76,23 +73,22 @@ func _get_audio_interact_of_object(collision):
 		var i = physic_materials.rfind(mat)
 		if i != -1:
 			audio_interact = audio_interacts[i]
-	
 
 
 func _on_controller_crouched():
-	crouch_audio.play()
+	crouch_stream.play()
 
 
 func _on_controller_uncrouched():
-	uncrouch_audio.play()
+	uncrouch_stream.play()
 
 
 func _on_controller_entered_the_water():
 	audio_interact = water_audio_interact
-	land.stream = audio_interact.landed_audio
-	land.play()
+	land_stream.stream = audio_interact.landed_audio
+	land_stream.play()
 
 
 func _on_controller_exit_the_water():
-	jump.stream = audio_interact.jump_audio
-	jump.play()
+	jump_stream.stream = audio_interact.jump_audio
+	jump_stream.play()
