@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dr814b7u4f0a5"]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/player_audios.gd" id="1_5jhob"]
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/player_audios_3d.gd" id="1_5jhob"]
 [ext_resource type="Resource" uid="uid://boafje76qrf27" path="res://addons/character-controller/example/main/audio_interacts/grass_audio_interact.tres" id="2_m88gv"]
 [ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="3_pjbyl"]
 [ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="4_qrhb1"]

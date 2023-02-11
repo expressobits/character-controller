@@ -1,18 +1,41 @@
 extends MovementAbility3D
-
 class_name SwimAbility3D
 
+## swimming ability of [CharacterController3D].
+## 
+## There are three possible states: 
+## - Touching water
+## - floating in water
+## - Submerged
+##
+## Note: the [b]actived[/b] and [b]deactived[/b] signals are emitted when it is 
+## submerged(active) and surfaced(deactived)
+
+## Emitted when character controller touched water
 signal entered_the_water
+
+## Emitted when character controller stopped touching water
 signal exit_the_water
+
+## Emitted when we start to float in water
 signal started_floating
+
+## Emitted when we stop to float in water
 signal stopped_floating
 
+## Minimum height for [CharacterController3D] to be completely submerged in water.
 @export var submerged_height := 0.36
+
+## Minimum height for [CharacterController3D] to be float in water.
 @export var floating_height := 0.55
+
+## Speed multiplier when floating water
 @export var on_water_speed_multiplier := 0.75
+
+## Speed multiplier when submerged water
 @export var submerged_speed_multiplier := 0.5
-var raycast_path := NodePath("RayCast3D")
-@onready var raycast: RayCast3D = get_node(raycast_path)
+
+@onready var _raycast: RayCast3D = get_node(NodePath("RayCast3D"))
 
 var _is_on_water := false
 var _is_floating := false
@@ -29,10 +52,10 @@ func get_speed_modifier() -> float:
 		return super.get_speed_modifier()
 		
 func set_active(a : bool) -> void:
-	_is_on_water = raycast.is_colliding()
+	_is_on_water = _raycast.is_colliding()
 	
 	if _is_on_water:
-		_depth_on_water = -raycast.to_local(raycast.get_collision_point()).y
+		_depth_on_water = -_raycast.to_local(_raycast.get_collision_point()).y
 	else:
 		_depth_on_water = 2.1
 		
@@ -55,7 +78,7 @@ func set_active(a : bool) -> void:
 func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
 	if not is_floating():
 		return velocity
-	var depth = get_floating_height() - get_depth_on_water()
+	var depth = floating_height - get_depth_on_water()
 	velocity = direction * speed
 #	if depth < 0.1: && !is_fly_mode():
 	if depth < 0.1:
@@ -64,22 +87,24 @@ func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vec
 	return velocity
 
 
+## Returns true if we are touching the water
 func is_on_water() -> bool:
 	return _is_on_water
 
 
+## Returns true if we are floating in water
 func is_floating() -> bool:
 	return _is_floating
 
 
+## Returns true if we are submerged in water
 func is_submerged() -> bool:
 	return is_actived()
 
 
-func get_floating_height() -> float:
-	return floating_height
-
-
+## Returns the height of the water in [Character Controller 3D].
+## 2.1 or more - Above water level
+## 2 - If it's touching our feet
+## 0 - If we just got submerged
 func get_depth_on_water() -> float:
 	return _depth_on_water
-

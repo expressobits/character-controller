@@ -1,31 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmybavw6ey5w8"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" uid="uid://ciu2qgckgu5sr" path="res://addons/character-controller/core/controller.tscn" id="1_l26lu"]
 [ext_resource type="Script" path="res://addons/character-controller/fps/fps_controller_3d.gd" id="2_426o3"]
-[ext_resource type="Script" path="res://addons/character-controller/fps/head_movement.gd" id="3_it6yb"]
+[ext_resource type="Script" path="res://addons/character-controller/fps/head_movement_3d.gd" id="3_pqlf6"]
 [ext_resource type="Script" path="res://addons/character-controller/fps/bob/head_bob.gd" id="4_6ym6a"]
 [ext_resource type="Curve" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="5_cv58a"]
-[ext_resource type="Resource" path="res://addons/character-controller/fps/bob/lerp_curve.tres" id="6_cgstf"]
+[ext_resource type="Resource" path="res://addons/character-controller/fps/bob/jump_curve.tres" id="6_cgstf"]
 
 [node name="FPSController3D" instance=ExtResource("1_l26lu")]
 script = ExtResource("2_426o3")
+fov_change_speed = 4
+sprint_fov_multiplier = 1.1
+crouch_fov_multiplier = 0.95
+swim_fov_multiplier = 1.0
 mouse_sensitivity = 2.0
 vertical_angle_limit = 90.0
 step_bob_enabled = true
 vertical_horizontal_ratio = 2
-jump_bop_enabled = true
+jump_bob_enabled = true
 rotation_to_move = true
 speed_rotation = 4.0
 angle_limit_for_rotation = 0.1
 
 [node name="Head" type="Marker3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
-script = ExtResource("3_it6yb")
+script = ExtResource("3_pqlf6")
 
 [node name="Camera" type="Camera3D" parent="Head" index="0"]
 current = true
 
 [node name="Head Bob" type="Node" parent="Head" index="1"]
 script = ExtResource("4_6ym6a")
+head_path = NodePath("../Camera")
 bob_curve = ExtResource("5_cv58a")
 lerp_bob_curve = ExtResource("6_cgstf")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://addons/character-controller/fps/bob/lerp_bob_curve.gd" id="1_xot37"]
+[ext_resource type="Script" path="res://addons/character-controller/fps/bob/timed_bob_curve.gd" id="1_xot37"]
 
 [resource]
 script = ExtResource("1_xot37")

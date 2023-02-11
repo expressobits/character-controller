@@ -1,22 +1,18 @@
 extends Node3D
 
-#-----------------SCENE--SCRIPT------------------#
-#    Close your game faster by clicking 'Esc'    #
-#   Change mouse mode by clicking 'Shift + F1'   #
-#------------------------------------------------#
+## Base class for demo level.
+## Manages mouse inputs and their capture.
 
+## If true, Esc key quit game
 @export var fast_close := true
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	
 	if !OS.is_debug_build():
 		fast_close = false
-	
 	if fast_close:
-		print("** Fast Close enabled in the 'L_Main.gd' script **")
+		print("** Fast Close enabled in the 'level.gd' script **")
 		print("** 'Esc' to close 'Shift + F1' to release mouse **")
-	
 	set_process_input(fast_close)
 
 
