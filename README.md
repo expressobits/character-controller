@@ -1,5 +1,5 @@
-# Welcome to Expresso Character Controller 👋
-![Version](https://img.shields.io/badge/version-2.1.4-blue.svg?cacheSeconds=2592000)
+# <img src="https://raw.githubusercontent.com/expressobits/character-controller/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Character Controller 👋
+![Version](https://img.shields.io/badge/version-2.1.5-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -40,11 +40,14 @@ See in [Wiki](https://github.com/ExpressoBits/character-controller/wiki)
 ## Authors
 
 👤 **Rafael Correa**
+
 * Twitter: [@ScriptsEngineer](https://twitter.com/ScriptsEngineer)
 * Github: [@scriptsengineer](https://github.com/scriptsengineer)
 
 Based on the plugin https://github.com/Whimfoome/godot-FirstPersonStarter:
+
 👤 **Whimfoome**
+
 * Github: [@Whimfoome](https://github.com/Whimfoome)
 
 ## 🤝 Contributing
