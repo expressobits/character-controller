@@ -31,7 +31,7 @@ class_name HeadBob
 @export var jump_bob_enabled := true
 
 ## Resource that stores information from bob lerp jump
-@export var lerp_bob_curve : LerpBobCurve
+@export var timed_bob_curve : TimedBobCurve
 
 
 @export_group("Rotation To Move (Quake Like)")
@@ -79,8 +79,8 @@ func setup_step_bob(step_interval: float):
 
 ## Applies step headbob and rotation headbob (quake style).
 func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint:bool, is_on_floor:bool, _delta:float):
-	if lerp_bob_curve:
-		lerp_bob_curve.bob_process(_delta)
+	if timed_bob_curve:
+		timed_bob_curve.bob_process(_delta)
 	
 	var new_position = original_position
 	var new_rotation = original_rotation
@@ -89,8 +89,8 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 		if is_on_floor:
 			new_position += headpos
 			
-	if lerp_bob_curve:
-		new_position.y -= lerp_bob_curve.offset
+	if timed_bob_curve:
+		timed_bob_curve.y -= timed_bob_curve.offset
 		
 	
 	if is_sprint:
@@ -104,8 +104,8 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 
 ## Apply headbob jump
 func do_bob_jump():
-	if lerp_bob_curve:
-		lerp_bob_curve.do_bob_cycle()
+	if timed_bob_curve:
+		timed_bob_curve.do_bob_cycle()
 
 
 ## Resets head bob step cycles
