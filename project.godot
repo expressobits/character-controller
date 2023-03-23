@@ -15,6 +15,10 @@ run/main_scene="res://addons/character-controller/example/main/level.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.png"
 
+[dotnet]
+
+project/assembly_name="character-controller"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/character-controller/plugin.cfg")

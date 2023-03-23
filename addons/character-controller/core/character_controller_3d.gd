@@ -62,6 +62,9 @@ signal started_floating
 ## minimum height defined in [b]floating_height[/b].
 signal stopped_floating
 
+## Emitted when an object in the interact raycast is detected.
+signal throwing_interactive
+
 
 @export_group("Movement")
 
@@ -142,6 +145,10 @@ signal stopped_floating
 ## List of movement skills to be used in processing this class.
 @export var abilities_path: Array[NodePath]
 
+@export_group("Interaction")
+## List of properties for Interaction
+@export var group_for_interactions := "interactive"
+
 ## List of movement skills to be used in processing this class.
 var _abilities: Array[MovementAbility3D]
  
@@ -187,6 +194,9 @@ var _direction_base_node : Node3D
 
 ## Swimming ability.
 @onready var swim_ability: SwimAbility3D = get_node(NodePath("Swim Ability 3D"))
+
+## Interact collider
+@onready var interact_collider: RayCast3D = get_node(NodePath("Interact Collider"))
 
 ## Stores normal speed
 @onready var _normal_speed: int = speed
@@ -240,6 +250,17 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 ## Returns true if the character controller is crouched
 func is_crouching() -> bool:
 	return crouch_ability.is_actived()
+
+
+func interact(interact := false):
+	# Return anything hitting the raycast collider
+	print("Interact thrown")
+	var collider = interact_collider.get_collider()
+	if collider != null:
+		if collider.is_in_group(group_for_interactions):
+			print("Player is facing an interactive")
+			emit_signal("throwing_interactive")
+			collider.interact()
 
 
 ## Returns true if the character controller is sprinting

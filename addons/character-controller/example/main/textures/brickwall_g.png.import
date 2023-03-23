@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/brickwall_g.png-94d2e7075454cf3ab1278b97aa90e
 [params]
 
 compress/mode=3
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
