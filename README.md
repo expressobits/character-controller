@@ -22,8 +22,6 @@
 
 ✔️ Crouch Ability
 
-✔️ Crouch Ability
-
 ✔️ Fly Mode Ability
 
 ✔️ Jump Ability
