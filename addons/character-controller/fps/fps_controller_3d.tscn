@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://8oy3xm2sff8"]
 
 [ext_resource type="PackedScene" uid="uid://ciu2qgckgu5sr" path="res://addons/character-controller/core/controller.tscn" id="1_l26lu"]
 [ext_resource type="Script" path="res://addons/character-controller/fps/fps_controller_3d.gd" id="2_426o3"]
 [ext_resource type="Script" path="res://addons/character-controller/fps/head_movement_3d.gd" id="3_pqlf6"]
 [ext_resource type="Script" path="res://addons/character-controller/fps/bob/head_bob.gd" id="4_6ym6a"]
 [ext_resource type="Curve" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="5_cv58a"]
-[ext_resource type="Resource" path="res://addons/character-controller/fps/bob/jump_curve.tres" id="6_cgstf"]
 
 [node name="FPSController3D" instance=ExtResource("1_l26lu")]
 script = ExtResource("2_426o3")
@@ -33,4 +32,3 @@ current = true
 script = ExtResource("4_6ym6a")
 head_path = NodePath("../Camera")
 bob_curve = ExtResource("5_cv58a")
-lerp_bob_curve = ExtResource("6_cgstf")
