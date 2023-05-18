@@ -13,6 +13,9 @@ class_name HeadMovement3D
 ## Actual rotation of movement
 var actual_rotation := Vector3()
 
+func _ready() -> void:
+	actual_rotation.y = get_owner().rotation.y
+
 
 ## Define mouse sensitivity
 func set_mouse_sensitivity(sensitivity):
