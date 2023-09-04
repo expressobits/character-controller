@@ -90,7 +90,7 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 			new_position += headpos
 			
 	if timed_bob_curve:
-		timed_bob_curve.y -= timed_bob_curve.offset
+		new_position.y -= timed_bob_curve.get_offset()
 		
 	
 	if is_sprint:

@@ -38,9 +38,9 @@ func bob_process(delta):
 		print("sdas")
 		_time -= delta
 		if(_direction):
-			_offset = lerp(0.0, amount, _time/_direction)
+			_offset = lerp(0.0, amount, _time/duration)
 		else:
-			_offset = lerp(amount, 0.0, _time/_direction)
+			_offset = lerp(amount, 0.0, _time/duration)
 		if(_time < 0 && !_direction):
 			_back_do_bob_cycle()
 
