@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TimedBobCurve" load_steps=2 format=3 uid="uid://duu5m0sajkuix"]
+
+[ext_resource type="Script" path="res://addons/character-controller/fps/bob/TimedBobCurve.cs" id="1_rgp08"]
+
+[resource]
+script = ExtResource("1_rgp08")
+Duration = 0.72
+Amount = 0.45

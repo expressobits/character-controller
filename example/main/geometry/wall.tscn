@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbfe8rkt51tf8"]
+
+[ext_resource type="Material" uid="uid://ckvcdcn2iue87" path="res://addons/character-controller/example/main/materials/wood.tres" id="1_7lrh3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7y6gq"]
+size = Vector3(40, 12, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_y0tdx"]
+data = PackedVector3Array(-20, 6, 0.5, 20, 6, 0.5, -20, -6, 0.5, 20, 6, 0.5, 20, -6, 0.5, -20, -6, 0.5, 20, 6, -0.5, -20, 6, -0.5, 20, -6, -0.5, -20, 6, -0.5, -20, -6, -0.5, 20, -6, -0.5, 20, 6, 0.5, 20, 6, -0.5, 20, -6, 0.5, 20, 6, -0.5, 20, -6, -0.5, 20, -6, 0.5, -20, 6, -0.5, -20, 6, 0.5, -20, -6, -0.5, -20, 6, 0.5, -20, -6, 0.5, -20, -6, -0.5, 20, 6, 0.5, -20, 6, 0.5, 20, 6, -0.5, -20, 6, 0.5, -20, 6, -0.5, 20, 6, -0.5, -20, -6, 0.5, 20, -6, 0.5, -20, -6, -0.5, 20, -6, 0.5, 20, -6, -0.5, -20, -6, -0.5)
+
+[node name="Wall" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_7y6gq")
+surface_material_override/0 = ExtResource("1_7lrh3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_y0tdx")

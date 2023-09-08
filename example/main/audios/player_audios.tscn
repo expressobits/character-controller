@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/PlayerAudios3D.cs" id="1_5jhob"]
+[ext_resource type="Resource" uid="uid://boafje76qrf27" path="res://addons/character-controller/example/main/audio_interacts/grass_audio_interact.tres" id="2_m88gv"]
+[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="3_pjbyl"]
+[ext_resource type="PhysicsMaterial" uid="uid://bklf2cx3fydt3" path="res://addons/character-controller/example/main/physics/stone.tres" id="4_qrhb1"]
+[ext_resource type="Resource" uid="uid://ci8kg40ae4vnl" path="res://addons/character-controller/example/main/audio_interacts/stone_audio_interact.tres" id="5_fv0qi"]
+[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/wood.tres" id="5_vfwfh"]
+[ext_resource type="Resource" uid="uid://clro80qf2tdqi" path="res://addons/character-controller/example/main/audio_interacts/water_audio_interact.tres" id="6_fohsf"]
+[ext_resource type="Resource" uid="uid://dx5kojv0cn4yl" path="res://addons/character-controller/example/main/audio_interacts/wood_audio_interact.tres" id="7_483qj"]
+[ext_resource type="AudioStream" uid="uid://dyj8811150sq5" path="res://addons/character-controller/example/main/jute-dh-steps/stepdirt_1.wav" id="9_pghw8"]
+
+[node name="Player Audios" type="Node3D"]
+script = ExtResource("1_5jhob")
+audio_interact = ExtResource("2_m88gv")
+physic_materials = [ExtResource("3_pjbyl"), ExtResource("4_qrhb1"), ExtResource("5_vfwfh")]
+audio_interacts = [ExtResource("2_m88gv"), ExtResource("5_fv0qi"), ExtResource("7_483qj")]
+water_audio_interact = ExtResource("6_fohsf")
+
+[node name="Jump" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_pghw8")
+attenuation_filter_db = -65.4
+
+[node name="Step" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_pghw8")
+attenuation_filter_db = -65.4
+
+[node name="Land" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_pghw8")
+attenuation_filter_db = -65.4
+
+[node name="Crouch" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_pghw8")
+attenuation_filter_db = -65.4
+
+[node name="Uncrouch" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_pghw8")
+attenuation_filter_db = -65.4
+
+[node name="Detect Ground" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1.5, 0)

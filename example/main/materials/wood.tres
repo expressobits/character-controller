@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ckvcdcn2iue87"]
+
+[ext_resource type="Texture2D" uid="uid://q3ivnhsfep4v" path="res://addons/character-controller/example/main/textures/wood.png" id="1_qdvry"]
+
+[resource]
+albedo_texture = ExtResource("1_qdvry")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0

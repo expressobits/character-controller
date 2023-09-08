@@ -1,19 +1,19 @@
 [gd_scene load_steps=9 format=3 uid="uid://ciu2qgckgu5sr"]
 
-[ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="11_obyn2"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="12_3irqv"]
+[ext_resource type="Script" path="res://addons/character-controller/core/CharacterController3D.cs" id="1_snllq"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/CrouchAbility3D.cs" id="7_kh76d"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/SprintAbility3D.cs" id="8_8b02o"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/WalkAbility3D.cs" id="9_laych"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/JumpAbility3D.cs" id="10_abxar"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/FlyAbility3D.cs" id="11_obyn2"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/SwimAbility3D.cs" id="12_3irqv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
 [node name="CharacterController3D" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
-abilities_path = Array[NodePath]([NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D")])
+AbilitiesPath = [NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D")]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")

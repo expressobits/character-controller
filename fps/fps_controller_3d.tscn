@@ -1,25 +1,25 @@
 [gd_scene load_steps=6 format=3 uid="uid://8oy3xm2sff8"]
 
 [ext_resource type="PackedScene" uid="uid://ciu2qgckgu5sr" path="res://addons/character-controller/core/controller.tscn" id="1_l26lu"]
-[ext_resource type="Script" path="res://addons/character-controller/fps/fps_controller_3d.gd" id="2_426o3"]
-[ext_resource type="Script" path="res://addons/character-controller/fps/head_movement_3d.gd" id="3_pqlf6"]
-[ext_resource type="Script" path="res://addons/character-controller/fps/bob/head_bob.gd" id="4_6ym6a"]
-[ext_resource type="Curve" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="5_cv58a"]
+[ext_resource type="Script" path="res://addons/character-controller/fps/FPSController3D.cs" id="2_426o3"]
+[ext_resource type="Script" path="res://addons/character-controller/fps/HeadMovement3D.cs" id="3_pqlf6"]
+[ext_resource type="Script" path="res://addons/character-controller/fps/bob/HeadBob.cs" id="4_6ym6a"]
+[ext_resource type="Resource" uid="uid://duu5m0sajkuix" path="res://addons/character-controller/fps/bob/timed_bob_curve.tres" id="5_andmv"]
 
 [node name="FPSController3D" instance=ExtResource("1_l26lu")]
 script = ExtResource("2_426o3")
-fov_change_speed = 4
-sprint_fov_multiplier = 1.1
-crouch_fov_multiplier = 0.95
-swim_fov_multiplier = 1.0
-mouse_sensitivity = 2.0
-vertical_angle_limit = 90.0
-step_bob_enabled = true
-vertical_horizontal_ratio = 2
-jump_bob_enabled = true
-rotation_to_move = true
-speed_rotation = 4.0
-angle_limit_for_rotation = 0.1
+FovChangeSpeed = 4.0
+SprintFovMultiplier = 1.1
+CrouchFovMultiplier = 0.95
+SwimFovMultiplier = 1.0
+MouseSensitivity = 2.0
+VerticalAngleLimit = 90.0
+StepBobEnabled = true
+VerticalHorizontalRatio = 2.0
+JumpBobEnabled = true
+RotationToMove = true
+SpeedRotation = 4.0
+AngleLimitForRotation = 0.1
 
 [node name="Head" type="Marker3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
@@ -30,5 +30,5 @@ current = true
 
 [node name="Head Bob" type="Node" parent="Head" index="1"]
 script = ExtResource("4_6ym6a")
-head_path = NodePath("../Camera")
-bob_curve = ExtResource("5_cv58a")
+HeadPath = NodePath("../Camera")
+TimedBobCurve = ExtResource("5_andmv")
