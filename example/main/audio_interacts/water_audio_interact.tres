@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://clro80qf2tdqi"]
+
+[ext_resource type="AudioStream" uid="uid://btyn2jp6i5s8l" path="res://addons/character-controller/example/main/jute-dh-steps/stepwater_1.wav" id="1_bqhqy"]
+[ext_resource type="Script" path="res://addons/character-controller/example/main/audios/AudioInteract.cs" id="1_h7qps"]
+[ext_resource type="AudioStream" uid="uid://b3me04d8q11xf" path="res://addons/character-controller/example/main/jute-dh-steps/stepwater_2.wav" id="2_d8xo7"]
+
+[resource]
+script = ExtResource("1_h7qps")
+JumpAudio = ExtResource("1_bqhqy")
+LandedAudio = ExtResource("2_d8xo7")
+StepAudios = [ExtResource("1_bqhqy"), ExtResource("2_d8xo7")]
