@@ -55,8 +55,6 @@ public partial class Player : FPSController3D
         {
             RotateHead(eventMouseMotion.Relative);
         }
-                    var root = Engine.GetMainLoop().Get("GetTree");
-            GD.Print((ReferenceEquals(root, null)));
     }
 
     private void OnControllerEmerged()
