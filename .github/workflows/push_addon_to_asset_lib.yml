@@ -27,7 +27,7 @@ jobs:
     - name: set_plugin_version
       id: set_plugin_version
       run: |
-        VERSION=$(grep version addons/character-controller/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
+        VERSION=$(grep version= addons/character-controller/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
         echo "PLUGIN_VERSION=${VERSION}" >> $GITHUB_ENV
 
     - name: Godot Asset Lib
