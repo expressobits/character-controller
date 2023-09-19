@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://wh8m6jb8ktpj"]
+
+[ext_resource type="Texture2D" uid="uid://bvvc2rijdu6hy" path="res://addons/character-controller/example/main/textures/water01.png" id="1_121nf"]
+
+[resource]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0.631373, 1, 0.729412)
+albedo_texture = ExtResource("1_121nf")
+uv1_triplanar = true
+texture_filter = 0

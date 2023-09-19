@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3wdcta6c4k4t"]
+
+[ext_resource type="Material" uid="uid://2ciy11rdndma" path="res://addons/character-controller/example/main/materials/grass.tres" id="1_sl4h5"]
+[ext_resource type="PhysicsMaterial" path="res://addons/character-controller/example/main/physics/grass.tres" id="2_3we8r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_srxwf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kxdy3"]
+
+[node name="Floor" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_srxwf")
+surface_material_override/0 = ExtResource("1_sl4h5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = ExtResource("2_3we8r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_kxdy3")
