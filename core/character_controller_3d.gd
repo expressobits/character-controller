@@ -220,7 +220,7 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
 	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode())
-	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
+	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.y >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
 	
 	var multiplier = 1.0
 	for ability in _abilities:
@@ -334,13 +334,13 @@ func _check_step(_delta):
 func _direction_input(input : Vector2, input_down : bool, input_up : bool, aim_node : Node3D) -> Vector3:
 	_direction = Vector3()
 	var aim = aim_node.get_global_transform().basis
-	if input.x >= 0.5:
-		_direction -= aim.z
-	if input.x <= -0.5:
-		_direction += aim.z
-	if input.y <= -0.5:
-		_direction -= aim.x
 	if input.y >= 0.5:
+		_direction -= aim.z
+	if input.y <= -0.5:
+		_direction += aim.z
+	if input.x <= -0.5:
+		_direction -= aim.x
+	if input.x >= 0.5:
 		_direction += aim.x
 	# NOTE: For free-flying and swimming movements
 	if is_fly_mode() or is_floating():
