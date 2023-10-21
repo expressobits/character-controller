@@ -321,7 +321,7 @@ func _start_variables():
 
 func _check_landed():
 	if is_on_floor() and not _last_is_on_floor:
-		emit_signal("landed")
+		_on_landed()
 		_reset_step()
 	_last_is_on_floor = is_on_floor()
 	
@@ -393,6 +393,10 @@ func _on_sprinted():
 
 func _on_jumped():
 	emit_signal("jumped")
+
+
+func _on_landed():
+	emit_signal("landed")
 
 
 func _on_swim_ability_emerged():
