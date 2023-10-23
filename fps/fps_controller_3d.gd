@@ -36,7 +36,10 @@ class_name FPSController3D
 @export_group("Head Bob - Steps")
 
 ## Enables bob for made steps
-@export var step_bob_enabled := true
+@export var step_bob_enabled := true:
+	set(value):
+		if head_bob != null:
+			head_bob.step_bob_enabled = value
 
 ## Difference of step bob movement between vertical and horizontal angle
 @export var vertical_horizontal_ratio = 2
@@ -45,13 +48,19 @@ class_name FPSController3D
 @export_group("Head Bob - Jump")
 
 ## Enables bob for made jumps
-@export var jump_bob_enabled := true
+@export var jump_bob_enabled := true:
+	set(value):
+		if head_bob != null:
+			head_bob.jump_bob_enabled = value
 
 
 @export_group("Head Bob - Rotation When Move (Quake Like)")
 
 ## Enables camera angle for the direction the character controller moves
-@export var rotation_to_move := true
+@export var rotation_to_move := true:
+	set(value):
+		if head_bob != null:
+			head_bob.rotation_to_move = value
 
 ## Speed at which the camera angle moves
 @export var speed_rotation := 4.0

@@ -155,7 +155,7 @@ var _step_cycle : float = 0
 var _next_step : float = 0
 
 ## Character controller horizontal speed.
-var _horizontal_velocity
+var _horizontal_velocity : Vector3
 
 ## Base transform node to direct player movement
 ## Used to differentiate fly mode/swim moves from regular character movement.
