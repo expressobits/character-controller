@@ -71,14 +71,14 @@ class_name FPSController3D
 ## [HeadMovement3D] reference, where the rotation of the camera sight is calculated
 @onready var head: HeadMovement3D = get_node(NodePath("Head"))
 
-## Camera3D reference
-@onready var camera: Camera3D = get_node(NodePath("Head/Camera"))
+## First Person Camera3D reference
+@onready var first_person_camera_reference : Marker3D = get_node(NodePath("Head/FirstPersonCameraReference"))
+
+## Third Person Camera3D reference
+@onready var third_person_camera_reference : Marker3D = get_node(NodePath("Head/ThirdPersonCameraReference"))
 
 ## HeadBob reference
 @onready var head_bob: HeadBob = get_node(NodePath("Head/Head Bob"))
-
-## Stores normal fov from camera fov
-@onready var normal_fov: float = camera.fov
 
 
 ## Configure mouse sensitivity, rotation limit angle and head bob
@@ -112,8 +112,9 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 	else:
 		_direction_base_node = self
 	super.move(_delta, input_axis, input_jump, input_crouch, input_sprint, input_swim_down, input_swim_up)
-	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
-		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
+#	TODO Make in exemple this	
+#	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged()
+#		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
 	_check_head_bob(_delta, input_axis)
 
 
