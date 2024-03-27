@@ -68,74 +68,74 @@ signal stopped_floating
 ## Controller Gravity Multiplier
 ## The higher the number, the faster the controller will fall to the ground and 
 ## your jump will be shorter.
-@export var gravity_multiplier := 3.0
+@export var gravity_multiplier : float = 3.0
 
 ## Controller base speed
 ## Note: this speed is used as a basis for abilities to multiply their 
 ## respective values, changing it will have consequences on [b]all abilities[/b]
 ## that use velocity.
-@export var speed := 10
+@export var speed : float = 10.0
 
 ## Time for the character to reach full speed
-@export var acceleration := 8
+@export var acceleration : float = 8.0
 
 ## Time for the character to stop walking
-@export var deceleration := 10
+@export var deceleration : float = 10.0
 
 ## Sets control in the air
-@export var air_control := 0.3
+@export var air_control : float = 0.3
 
 
 @export_group("Sprint")
 
 ## Speed to be multiplied when active the ability
-@export var sprint_speed_multiplier := 1.6
+@export var sprint_speed_multiplier : float = 1.6
 
 
 @export_group("Footsteps")
 
 ## Maximum counter value to be computed one step
-@export var step_lengthen := 0.7
+@export var step_lengthen : float = 0.7
 
 ## Value to be added to compute a step, each frame that the character is walking this value 
 ## is added to a counter
-@export var step_interval := 6.0
+@export var step_interval : float = 6.0
 
 
 @export_group("Crouch")
 
 ## Collider height when crouch actived
-@export var height_in_crouch := 1.0
+@export var height_in_crouch : float = 1.0
 
 ## Speed multiplier when crouch is actived
-@export var crouch_speed_multiplier := 0.7
+@export var crouch_speed_multiplier : float = 0.7
 
 
 @export_group("Jump")
 
 ## Jump/Impulse height
-@export var jump_height := 10
+@export var jump_height : float = 10.0
 
 
 @export_group("Fly")
 
 ## Speed multiplier when fly mode is actived
-@export var fly_mode_speed_modifier := 2
+@export var fly_mode_speed_modifier : float = 2.0
 
 
 @export_group("Swim")
 
 ## Minimum height for [CharacterController3D] to be completely submerged in water.
-@export var submerged_height := 0.36
+@export var submerged_height : float = 0.36
 
 ## Minimum height for [CharacterController3D] to be float in water.
-@export var floating_height := 0.75
+@export var floating_height : float = 0.75
 
 ## Speed multiplier when floating water
-@export var on_water_speed_multiplier := 0.75
+@export var on_water_speed_multiplier : float = 0.75
 
 ## Speed multiplier when submerged water
-@export var submerged_speed_multiplier := 0.5
+@export var submerged_speed_multiplier : float = 0.5
 
 
 @export_group("Abilities")
@@ -155,7 +155,7 @@ var _step_cycle : float = 0
 var _next_step : float = 0
 
 ## Character controller horizontal speed.
-var _horizontal_velocity
+var _horizontal_velocity : Vector3
 
 ## Base transform node to direct player movement
 ## Used to differentiate fly mode/swim moves from regular character movement.
@@ -189,7 +189,7 @@ var _direction_base_node : Node3D
 @onready var swim_ability: SwimAbility3D = get_node(NodePath("Swim Ability 3D"))
 
 ## Stores normal speed
-@onready var _normal_speed: int = speed
+@onready var _normal_speed : float = speed
 
 ## True if in the last frame it was on the ground
 var _last_is_on_floor := false
@@ -220,7 +220,7 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 	jump_ability.set_active(input_jump and is_on_floor() and not head_check.is_colliding())
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
 	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode())
-	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.x >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
+	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.y >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
 	
 	var multiplier = 1.0
 	for ability in _abilities:
@@ -321,7 +321,7 @@ func _start_variables():
 
 func _check_landed():
 	if is_on_floor() and not _last_is_on_floor:
-		emit_signal("landed")
+		_on_landed()
 		_reset_step()
 	_last_is_on_floor = is_on_floor()
 	
@@ -334,13 +334,13 @@ func _check_step(_delta):
 func _direction_input(input : Vector2, input_down : bool, input_up : bool, aim_node : Node3D) -> Vector3:
 	_direction = Vector3()
 	var aim = aim_node.get_global_transform().basis
-	if input.x >= 0.5:
-		_direction -= aim.z
-	if input.x <= -0.5:
-		_direction += aim.z
-	if input.y <= -0.5:
-		_direction -= aim.x
 	if input.y >= 0.5:
+		_direction -= aim.z
+	if input.y <= -0.5:
+		_direction += aim.z
+	if input.x <= -0.5:
+		_direction -= aim.x
+	if input.x >= 0.5:
 		_direction += aim.x
 	# NOTE: For free-flying and swimming movements
 	if is_fly_mode() or is_floating():
@@ -393,6 +393,10 @@ func _on_sprinted():
 
 func _on_jumped():
 	emit_signal("jumped")
+
+
+func _on_landed():
+	emit_signal("landed")
 
 
 func _on_swim_ability_emerged():

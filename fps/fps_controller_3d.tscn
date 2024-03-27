@@ -25,10 +25,12 @@ angle_limit_for_rotation = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
 script = ExtResource("3_pqlf6")
 
-[node name="Camera" type="Camera3D" parent="Head" index="0"]
-current = true
-
-[node name="Head Bob" type="Node" parent="Head" index="1"]
+[node name="Head Bob" type="Node" parent="Head" index="0"]
 script = ExtResource("4_6ym6a")
-head_path = NodePath("../Camera")
+head_path = NodePath("../FirstPersonCameraReference")
 bob_curve = ExtResource("5_cv58a")
+
+[node name="FirstPersonCameraReference" type="Marker3D" parent="Head" index="1"]
+
+[node name="ThirdPersonCameraReference" type="Marker3D" parent="Head" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
