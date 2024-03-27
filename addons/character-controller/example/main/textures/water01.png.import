@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/water01.png-1950fe27c3e86ad5d06f46481220f0a9.
 [params]
 
 compress/mode=3
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
