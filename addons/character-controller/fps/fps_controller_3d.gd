@@ -27,7 +27,10 @@ class_name FPSController3D
 @export_group("Mouse")
 
 ## Mouse Sensitivity
-@export var mouse_sensitivity := 2.0
+@export var mouse_sensitivity := 2.0:
+	set(value):
+			if head != null:
+				head.mouse_sensitivity = value
 
 ## Maximum vertical angle the head can aim
 @export var vertical_angle_limit := 90.0
@@ -36,7 +39,10 @@ class_name FPSController3D
 @export_group("Head Bob - Steps")
 
 ## Enables bob for made steps
-@export var step_bob_enabled := true
+@export var step_bob_enabled := true:
+	set(value):
+		if head_bob != null:
+			head_bob.step_bob_enabled = value
 
 ## Difference of step bob movement between vertical and horizontal angle
 @export var vertical_horizontal_ratio = 2
@@ -45,13 +51,19 @@ class_name FPSController3D
 @export_group("Head Bob - Jump")
 
 ## Enables bob for made jumps
-@export var jump_bob_enabled := true
+@export var jump_bob_enabled := true:
+	set(value):
+		if head_bob != null:
+			head_bob.jump_bob_enabled = value
 
 
 @export_group("Head Bob - Rotation When Move (Quake Like)")
 
 ## Enables camera angle for the direction the character controller moves
-@export var rotation_to_move := true
+@export var rotation_to_move := true:
+	set(value):
+		if head_bob != null:
+			head_bob.rotation_to_move = value
 
 ## Speed at which the camera angle moves
 @export var speed_rotation := 4.0
@@ -62,14 +74,14 @@ class_name FPSController3D
 ## [HeadMovement3D] reference, where the rotation of the camera sight is calculated
 @onready var head: HeadMovement3D = get_node(NodePath("Head"))
 
-## Camera3D reference
-@onready var camera: Camera3D = get_node(NodePath("Head/Camera"))
+## First Person Camera3D reference
+@onready var first_person_camera_reference : Marker3D = get_node(NodePath("Head/FirstPersonCameraReference"))
+
+## Third Person Camera3D reference
+@onready var third_person_camera_reference : Marker3D = get_node(NodePath("Head/ThirdPersonCameraReference"))
 
 ## HeadBob reference
 @onready var head_bob: HeadBob = get_node(NodePath("Head/Head Bob"))
-
-## Stores normal fov from camera fov
-@onready var normal_fov: float = camera.fov
 
 
 ## Configure mouse sensitivity, rotation limit angle and head bob
@@ -103,8 +115,9 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 	else:
 		_direction_base_node = self
 	super.move(_delta, input_axis, input_jump, input_crouch, input_sprint, input_swim_down, input_swim_up)
-	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged():
-		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
+#	TODO Make in exemple this	
+#	if not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged()
+#		camera.set_fov(lerp(camera.fov, normal_fov, _delta * fov_change_speed))
 	_check_head_bob(_delta, input_axis)
 
 

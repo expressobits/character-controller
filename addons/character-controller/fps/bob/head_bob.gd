@@ -55,7 +55,7 @@ var speed : float = 0
 var original_position : Vector3
 
 ## Store original rotation of head for headbob reference
-var original_rotation : Vector3
+var original_rotation : Quaternion
 
 ## Actual cycle x of step headbob
 var cycle_position_x: float = 0
@@ -69,7 +69,7 @@ var step_interval: float = 0
 
 func _ready():
 	original_position = head.position
-	original_rotation = head.rotation
+	original_rotation = head.quaternion
 
 
 ## Setup bob with bob base interval
@@ -96,10 +96,10 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 	if is_sprint:
 		input_axis *= 2
 	if rotation_to_move:
-		new_rotation += _head_bob_rotation(input_axis.x, input_axis.y, _delta)	
+		new_rotation += _head_bob_rotation(input_axis.y, input_axis.x, _delta)	
 	
 	head.position = new_position
-	head.rotation = new_rotation
+	head.quaternion = new_rotation
 
 
 ## Apply headbob jump
@@ -114,9 +114,10 @@ func reset_cycles():
 	cycle_position_y = 0
 
 
-func _head_bob_rotation(x, z, _delta) -> Vector3:
-	var target_rotation = Vector3(x * angle_limit_for_rotation, 0.0, -z * angle_limit_for_rotation)
-	return lerp(head.rotation, target_rotation, speed_rotation * _delta)
+func _head_bob_rotation(x, z, _delta) -> Quaternion:
+	var target_rotation : Quaternion
+	target_rotation.from_euler(Vector3(x * angle_limit_for_rotation, 0.0, -z * angle_limit_for_rotation))
+	return lerp(head.quaternion, target_rotation, speed_rotation * _delta)
 
 
 func _do_head_bob(speed: float, delta: float) -> Vector3:

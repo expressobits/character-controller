@@ -18,6 +18,7 @@ class_name CrouchAbility3D
 ## Collider height when crouch deactived
 @export var default_height := 2.0
 
+var crouch_factor : float
 
 ## Applies slow if crouch is enabled
 func get_speed_modifier() -> float:
@@ -33,4 +34,5 @@ func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vec
 	elif not head_check.is_colliding():
 		collision.shape.height += delta * 8
 	collision.shape.height = clamp(collision.shape.height , height_in_crouch, default_height)
+	crouch_factor = (default_height - height_in_crouch) - (collision.shape.height - height_in_crouch)/ (default_height - height_in_crouch)
 	return velocity
