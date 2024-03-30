@@ -96,9 +96,9 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 	if is_sprint:
 		input_axis *= 2
 	if rotation_to_move:
-		new_rotation += _head_bob_rotation(input_axis.y, input_axis.x, _delta)	
+		new_rotation = _head_bob_rotation(input_axis.y, input_axis.x, _delta)	
 	
-	head.position = new_position
+	head.position = original_position
 	head.quaternion = new_rotation
 
 
@@ -115,9 +115,8 @@ func reset_cycles():
 
 
 func _head_bob_rotation(x, z, _delta) -> Quaternion:
-	var target_rotation : Quaternion
-	target_rotation.from_euler(Vector3(x * angle_limit_for_rotation, 0.0, -z * angle_limit_for_rotation))
-	return lerp(head.quaternion, target_rotation, speed_rotation * _delta)
+	var target_rotation := Quaternion.from_euler(Vector3(x * angle_limit_for_rotation, 0.0, -z * angle_limit_for_rotation))
+	return head.quaternion.slerp(target_rotation, speed_rotation * _delta)
 
 
 func _do_head_bob(speed: float, delta: float) -> Vector3:
