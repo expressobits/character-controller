@@ -98,7 +98,7 @@ func head_bob_process(horizontal_velocity:Vector3, input_axis:Vector2, is_sprint
 	if rotation_to_move:
 		new_rotation = _head_bob_rotation(input_axis.y, input_axis.x, _delta)	
 	
-	head.position = original_position
+	head.position = new_position
 	head.quaternion = new_rotation
 
 
