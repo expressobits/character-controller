@@ -35,7 +35,6 @@ func do_bob_cycle():
 ## Tick process of bob timer
 func bob_process(delta):
 	if(_time > 0):
-		print("sdas")
 		_time -= delta
 		if(_direction):
 			_offset = lerp(0.0, amount, _time/_direction)
