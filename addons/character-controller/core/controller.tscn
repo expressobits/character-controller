@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://ciu2qgckgu5sr"]
 
-[ext_resource type="Script" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="11_obyn2"]
-[ext_resource type="Script" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="12_3irqv"]
+[ext_resource type="Script" uid="uid://lbeyn0w1ah42" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
+[ext_resource type="Script" uid="uid://drn2mhrkcp474" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
+[ext_resource type="Script" uid="uid://ulyoeaxbl23n" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="8_8b02o"]
+[ext_resource type="Script" uid="uid://5rsltlis8hfc" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="9_laych"]
+[ext_resource type="Script" uid="uid://bx7pp0eao8dne" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
+[ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="11_obyn2"]
+[ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="12_3irqv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
