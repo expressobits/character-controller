@@ -10,7 +10,7 @@ class_name CrouchAbility3D
 @export var collision : CollisionShape3D
 
 ## Raycast that checks if it is possible to exit the crouch state
-@export var head_check : RayCast3D
+@export var head_check : ShapeCast3D
 
 ## Collider height when crouch actived
 @export var height_in_crouch := 1.0
