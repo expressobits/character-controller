@@ -168,7 +168,7 @@ var _direction_base_node : Node3D
 @onready var collision: CollisionShape3D = get_node(NodePath("Collision"))
 
 ## Above head collision checker, used for crouching and jumping.
-@onready var head_check: RayCast3D = get_node(NodePath("Head Check"))
+@onready var head_check: ShapeCast3D = get_node(NodePath("Head Check"))
 
 ## Basic movement ability.
 @onready var walk_ability: WalkAbility3D = get_node(NodePath("Walk Ability 3D"))

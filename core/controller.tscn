@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ciu2qgckgu5sr"]
+[gd_scene load_steps=10 format=3 uid="uid://ciu2qgckgu5sr"]
 
 [ext_resource type="Script" uid="uid://lbeyn0w1ah42" path="res://addons/character-controller/core/character_controller_3d.gd" id="1_snllq"]
 [ext_resource type="Script" uid="uid://drn2mhrkcp474" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="7_kh76d"]
@@ -10,6 +10,8 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_elntb"]
+
 [node name="CharacterController3D" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
@@ -18,8 +20,9 @@ abilities_path = Array[NodePath]([NodePath("Crouch Ability 3D"), NodePath("Sprin
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
 
-[node name="Head Check" type="RayCast3D" parent="."]
-target_position = Vector3(0, 1, 0)
+[node name="Head Check" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_elntb")
+target_position = Vector3(0, 0.5, 0)
 
 [node name="Walk Ability 3D" type="Node3D" parent="."]
 script = ExtResource("9_laych")
