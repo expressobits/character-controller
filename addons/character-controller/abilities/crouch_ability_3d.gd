@@ -29,10 +29,13 @@ func get_speed_modifier() -> float:
 
 ## Set collision height 
 func apply(velocity: Vector3, speed : float, is_on_floor : bool, direction : Vector3, delta: float) -> Vector3:
+	var height = collision.shape.height
 	if is_actived():
-		collision.shape.height -= delta * 8
+		if height > height_in_crouch:
+			height -= delta * 8
 	elif not head_check.is_colliding():
-		collision.shape.height += delta * 8
-	collision.shape.height = clamp(collision.shape.height , height_in_crouch, default_height)
+		if height < default_height:
+			height += delta * 8
+	collision.shape.height = clamp(height , height_in_crouch, default_height)
 	crouch_factor = (default_height - height_in_crouch) - (collision.shape.height - height_in_crouch)/ (default_height - height_in_crouch)
 	return velocity
