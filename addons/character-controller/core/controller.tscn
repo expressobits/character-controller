@@ -11,6 +11,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_elntb"]
+radius = 0.4
 
 [node name="CharacterController3D" type="CharacterBody3D"]
 floor_snap_length = 0.5
