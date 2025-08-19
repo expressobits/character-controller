@@ -66,13 +66,19 @@ func _get_audio_interact_of_object(collision):
 		return
 	if !collision:
 		return
-	if not "physics_material_override" in collision:
-		return
-	var mat = collision.physics_material_override
-	if mat:
-		var i = physic_materials.rfind(mat)
-		if i != -1:
-			audio_interact = audio_interacts[i]
+	LimboConsole.print_line(str(collision.name))
+	if "physics_material" in collision:
+		var mat = collision.physics_material
+		if mat:
+			var i = physic_materials.rfind(mat)
+			if i != -1:
+				audio_interact = audio_interacts[i]
+	if "physics_material_override" in collision:
+		var mat = collision.physics_material_override
+		if mat:
+			var i = physic_materials.rfind(mat)
+			if i != -1:
+				audio_interact = audio_interacts[i]
 
 
 func _on_controller_crouched():
