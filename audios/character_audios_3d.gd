@@ -67,7 +67,6 @@ func _get_audio_interact_of_object(collision):
 		return
 	if !collision:
 		return
-	LimboConsole.print_line(str(collision.name))
 	if "physics_material" in collision:
 		var mat = collision.physics_material
 		if mat:
