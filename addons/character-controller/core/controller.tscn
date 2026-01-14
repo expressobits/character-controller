@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://bx7pp0eao8dne" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="10_abxar"]
 [ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="11_obyn2"]
 [ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="12_3irqv"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/climb_step_ability_3d.gd" id="13_climb"]
+[ext_resource type="Script" path="res://addons/character-controller/abilities/crouch_jump_boost_ability_3d.gd" id="14_crouchjump"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fn1rj"]
 
@@ -16,7 +18,7 @@ radius = 0.4
 [node name="CharacterController3D" type="CharacterBody3D"]
 floor_snap_length = 0.5
 script = ExtResource("1_snllq")
-abilities_path = Array[NodePath]([NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D")])
+abilities_path = Array[NodePath]([NodePath("Crouch Ability 3D"), NodePath("Sprint Ability 3D"), NodePath("Walk Ability 3D"), NodePath("Jump Ability 3D"), NodePath("Fly Ability 3D"), NodePath("Swim Ability 3D"), NodePath("Climb Step Ability 3D"), NodePath("Crouch Jump Boost Ability 3D")])
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fn1rj")
@@ -50,3 +52,17 @@ collision_mask = 8
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Climb Step Ability 3D" type="Node3D" parent="."]
+script = ExtResource("13_climb")
+step_size = 0.5
+min_step_size = 0.15
+check_distance = 0.3
+climb_velocity_multiplier = 8.0
+max_climb_velocity = 15.0
+
+[node name="Crouch Jump Boost Ability 3D" type="Node3D" parent="."]
+script = ExtResource("14_crouchjump")
+enabled = true
+jump_boost = 1.5
+combo_window = 0.3
