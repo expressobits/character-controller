@@ -188,6 +188,12 @@ var _direction_base_node : Node3D
 ## Swimming ability.
 @onready var swim_ability: SwimAbility3D = get_node(NodePath("Swim Ability 3D"))
 
+## Ability that allows climbing steps/stairs.
+@onready var climb_step_ability: ClimbStepAbility3D = get_node(NodePath("Climb Step Ability 3D"))
+
+## Ability that boosts jump height when crouch+jump combo is performed.
+@onready var crouch_jump_boost_ability: CrouchJumpBoostAbility3D = get_node(NodePath("Crouch Jump Boost Ability 3D"))
+
 ## Stores normal speed
 @onready var _normal_speed : float = speed
 
@@ -221,6 +227,9 @@ func move(_delta: float, input_axis := Vector2.ZERO, input_jump := false, input_
 	walk_ability.set_active(not is_fly_mode() and not swim_ability.is_floating())
 	crouch_ability.set_active(input_crouch and is_on_floor() and not is_floating() and not is_submerged() and not is_fly_mode() or (crouch_ability.is_actived() and crouch_ability.head_check.is_colliding()))
 	sprint_ability.set_active(input_sprint and is_on_floor() and  input_axis.y >= 0.5 and !is_crouching() and not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged())
+	var climb_step_active = not is_fly_mode() and not swim_ability.is_floating() and not swim_ability.is_submerged()
+	climb_step_ability.set_active(climb_step_active)
+	crouch_jump_boost_ability.set_active(true)  # Always active, uses enabled flag internally
 	
 	var multiplier = 1.0
 	for ability in _abilities:
@@ -299,6 +308,10 @@ func _connect_signals():
 	swim_ability.stopped_floating.connect(_on_swim_ability_stopped_floating.bind())
 	swim_ability.entered_the_water.connect(_on_swim_ability_entered_the_water.bind())
 	swim_ability.exit_the_water.connect(_on_swim_ability_exit_the_water.bind())
+	# Connect signals for crouch+jump boost ability
+	jumped.connect(crouch_jump_boost_ability.on_jumped.bind())
+	crouched.connect(crouch_jump_boost_ability.on_crouched.bind())
+	landed.connect(crouch_jump_boost_ability.on_landed.bind())
 
 
 func _start_variables():
@@ -317,6 +330,11 @@ func _start_variables():
 	swim_ability.floating_height = floating_height
 	swim_ability.on_water_speed_multiplier = on_water_speed_multiplier
 	swim_ability.submerged_speed_multiplier = submerged_speed_multiplier
+	# Setup climb step ability references
+	climb_step_ability.character_body = self
+	climb_step_ability.collision_shape = collision
+	# Setup crouch jump boost ability references
+	crouch_jump_boost_ability.setup(jump_ability, crouch_ability)
 
 
 func _check_landed():
