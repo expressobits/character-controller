@@ -27,7 +27,6 @@ class_name CharacterAudios3D
 @export var water_audio_interact : Resource
 
 func _ready():
-	pass
 	character_controller.stepped.connect(_on_controller_stepped.bind())
 	character_controller.crouched.connect(_on_controller_crouched.bind())
 	character_controller.jumped.connect(_on_controller_jumped.bind())
